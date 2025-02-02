@@ -10,8 +10,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.0",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "psy/psysh": "^0.12.7",
+        "spatie/browsershot": "^5.0",
+        "spatie/laravel-pdf": "*",
         "spatie/laravel-permission": "^6.10"
     },
     "require-dev": {
