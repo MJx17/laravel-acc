@@ -20,7 +20,6 @@
                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Name</th>
                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Email</th>
                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Designation</th>
-                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Departments</th>
                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Actions</th>
                 </tr>
             </thead>
@@ -33,11 +32,7 @@
                         </td>
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $professor->email }}</td>
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $professor->designation }}</td>
-                        <td class="px-4 py-2 text-sm text-gray-800">
-                            @foreach($professor->departments as $department)
-                                <span class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">{{ $department->name }}</span>
-                            @endforeach
-                        </td>
+                       
                         <td class="px-4 py-2 text-sm">
                             <a href="{{ route('professors.edit', $professor->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                 Edit

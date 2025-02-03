@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('fee', 10, 2)->nullable(); // Subject fee (optional)
             $table->decimal('units', 3, 1)->unsigned(); // Number of units (e.g., 3.0, 1.5)
             $table->integer('year_level')->unsigned(); // Year level the subject belongs to
-        
+            
             // **NEW: Assign Course and Professor Directly**
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade'); // Course that the subject belongs to
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade'); // Professor assigned to teach this subject

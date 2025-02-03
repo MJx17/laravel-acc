@@ -54,7 +54,8 @@
                 <div class="d-flex justify-content-between">
                     <!-- Available Subjects -->
                     <div class="w-50 pr-2">
-                        <select name="subjects[]" id="available_subjects" class="form-select" multiple size="10" required>
+                        <label class="block text-sm font-medium text-gray-700">Available Subjects</label>
+                        <select name="available_subjects[]" id="available_subjects" class="form-select" multiple size="10" required>
                             @foreach ($subjects as $subject)
                                 <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                             @endforeach
@@ -69,6 +70,7 @@
 
                     <!-- Selected Subjects -->
                     <div class="w-50 pl-2">
+                        <label class="block text-sm font-medium text-gray-700">Selected Subjects</label>
                         <select name="subjects[]" id="selected_subjects" class="form-select" multiple size="10" required>
                         </select>
                     </div>

@@ -82,19 +82,7 @@
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="department_ids" class="block font-medium">Select Departments</label>
-                <select name="department_ids[]" id="department_ids" multiple class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @foreach($departments as $department)
-                        <option value="{{ $department->id }}" {{ in_array($department->id, old('department_ids', [])) ? 'selected' : '' }}>
-                            {{ $department->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('department_ids')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+           
 
             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                 Save

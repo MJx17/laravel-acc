@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/css/app.css')
+    @livewireStyles <!-- Include Livewire styles -->
 </head>
 <body class="bg-gray-100">
-    <div class ="app">
-    <!-- Navbar -->
-    @include('partials.navbar')
+    <div class="app">
+        <!-- Navbar -->
+        @include('partials.navbar')
 
-    <!-- Sidebar -->
-    @include('partials.sidebar')
+        <!-- Sidebar -->
+        @include('partials.sidebar')
     </div>
+
     <!-- Main Content -->
     <div id="main-content" class="transition-all duration-300 p-4">
-    {{ $slot }}
-
-       
-       
-   
+        {{ $slot }} <!-- This is where your page-specific content goes -->
+        
+        <!-- Insert the Livewire component for the dual listbox here -->
+        @livewire('dual-listbox', ['subjects' => $subjects]) <!-- Pass the subjects to the Livewire component -->
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const sidebarToggleButton = document.getElementById('sidebar-toggle-button');
@@ -50,5 +52,6 @@
         });
     </script>
 
+    @livewireScripts <!-- Include Livewire scripts -->
 </body>
 </html>
