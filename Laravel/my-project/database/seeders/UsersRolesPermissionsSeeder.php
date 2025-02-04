@@ -182,7 +182,7 @@ class UsersRolesPermissionsSeeder extends Seeder
             'living_address' => 'Living Address',
             'living_contact_number' => '0987654321',   
             'image' => 'path/to/image.jpg',
-            'status' => 'pending',
+            'status' => 'not_enrolled',
         ]);
 
         // Student 2
@@ -234,7 +234,7 @@ class UsersRolesPermissionsSeeder extends Seeder
             'living_contact_number' => '0987654321',
       
             'image' => 'path/to/image.jpg',
-             'status' => 'pending',
+             'status' => 'not_enrolled',
         ]);
 
 

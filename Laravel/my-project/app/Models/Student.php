@@ -50,7 +50,8 @@ class Student extends Model
         'living_situation',
         'living_address',
         'living_contact_number',
-        'image'
+        'image',
+        'status'
     ];
 
     /**

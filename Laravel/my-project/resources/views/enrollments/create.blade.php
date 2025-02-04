@@ -15,21 +15,22 @@
                 <select name="student_id" id="student_id" class="mt-1 block w-full form-select" required>
                     <option value="">Select a student</option>
                     @foreach ($students as $student)
-                        <option value="{{ $student->id }}">{{ $student->name }}</option>
+                        <option value="{{ $student->id }}">{{ $student->fullname }}</option>
                     @endforeach
                 </select>
             </div>
 
-            <!-- Semester -->
-            <div class="mb-4">
-                <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
-                <select name="semester_id" id="semester_id" class="mt-1 block w-full form-select" required>
-                    <option value="">Select a semester</option>
-                    @foreach ($semesters as $semester)
-                        <option value="{{ $semester->id }}">{{ $semester->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+ <!-- Semester -->
+                <div class="mb-4">
+                    <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
+                    <select name="semester_id" id="semester_id" class="mt-1 block w-full form-select" required>
+                        <option value="">Select a semester</option>
+                        @foreach ($semesters as $semester)
+                            <option value="{{ $semester->id }}">{{ $semester->semester . ' Semester' }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
 
             <!-- Course -->
             <div class="mb-4">
@@ -45,35 +46,27 @@
             <!-- Year Level -->
             <div class="mb-4">
                 <label for="year_level" class="block text-sm font-medium text-gray-700">Year Level</label>
-                <input type="number" name="year_level" id="year_level" class="mt-1 block w-full form-input" required>
+                <select name="year_level" id="year_level" class="mt-1 block w-full form-select" required>
+                    <option value="" disabled selected>Select Year Level</option>
+                    <option value="1st_year">1st Year</option>
+                    <option value="2nd_year">2nd Year</option>
+                    <option value="3rd_year">3rd Year</option>
+                    <option value="4th_year">4th Year</option>
+                    <option value="5th_year">5th Year</option>
+                    <option value="irregular">Irregular</option>
+                </select>
             </div>
 
-            <!-- Subjects Dual Listbox -->
+            <!-- Subjects (Checkboxes) -->
             <div class="mb-4">
-                <label for="subjects" class="block text-sm font-medium text-gray-700">Subjects</label>
-                <div class="d-flex justify-content-between">
-                    <!-- Available Subjects -->
-                    <div class="w-50 pr-2">
-                        <label class="block text-sm font-medium text-gray-700">Available Subjects</label>
-                        <select name="available_subjects[]" id="available_subjects" class="form-select" multiple size="10" required>
-                            @foreach ($subjects as $subject)
-                                <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Buttons to move items between lists -->
-                    <div class="w-25 d-flex flex-column justify-content-center align-items-center">
-                        <button type="button" id="move_right" class="btn btn-primary mb-2" onclick="moveItem('right')">></button>
-                        <button type="button" id="move_left" class="btn btn-primary mb-2" onclick="moveItem('left')"><</button>
-                    </div>
-
-                    <!-- Selected Subjects -->
-                    <div class="w-50 pl-2">
-                        <label class="block text-sm font-medium text-gray-700">Selected Subjects</label>
-                        <select name="subjects[]" id="selected_subjects" class="form-select" multiple size="10" required>
-                        </select>
-                    </div>
+                <label class="block text-sm font-medium text-gray-700">Subjects</label>
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ($subjects as $subject)
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" class="form-checkbox">
+                            <span>{{ $subject->name }}</span>
+                        </label>
+                    @endforeach
                 </div>
             </div>
 
@@ -88,24 +81,4 @@
             </div>
         </form>
     </div>
-
-    <script>
-        function moveItem(direction) {
-            var availableSubjects = document.getElementById("available_subjects");
-            var selectedSubjects = document.getElementById("selected_subjects");
-            var selectedOption;
-
-            if (direction === 'right') {
-                // Move from available to selected
-                Array.from(availableSubjects.selectedOptions).forEach(option => {
-                    selectedSubjects.add(option);
-                });
-            } else if (direction === 'left') {
-                // Move from selected to available
-                Array.from(selectedSubjects.selectedOptions).forEach(option => {
-                    availableSubjects.add(option);
-                });
-            }
-        }
-    </script>
 </x-app-layout>

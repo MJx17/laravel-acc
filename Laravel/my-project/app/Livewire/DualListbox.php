@@ -1,40 +1,36 @@
 <?php
 
+// app/Http/Livewire/DualListbox.php
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;
 
 class DualListbox extends Component
 {
-    public $availableSubjects = [];
-    public $selectedSubjects = [];
+    public $subjects;
+    public $selectedSubjects;
 
-    public function mount($subjects)
+    public function mount($subjects, $selectedSubjects)
     {
-        // Initialize the available subjects (you can modify this to pull from a database or model)
-        $this->availableSubjects = $subjects;
+        $this->subjects = $subjects;
+        $this->selectedSubjects = $selectedSubjects;
     }
 
     public function moveToSelected($subjectId)
     {
-        // Move subject from available to selected
-        $subject = $this->findSubjectById($subjectId);
-        $this->selectedSubjects[] = $subject;
-        $this->availableSubjects = array_filter($this->availableSubjects, fn($item) => $item['id'] !== $subjectId);
+        if (($key = array_search($subjectId, $this->subjects)) !== false) {
+            unset($this->subjects[$key]);
+            $this->selectedSubjects[] = $subjectId;
+        }
     }
 
     public function moveToAvailable($subjectId)
     {
-        // Move subject from selected to available
-        $subject = $this->findSubjectById($subjectId, 'selected');
-        $this->availableSubjects[] = $subject;
-        $this->selectedSubjects = array_filter($this->selectedSubjects, fn($item) => $item['id'] !== $subjectId);
-    }
-
-    private function findSubjectById($id, $list = 'available')
-    {
-        $listToSearch = $list === 'available' ? $this->availableSubjects : $this->selectedSubjects;
-        return collect($listToSearch)->first(fn($subject) => $subject['id'] === $id);
+        if (($key = array_search($subjectId, $this->selectedSubjects)) !== false) {
+            unset($this->selectedSubjects[$key]);
+            $this->subjects[] = $subjectId;
+        }
     }
 
     public function render()

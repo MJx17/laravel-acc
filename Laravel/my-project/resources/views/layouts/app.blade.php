@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/css/app.css')
-    @livewireStyles <!-- Include Livewire styles -->
+
 </head>
 <body class="bg-gray-100">
     <div class="app">
@@ -21,7 +21,7 @@
         {{ $slot }} <!-- This is where your page-specific content goes -->
         
         <!-- Insert the Livewire component for the dual listbox here -->
-        @livewire('dual-listbox', ['subjects' => $subjects]) <!-- Pass the subjects to the Livewire component -->
+  
     </div>
 
     <script>
@@ -52,6 +52,6 @@
         });
     </script>
 
-    @livewireScripts <!-- Include Livewire scripts -->
+
 </body>
 </html>

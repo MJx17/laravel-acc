@@ -113,20 +113,6 @@
 
  
 
-    <div class="flex flex-col">
-        <select name="course_id" id="course_id"  class="mt-2 p-2 border border-gray-300 rounded-md">
-            <option value="" disabled selected>Select a Course</option> <!-- Default placeholder -->
-            @foreach($courses as $course)
-                <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
-                    {{ $course->course_name }}
-                </option>
-            @endforeach
-        </select>
-        @error('course_id')
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-
 
   
     </div>

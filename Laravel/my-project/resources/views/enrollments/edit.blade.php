@@ -52,20 +52,21 @@
             <!-- Year Level -->
             <div class="mb-4">
                 <label for="year_level" class="block text-sm font-medium text-gray-700">Year Level</label>
-                <input type="number" name="year_level" id="year_level" class="mt-1 block w-full form-input" value="{{ $enrollment->year_level }}" required>
+                <input type="number" name="year_level" id="year_level" class="mt-1 block w-full form-input" value="{{ old('year_level', $enrollment->year_level) }}" required>
             </div>
 
-            <!-- Subjects -->
+            <!-- Subjects (Checkboxes) -->
             <div class="mb-4">
-                <label for="subjects" class="block text-sm font-medium text-gray-700">Subjects</label>
-                <select name="subjects[]" id="subjects" class="mt-1 block w-full form-select" multiple required>
+                <label class="block text-sm font-medium text-gray-700">Subjects</label>
+                <div class="grid grid-cols-2 gap-2">
                     @foreach ($subjects as $subject)
-                        <option value="{{ $subject->id }}" 
-                            {{ in_array($subject->id, $enrollment->subjects->pluck('id')->toArray()) ? 'selected' : '' }}>
-                            {{ $subject->name }}
-                        </option>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" 
+                                {{ in_array($subject->id, $enrollment->subjects->pluck('id')->toArray()) ? 'checked' : '' }}>
+                            <span>{{ $subject->subject_name }}</span>
+                        </label>
                     @endforeach
-                </select>
+                </div>
             </div>
 
             <!-- Submit Button -->

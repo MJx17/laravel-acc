@@ -38,7 +38,7 @@ class StudentController extends Controller
             'home_address' => 'required|string',
             'mobile_number' => 'required|string',
             'email_address' => 'required|email',
-            'course_id' => 'required|integer|exists:courses,id',
+         
 
             // Father's Information
             'fathers_name' => 'required|string',
@@ -69,7 +69,7 @@ class StudentController extends Controller
             'living_address' => 'required|string',
             'living_contact_number' => 'required|string',
             // Year Level
-            'year_level' => 'required|in:1st_year,2nd_year,3rd_year,4th_year,5th_year,irregular',
+    
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -103,8 +103,7 @@ class StudentController extends Controller
             'email_address' => $request->email_address,
             'image'=> $imagePath,
 
-            'course_id'=> $request->course_id, 
-            'year_level' => $request->year_level,
+            
 
             'fathers_name' => $request->fathers_name,
             'fathers_educational_attainment' => $request->fathers_educational_attainment,
@@ -157,7 +156,7 @@ class StudentController extends Controller
         'home_address' => 'required|string',
         'mobile_number' => 'required|string',
         'email_address' => 'required|email',
-        'course_id' => 'required|integer|exists:courses,id',
+   
         'status' => 'required|string',
 
         'fathers_name' => 'required|string',
@@ -223,7 +222,7 @@ class StudentController extends Controller
         'home_address' => $request->home_address,
         'mobile_number' => $request->mobile_number,
         'email_address' => $request->email_address,
-        'course_id'=> $request->course_id,
+    
         
         'fathers_name' => $request->fathers_name,
         'fathers_educational_attainment' => $request->fathers_educational_attainment,

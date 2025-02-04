@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('home_address');
             $table->string('mobile_number');
             $table->string('email_address');
-            $table->string('status'); // Status (Active, Graduated, etc.)
-            
+            $table->enum('status', ['active', 'inactive', 'enrolled', 'not_enrolled'])->default('not_enrolled');
+
             // Father's Information
             $table->string('fathers_name');
             $table->string('fathers_educational_attainment');
