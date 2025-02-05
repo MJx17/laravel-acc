@@ -120,4 +120,13 @@ class Student extends Model
         return $this->first_name . ' ' . $this->surname;
     }
 
+        public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
 }

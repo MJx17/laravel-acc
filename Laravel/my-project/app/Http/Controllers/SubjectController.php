@@ -18,7 +18,7 @@ class SubjectController extends Controller
     }
     
 
-    // Show the form to create a new subject
+  // Show the form to create a new subject
     public function create()
     {
         $courses = Course::all();
@@ -101,3 +101,4 @@ class SubjectController extends Controller
         return view('subjects.show', compact('subject'));
     }
 }
+  
