@@ -10,29 +10,29 @@
 
         <!-- Table for students -->
         <div class="overflow-x-auto shadow-sm rounded-lg">
-            <table class="table-auto w-full divide-y -collapse  -gray-300">
+            <table class="table-auto w-full divide-y divide-gray-300">
                 <thead class="bg-gray-200 text-left">
                     <tr>
-                        <th class=" px-6 py-3">#</th>
-                        <th class=" px-6 py-3">Name</th>
-                        <th class=" px-6 py-3">Email</th>
-                        <th class=" px-6 py-3">Mobile</th>
-                        <th class=" px-6 py-3">Year Level</th>
-                        <th class=" px-6 py-3">Actions</th>
+                        <th class="px-6 py-3">#</th>
+                        <th class="px-6 py-3">Name</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Mobile</th>
+                        <th class="px-6 py-3">Year Level</th>
+                        <th class="px-6 py-3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($students as $student)
-                        <tr class="hover:bg-gray-100">
-                            <td class=" px-6 py-3">{{ $loop->iteration }}</td>
-                            <td class=" px-6 py-3">{{ $student->first_name }} {{ $student->surname }}</td>
-                            <td class=" px-6 py-3">{{ $student->email_address }}</td>
-                            <td class=" px-6 py-3">{{ $student->mobile_number }}</td>
-                            <td class=" px-6 py-3">{{ $student->year_level }}</td>
-                            <td class=" px-6 py-3">
-                                <!-- Example action buttons -->
-                                <a href="{{ route('student.edit', $student->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a> |
-                                <a href="{{ route('student.show', $student->id) }}" class="text-green-500 hover:text-green-700">View</a>
+                        <tr class="hover:bg-gray-100 transition duration-200">
+                            <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-3">{{ $student->first_name }} {{ $student->surname }}</td>
+                            <td class="px-6 py-3">{{ $student->email_address }}</td>
+                            <td class="px-6 py-3">{{ $student->mobile_number }}</td>
+                            <td class="px-6 py-3">{{ $student->year_level }}</td>
+                            <td class="px-6 py-3">
+                                <!-- Styled action buttons -->
+                                <a href="{{ route('student.edit', $student->id) }}" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-200">Edit</a>
+                                <a href="{{ route('student.show', $student->id) }}" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-700 transition duration-200">View</a>
                             </td>
                         </tr>
                     @endforeach

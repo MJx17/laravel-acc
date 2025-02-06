@@ -265,9 +265,9 @@ class StudentController extends Controller
         {
             // Fetch the student data
             $student = Student::findOrFail($id);
-            $courses = Course::findOrFail($id);
+   
             // Return the edit view with the student data
-            return view('student.edit', compact('student', 'courses'));
+            return view('student.edit', compact('student', ));
         }
 
 
@@ -275,7 +275,7 @@ class StudentController extends Controller
         {
             // Fetch the student data
             $student = Student::findOrFail($id);
-            $courses = Course::findOrFail($id);
+           
             // Delete the student image from storage if it exists
             if ($student->image) {
                 Storage::delete('public/' . $student->image);
@@ -292,7 +292,7 @@ class StudentController extends Controller
         {
             // Retrieve student by ID
             $student = Student::findOrFail($id);
-            $courses = Course::findOrFail($id);
+   
             // Return a view to display the student's details
             return view('student.show', compact('student'));
         }
