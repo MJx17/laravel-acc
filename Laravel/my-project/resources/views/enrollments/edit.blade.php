@@ -55,19 +55,7 @@
                 <input type="number" name="year_level" id="year_level" class="mt-1 block w-full form-input" value="{{ old('year_level', $enrollment->year_level) }}" required>
             </div>
 
-            <!-- Subjects (Checkboxes) -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Subjects</label>
-                <div class="grid grid-cols-2 gap-2">
-                    @foreach ($subjects as $subject)
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" 
-                                {{ in_array($subject->id, $enrollment->subjects->pluck('id')->toArray()) ? 'checked' : '' }}>
-                            <span>{{ $subject->subject_name }}</span>
-                        </label>
-                    @endforeach
-                </div>
-            </div>
+         
 
             <!-- Submit Button -->
             <div class="flex items-center justify-between mt-6">

@@ -61,8 +61,12 @@ class Subject extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'course_subject');
+        return $this->belongsToMany(Course::class, 'course_subject', 'subject_id', 'course_id');
     }
+    
+
+
+
     // Many-to-Many: Relation to Professors
   
     public function professor()

@@ -6,91 +6,156 @@ use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Course;
 use App\Models\Semester;
+use App\Models\Subject;
+use App\Models\CourseSubject;
+use App\Models\StudentSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class EnrollmentController extends Controller
 {
-    // Display a listing of the enrollments
+    // Display a listing of enrollments
     public function index()
     {
-        // Paginate the enrollments
-        $enrollments = Enrollment::with('student', 'semester', 'course')->paginate(10); // You can set the number per page
-    
-        // Pass the paginated result to the view
+        $enrollments = Enrollment::with('student', 'semester', 'course')->paginate(10);
         return view('enrollments.index', compact('enrollments'));
     }
-    
 
     // Show the form to create a new enrollment
-    public function create()
+    public function create(Request $request)
     {
-        // Fetch the IDs of students who are already enrolled
         $excludedStudentIds = Enrollment::pluck('student_id')->toArray();
-
-        // Fetch students who are NOT enrolled yet
         $students = Student::whereNotIn('id', $excludedStudentIds)->get();
-        
-        // Fetch courses and semesters
         $courses = Course::all();
         $semesters = Semester::all();
+        $subjects = collect(); // Empty collection by default
 
-        return view('enrollments.create', compact('students', 'courses', 'semesters'));
+        if ($request->has(['course_id', 'semester_id', 'year_level'])) {
+            $subjects = Subject::where('course_id', $request->course_id)
+                ->where('semester_id', $request->semester_id)
+                ->where('year_level', $request->year_level)
+                ->get();
+        }
+
+        return view('enrollments.create', compact('students', 'courses', 'semesters', 'subjects'));
     }
 
-    // Store a newly created enrollment in the database
     public function store(Request $request)
     {
-        // Validate the input data
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
             'semester_id' => 'required|exists:semesters,id',
             'course_id' => 'required|exists:courses,id',
             'year_level' => 'required|string',
+            'subjects' => 'required|array',
+            'subjects.*' => 'exists:subjects,id'
         ]);
-
-        // Create the enrollment record
-        Enrollment::create($validated);
-
-        return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully!');
+    
+        try {
+            DB::beginTransaction(); // Start transaction
+    
+            // Create enrollment
+            $enrollment = Enrollment::create([
+                'student_id' => $validated['student_id'],
+                'semester_id' => $validated['semester_id'],
+                'course_id' => $validated['course_id'],
+                'year_level' => $validated['year_level'],
+                'subject_ids' => json_encode($validated['subjects']),
+            ]);
+    
+            // Update student status to 'enrolled'
+            Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
+    
+            // Insert subjects into student_subjects table
+            $studentSubjects = [];
+            foreach ($validated['subjects'] as $subject_id) {
+                $studentSubjects[] = [
+                    'student_id' => $validated['student_id'],
+                    'subject_id' => $subject_id,
+                    'enrollment_id' => $enrollment->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+    
+            // Bulk insert for better performance
+            StudentSubject::insert($studentSubjects);
+    
+            DB::commit(); // Commit transaction
+    
+            return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback in case of an error
+            return back()->with('error', 'Failed to create enrollment: ' . $e->getMessage());
+        }
     }
-
-    // Show the form to edit the specified enrollment
+    
+    // Show the form to edit an enrollment
     public function edit($id)
     {
-        // Find the enrollment to edit
         $enrollment = Enrollment::findOrFail($id);
         $students = Student::all();
         $courses = Course::all();
         $semesters = Semester::all();
+        $selectedSubjects = json_decode($enrollment->subjects, true) ?? [];
 
-        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters'));
+        $subjects = Subject::where('course_id', $enrollment->course_id)
+                           ->where('year_level', $enrollment->year_level)
+                           ->where('semester_id', $enrollment->semester_id)
+                           ->get();
+
+        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects'));
     }
 
-    // Update the specified enrollment in the database
+    // Update an enrollment
     public function update(Request $request, $id)
     {
-        // Validate the input data
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
             'semester_id' => 'required|exists:semesters,id',
             'course_id' => 'required|exists:courses,id',
             'year_level' => 'required|string',
+            'subjects' => 'required|array',
+            'subjects.*' => 'exists:subjects,id'
         ]);
 
-        // Find the enrollment and update it
         $enrollment = Enrollment::findOrFail($id);
-        $enrollment->update($validated);
+        $enrollment->update([
+            'student_id' => $validated['student_id'],
+            'semester_id' => $validated['semester_id'],
+            'course_id' => $validated['course_id'],
+            'year_level' => $validated['year_level'],
+            'subject_ids' => json_encode($validated['subjects']),
+        ]);
 
         return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
     }
 
-    // Remove the specified enrollment from the database
+    // Delete an enrollment
     public function destroy($id)
     {
-        // Find the enrollment and delete it
         $enrollment = Enrollment::findOrFail($id);
         $enrollment->delete();
 
         return redirect()->route('enrollments.index')->with('success', 'Enrollment deleted successfully!');
     }
+
+    // Fetch subjects dynamically based on course, semester, and year level
+    public function getSubjects(Request $request)
+    {
+        $subjects = Subject::where('year_level', $request->year_level) // Filter by year_level in subjects
+                           ->where('semester_id', $request->semester_id) // Filter by semester_id in subjects
+                           ->whereHas('courses', function ($query) use ($request) {
+                               $query->where('courses.id', $request->course_id); // Filter by the related course id
+                           })
+                           ->get();
+    
+        return response()->json($subjects);
+    }
+    
+
+
+
+    
 }

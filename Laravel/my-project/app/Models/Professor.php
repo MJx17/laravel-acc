@@ -28,7 +28,7 @@ class Professor extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'professor_subject')->withTimestamps();
+        return $this->hasMany(Subject::class);
     }
 
     public function user()

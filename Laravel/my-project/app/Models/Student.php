@@ -76,7 +76,7 @@ class Student extends Model
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'student_subject')
-                    ->withPivot('status', 'remarks')  // Including enrollment status and remarks
+                    ->withPivot('status', 'grade')  // Including enrollment status and remarks
                     ->withTimestamps();
     }
 
@@ -105,13 +105,13 @@ class Student extends Model
         $enrolledSubjectsCount = $this->subjects()->count();
         
         if ($enrolledSubjectsCount <= 5) {
-            return '1st_year';
+            return 'first_year';
         } elseif ($enrolledSubjectsCount <= 10) {
-            return '2nd_year';
+            return 'second_year';
         } elseif ($enrolledSubjectsCount <= 15) {
-            return '3rd_year';
+            return 'third_year';
         } else {
-            return '4th_year';
+            return 'fourth_year';
         }
     }
 

@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseSubjectController;
-
+use App\Http\Controllers\StudentSubjectController;
 
 
 
@@ -61,8 +61,10 @@ Route::middleware('auth', 'verified','role:student', )->group(function () {
     // Route to download the filled enrollment form (PDF)
     Route::get('/enrollment/filled-form/download/{id}', [StudentController::class, 'downloadFilledForm'])
         ->name('enrollment.downloadFilledForm');
-        
+   
 });
+
+
 
 
 Route::middleware('auth', 'verified','role:admin')->group(function () {
@@ -118,6 +120,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('professors', ProfessorController::class)->parameters([
         'professor' => 'professor_id',
     ]);
+
+    Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
+         ->name('professors.subjects');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -132,12 +137,22 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 });
 
 
+Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
 
 
 
-Route::post('/students/{studentId}/subjects/{subjectId}/enroll', [SubjectStudentController::class, 'student_subject.enroll']);
-Route::put('/students/{studentId}/subjects/{subjectId}/update-status', [SubjectStudentController::class, 'student_subject.updateStatus']);
-Route::delete('/students/{studentId}/subjects/{subjectId}/drop', [SubjectStudentController::class, 'student_subject.drop']);
+Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
+->name('student_subject.subjects');  
+
+Route::get('/student-subjects/{studentId}/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');
+
+// Route to handle the update request
+Route::put('/student-subjects/{studentId}/update', [StudentSubjectController::class, 'update'])->name('student_subjects.update');
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-<nav class="bg-gray-900 text-white p-4 shadow-md">
+<nav class="bg-green-700 text-white p-4 shadow-md">
     <div class="navbar">
     <div class="flex items-center justify-between">
         <!-- Left side links -->

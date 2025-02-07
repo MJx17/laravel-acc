@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('prerequisite_id')->nullable()->constrained('subjects')->onDelete('set null'); // Optional prerequisite subject
             $table->decimal('fee', 10, 2)->nullable(); // Subject fee (optional)
             $table->decimal('units', 3, 1)->unsigned(); // Number of units (e.g., 3.0, 1.5)
-            $table->integer('year_level')->unsigned(); // Year level the subject belongs to
+            $table->enum('year_level', ['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year', 'irregular']);
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade'); // Professor assigned to teach this subject
             $table->timestamps();
         });

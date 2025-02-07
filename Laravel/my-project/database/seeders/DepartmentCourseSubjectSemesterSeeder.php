@@ -107,7 +107,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 500, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
         ]);
@@ -121,7 +121,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 400, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
         ]);
@@ -135,7 +135,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 450, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -148,7 +148,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 600, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -162,7 +162,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 800, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -175,7 +175,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 200, // Example fee
             'units' => 1,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -188,7 +188,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 0, // Typically free, unless there is a fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -201,7 +201,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 100, // Example fee
             'units' => 1,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -215,7 +215,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null, // Prerequisite GE 4
             'fee' => 500, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -228,7 +228,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null, // Prerequisite GE 5
             'fee' => 450, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -241,7 +241,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null, // Prerequisite GE 6
             'fee' => 600, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -254,7 +254,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null, // Prerequisite GE 7
             'fee' => 400, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -267,7 +267,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null, // No prerequisite
             'fee' => 700, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -280,7 +280,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => $pe1->id, // Prerequisite PE 1
             'fee' => 250, // Example fee
             'units' => 2,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
            
@@ -293,7 +293,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => $nstp1->id, // Prerequisite NSTP 1
             'fee' => 0, // Typically free, unless there is a fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
             
@@ -306,7 +306,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => $perDev1->id, // Prerequisite Per Dev 1
             'fee' => 100, // Example fee
             'units' => 3,
-            'year_level' => 1,
+            'year_level' => 'first_year',
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
      
@@ -330,93 +330,78 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
         // $pe1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
         // $pe2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
 
-            // Create the necessary subjects (same as before)
-            $subjects = [
-                'Per Dev 2' => Subject::where('name', 'Per Dev 2')->first(),
-                'NSTP 2' => Subject::where('name', 'NSTP 2')->first(),
-                'Eco 1' => Subject::where('name', 'Eco 1')->first(),
-            ];
-    
-            // Students
-            $student1 = Student::find(1);  // Assuming student ID 1 exists
-            $student2 = Student::find(2);  // Assuming student ID 2 exists
-    
-            // Ensure semester and course are defined
-            $semester = Semester::find(1); // or another method to get the semester
-            $course = Course::find(1); // or another method to get the course
-    
-            // Check if semester and course exist
-            if (!$semester || !$course) {
-                $this->command->error("Semester or Course not found.");
-                return;
-            }
-    
-            // Assign Subjects to Students based on Year Level and Enrollment Data
-            if ($student1) {
-                $this->assignSubjectsToStudent($student1->id, '1st_year', $semester->id, $course->id, [$subjects['Per Dev 2'], $subjects['NSTP 2'], $subjects['Eco 1']]); // Student 1 - 1st Year
-            }
-    
-            if ($student2) {
-                $this->assignSubjectsToStudent($student2->id, '2nd_year', $semester->id, $course->id, [$subjects['Per Dev 2'], $subjects['NSTP 2']]); // Student 2 - 2nd Year (No subjects)
-            }
-    
-            $this->command->info('Students enrolled in correct subjects.');
-        }
-    
-        // This method should be inside the class, using the correct access modifier
-        private function assignSubjectsToStudent($studentId, $yearLevel, $semesterId, $courseId, $subjects)
+     
+
+        function getSubjects($yearLevel, $semesterId, $courseId)
         {
-            // Check if the student is already enrolled
-            $enrollment = Enrollment::where([
-                'student_id' => $studentId,
+            return Subject::where('year_level', $yearLevel)
+                          ->where('semester_id', $semesterId)
+                          ->whereHas('courses', function ($query) use ($courseId) {
+                              $query->where('courses.id', $courseId);
+                          })
+                          ->pluck('id')
+                          ->toArray();
+        }
+
+        // Students
+        $student1 = Student::find(1);  
+        $student2 = Student::find(2);  
+
+        // Ensure semester and course exist
+        $semester = Semester::find(1); 
+        $course = Course::find(1); 
+
+        if (!$semester || !$course) {
+            $this->command->error("Semester or Course not found.");
+            return;
+        }
+
+        // Enroll Students
+        if ($student1) {
+            $subjects = getSubjects('first_year', $semester->id, $course->id);
+            $this->enrollStudent($student1, 'first_year', $semester->id, $course->id, $subjects);
+        }
+
+        if ($student2) {
+            $subjects = getSubjects('second_year', $semester->id, $course->id);
+            $this->enrollStudent($student2, 'second_year', $semester->id, $course->id, $subjects);
+        }
+
+        $this->command->info('Students enrolled successfully!');
+    }
+
+    private function enrollStudent($student, $yearLevel, $semesterId, $courseId, $subjectIds)
+    {
+        // Step 1: Create enrollment
+        $enrollment = Enrollment::updateOrCreate(
+            [
+                'student_id' => $student->id,
                 'year_level' => $yearLevel,
                 'semester_id' => $semesterId,
                 'course_id' => $courseId,
-            ])->first();
-    
-            // If enrollment does not exist, create it
-            if (!$enrollment) {
-                $enrollment = Enrollment::create([
-                    'student_id' => $studentId,
-                    'year_level' => $yearLevel,
-                    'semester_id' => $semesterId,
-                    'course_id' => $courseId,
-                ]);
-            }
-    
-            // Update student's status to 'not_enrolled' initially
-            $student = Student::find($studentId);
-            if ($student) {
-                $student->status = 'not_enrolled';
-                $student->save();
-            }
-    
-            // Now loop through subjects and assign them to the student if subjects are provided
-            foreach ($subjects as $subject) {
-                if ($subject) {
-                    // Create the student-subject association
-                    StudentSubject::create([
-                        'student_id' => $studentId,
-                        'subject_id' => $subject->id,
-                        'enrollment_id' => $enrollment->id,
-                        'status' => 'enrolled',
-                        'grade' => null,
-                    ]);
-                }
-            }
-    
-            // After enrollment, update student's status to 'enrolled'
-            if ($student) {
-                $student->status = 'enrolled';
-                $student->save();
-            }
-        
-    
+            ],
+            ['subject_ids' => json_encode($subjectIds)]
+        );
 
-                    
+        // Step 2: Update student's status
+        $student->status = 'enrolled';
+        $student->save();
+
+        // Step 3: Assign subjects to Student
+        foreach ($subjectIds as $subjectId) {
+            StudentSubject::updateOrCreate([
+                'student_id' => $student->id,
+                'subject_id' => $subjectId,
+                'enrollment_id' => $enrollment->id,
+            ], [
+                'status' => 'enrolled',
+                'grade' => null,
+            ]);
+        }
+                                
                     
             
-        
+            
         
     }
 }

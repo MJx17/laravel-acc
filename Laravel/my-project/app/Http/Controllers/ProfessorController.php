@@ -100,4 +100,16 @@ class ProfessorController extends Controller
         $professor = Professor::findOrFail($id);
         return view('professors.show', compact('professor'));
     }
+
+    public function subjects($id)
+    {
+        $professor = Professor::findOrFail($id);
+        $subjects = $professor->subjects()->with('students', 'courses')->paginate(10);
+        
+        return view('professors.subjects', compact('professor', 'subjects'));
+    }
+    
+    
+    
+
 }

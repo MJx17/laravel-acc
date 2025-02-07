@@ -56,18 +56,18 @@
                         </div>
 
                         <!-- Year Level -->
-                        <div class="mb-4">
-                            <label for="year_level" class="block font-medium text-sm text-gray-700 dark:text-gray-300">Year Level</label>
-                            <select name="year_level" id="year_level" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm">
-                                <option value="" disabled selected>Select Year Level</option>
-                                <option value="1st_year">1st Year</option>
-                                <option value="2nd_year">2nd Year</option>
-                                <option value="3rd_year">3rd Year</option>
-                                <option value="4th_year">4th Year</option>
-                                <option value="5th_year">5th Year</option>
-                                <option value="irregular">Irregular</option>
-                            </select>
-                        </div>
+                        <div class="flex flex-col">
+                        <select id="year_level" name="year_level" class="mt-2 p-2 border border-gray-300 rounded-md">
+                            <option value="" disabled selected>Select Year Level</option> <!-- Default placeholder -->
+                            <option value="first_year">First Year</option>
+                            <option value="second_year">Second Year</option>
+                            <option value="third_year">Third Year</option>
+                            <option value="fourth_year">Fourth Year</option>
+                            <option value="5th_year">Fifth Year</option>
+                            <option value="irregular">Irregular</option>
+                        </select>
+                    </div>
+
 
 
                         <!-- Prerequisite -->

@@ -26,7 +26,7 @@ class Course extends Model
   
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'course_subject')->withTimestamps();
+        return $this->belongsToMany(Subject::class, 'course_subject', 'course_id', 'subject_id');
     }
     
     
