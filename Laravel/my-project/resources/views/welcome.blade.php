@@ -471,10 +471,10 @@ https://templatemo.com/tm-557-grad-school
         <div class="col-md-6">
           <article class="video-item">
             <div class="video-caption">
-              <h4>Power HTML Template</h4>
+              <h4>Amando Cope College</h4>
             </div>
             <figure>
-              <a href="https://www.youtube.com/watch?v=r9LtOG6pNUw" class="play"><img src="assets/images/main-thumb.png"></a>
+              <a href="https://www.facebook.com/amando.cope.9/videos/1120214873107483" class="play"><img src="assets/images/video-thumb-03.jpg"></a>
             </figure>
           </article>
         </div>
@@ -523,7 +523,7 @@ https://templatemo.com/tm-557-grad-school
         </div>
         <div class="col-md-6">
           <div id="map">
-            <iframe src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="422px" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3881.9192070054037!2d123.72128428885495!3d13.355299700000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1adc91b728cb1%3A0x5b3e355634ab3779!2sAmando%20Cope%20College!5e0!3m2!1sen!2sph!4v1738855547113!5m2!1sen!2sph" style="border:0;"  width="100%" height="422px" frameborder="0" style="border:0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -534,7 +534,7 @@ https://templatemo.com/tm-557-grad-school
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <p><i class="fa fa-copyright"></i> Copyright 2020 by Grad School  
+          <p><i class="fa fa-copyright"></i> Copyright 2025 by Amando Cope
           
            | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">TemplateMo</a></p>
         </div>
