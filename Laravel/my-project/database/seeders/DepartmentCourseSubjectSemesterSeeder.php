@@ -103,15 +103,16 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
         $ge1 = Subject::create([
             'name' => 'Understanding the Self',
             'code' => 'GE 1',
-            'semester_id' => $semester1 ->id,
+            'semester_id' => $semester1->id,
             'prerequisite_id' => null,
             'fee' => 500, // Example fee
             'units' => 3,
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
         ]);
+        
+     
         
         $ge2 = Subject::create([
             'name' => 'Reading in Philippine History',
@@ -123,8 +124,9 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
         ]);
+        
+       
     
         $ge3 = Subject::create([
             'name' => 'The Contemporary World',
@@ -136,7 +138,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $ge4 = Subject::create([
@@ -149,9 +151,10 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
-    
+
+        
         $ba1 = Subject::create([
             'name' => 'Principles of Management and Organization',
             'code' => 'BA 1',
@@ -162,7 +165,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
     
         $pe1 = Subject::create([
@@ -175,7 +178,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $nstp1 = Subject::create([
@@ -188,7 +191,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
     
         $perDev1 = Subject::create([
@@ -201,7 +204,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
     
@@ -215,7 +218,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $ge6 = Subject::create([
@@ -228,7 +231,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
     
         $ge7 = Subject::create([
@@ -241,7 +244,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
     
         $ge8 = Subject::create([
@@ -254,7 +257,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $eco1 = Subject::create([
@@ -267,7 +270,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $pe2 = Subject::create([
@@ -280,7 +283,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+           
         ]);
     
         $nstp2 = Subject::create([
@@ -293,7 +296,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+            
         ]);
     
         $perDev2 = Subject::create([
@@ -306,76 +309,109 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'year_level' => 1,
             'block' => 'A', // Example block
             'professor_id' => $professor1->id,
-            'course_id' => $course1->id,
+     
         ]);
 
+
+        $ge1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $ge2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $ge3->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $ge4->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $ge5->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $ge6->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $ge7->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $ge8->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $perDev1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $perDev2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $pe1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $pe2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+        $eco1->courses()->attach([ $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $ba1->courses()->attach([ $course4->id,  $course5->id, ]); 
+        // $pe1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        // $pe2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
+
             // Create the necessary subjects (same as before)
-        $subjects = [
-            'Per Dev 2' => Subject::where('name', 'Per Dev 2')->first(),
-            'NSTP 2' => Subject::where('name', 'NSTP 2')->first(),
-            'Eco 1' => Subject::where('name', 'Eco 1')->first(),
-        ];
-
-
-        $student1 = Student::find(1);  // Assuming student ID 1 exists
-        $student2 = Student::find(2);  // Assuming student ID 2 exists
-
-        // Ensure semester and course are defined
-        $semester = Semester::find(1); // or another method to get the semester
-        $course = Course::find(1); // or another method to get the course
-
-        // Check if semester and course exist
-        if (!$semester || !$course) {
-            $this->command->error("Semester or Course not found.");
-            return;
+            $subjects = [
+                'Per Dev 2' => Subject::where('name', 'Per Dev 2')->first(),
+                'NSTP 2' => Subject::where('name', 'NSTP 2')->first(),
+                'Eco 1' => Subject::where('name', 'Eco 1')->first(),
+            ];
+    
+            // Students
+            $student1 = Student::find(1);  // Assuming student ID 1 exists
+            $student2 = Student::find(2);  // Assuming student ID 2 exists
+    
+            // Ensure semester and course are defined
+            $semester = Semester::find(1); // or another method to get the semester
+            $course = Course::find(1); // or another method to get the course
+    
+            // Check if semester and course exist
+            if (!$semester || !$course) {
+                $this->command->error("Semester or Course not found.");
+                return;
+            }
+    
+            // Assign Subjects to Students based on Year Level and Enrollment Data
+            if ($student1) {
+                $this->assignSubjectsToStudent($student1->id, '1st_year', $semester->id, $course->id, [$subjects['Per Dev 2'], $subjects['NSTP 2'], $subjects['Eco 1']]); // Student 1 - 1st Year
+            }
+    
+            if ($student2) {
+                $this->assignSubjectsToStudent($student2->id, '2nd_year', $semester->id, $course->id, [$subjects['Per Dev 2'], $subjects['NSTP 2']]); // Student 2 - 2nd Year (No subjects)
+            }
+    
+            $this->command->info('Students enrolled in correct subjects.');
         }
-
-        // Assign Subjects to Students based on Year Level and Enrollment Data
-        if ($student1) {
-            $this->assignSubjectsToStudent($student1->id, '1st_year', $semester->id, $course->id, [$pe2, $nstp2, $perDev2]); // Student 1 - 1st Year
-        }
-
-        if ($student2) {
-            $this->assignSubjectsToStudent($student2->id, '2nd_year', $semester->id, $course->id, []); // Student 2 - 2nd Year (No subjects)
-        }
-
-        $this->command->info('Students enrolled in correct subjects.');
-    }
-
-    // Define the method outside of the `run` method.
-    private function assignSubjectsToStudent($studentId, $yearLevel, $semesterId, $courseId, $subjects)
-    {
-        // Check if the student is already enrolled
-        $enrollment = Enrollment::where([
-            'student_id' => $studentId,
-            'year_level' => $yearLevel,
-            'semester_id' => $semesterId,
-            'course_id' => $courseId,
-        ])->first();
-
-        // If enrollment does not exist, create it
-        if (!$enrollment) {
-            $enrollment = Enrollment::create([
+    
+        // This method should be inside the class, using the correct access modifier
+        private function assignSubjectsToStudent($studentId, $yearLevel, $semesterId, $courseId, $subjects)
+        {
+            // Check if the student is already enrolled
+            $enrollment = Enrollment::where([
                 'student_id' => $studentId,
                 'year_level' => $yearLevel,
                 'semester_id' => $semesterId,
                 'course_id' => $courseId,
-            ]);
-        }
-
-        // Now loop through subjects and assign them to the student if subjects are provided
-        foreach ($subjects as $subject) {
-            if ($subject) {
-                // Create the student-subject association
-                StudentSubject::create([
+            ])->first();
+    
+            // If enrollment does not exist, create it
+            if (!$enrollment) {
+                $enrollment = Enrollment::create([
                     'student_id' => $studentId,
-                    'subject_id' => $subject->id,
-                    'enrollment_id' => $enrollment->id,
-                    'status' => 'enrolled',
-                    'grade' => null,
+                    'year_level' => $yearLevel,
+                    'semester_id' => $semesterId,
+                    'course_id' => $courseId,
                 ]);
             }
-        }
+    
+            // Update student's status to 'not_enrolled' initially
+            $student = Student::find($studentId);
+            if ($student) {
+                $student->status = 'not_enrolled';
+                $student->save();
+            }
+    
+            // Now loop through subjects and assign them to the student if subjects are provided
+            foreach ($subjects as $subject) {
+                if ($subject) {
+                    // Create the student-subject association
+                    StudentSubject::create([
+                        'student_id' => $studentId,
+                        'subject_id' => $subject->id,
+                        'enrollment_id' => $enrollment->id,
+                        'status' => 'enrolled',
+                        'grade' => null,
+                    ]);
+                }
+            }
+    
+            // After enrollment, update student's status to 'enrolled'
+            if ($student) {
+                $student->status = 'enrolled';
+                $student->save();
+            }
+        
+    
 
                     
                     

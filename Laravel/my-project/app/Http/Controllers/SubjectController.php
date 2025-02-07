@@ -16,16 +16,15 @@ class SubjectController extends Controller
         $subjects = Subject::paginate(10); // Show 10 subjects per page
         return view('subjects.index', compact('subjects'));
     }
-    
 
-  // Show the form to create a new subject
+    // Show the form to create a new subject
     public function create()
     {
-        $courses = Course::all();
-        $professors = Professor::with('user')->get();
-        $semesters = Semester::all();
-        $subjects = [];
-
+        $courses = Course::all(); // Fetch all available courses
+        $professors = Professor::with('user')->get(); // Fetch professors with user information
+        $semesters = Semester::all(); // Fetch semesters
+        $subjects = []; // Placeholder for prerequisites if needed
+    
         return view('subjects.create', compact('courses', 'professors', 'semesters', 'subjects'));
     }
 
@@ -37,15 +36,30 @@ class SubjectController extends Controller
             'code' => 'required|string|max:50|unique:subjects,code',
             'description' => 'nullable|string',
             'semester_id' => 'required|exists:semesters,id',
-            'year_level' => 'required|integer',
+            'year_level' => 'required|string',
             'prerequisite_id' => 'nullable|exists:subjects,id',
             'fee' => 'required|numeric|min:0',
             'units' => 'required|numeric|min:0.1|max:10',
-            'course_id' => 'required|exists:courses,id',  // Now a direct column, not pivot
-            'professor_id' => 'required|exists:professors,id', // Now a direct column, not pivot
+            'course_ids' => 'required|array',  // Handle multiple courses as an array
+            'course_ids.*' => 'exists:courses,id',  // Each course ID must exist in the courses table
+            'professor_id' => 'required|exists:professors,id',
         ]);
 
-        Subject::create($validatedData);
+        // Create a new subject
+        $subject = Subject::create([
+            'name' => $validatedData['name'],
+            'code' => $validatedData['code'],
+            'description' => $validatedData['description'],
+            'semester_id' => $validatedData['semester_id'],
+            'year_level' => $validatedData['year_level'],
+            'prerequisite_id' => $validatedData['prerequisite_id'],
+            'fee' => $validatedData['fee'],
+            'units' => $validatedData['units'],
+            'professor_id' => $validatedData['professor_id'],
+        ]);
+
+        // Attach courses via pivot table (course_subject)
+        $subject->courses()->attach($validatedData['course_ids']);
 
         return redirect()->route('subjects.index')->with('success', 'Subject created successfully!');
     }
@@ -54,10 +68,10 @@ class SubjectController extends Controller
     public function edit($id)
     {
         $subject = Subject::findOrFail($id);
-        $courses = Course::all();
-        $professors = Professor::with('user')->get();
-        $semesters = Semester::all();
-        $subjects = Subject::where('id', '!=', $subject->id)->get(); // Exclude itself from prerequisites
+        $courses = Course::all(); // Fetch all available courses
+        $professors = Professor::with('user')->get(); // Fetch professors with user information
+        $semesters = Semester::all(); // Fetch semesters
+        $subjects = Subject::where('id', '!=', $subject->id)->get(); // Exclude the current subject from prerequisites
 
         return view('subjects.edit', compact('subject', 'courses', 'professors', 'semesters', 'subjects'));
     }
@@ -72,15 +86,30 @@ class SubjectController extends Controller
             'code' => 'required|string|max:50|unique:subjects,code,' . $subject->id,
             'description' => 'nullable|string',
             'semester_id' => 'required|exists:semesters,id',
-            'year_level' => 'required|integer',
+            'year_level' => 'required|string',
             'prerequisite_id' => 'nullable|exists:subjects,id',
             'fee' => 'required|numeric|min:0',
             'units' => 'required|numeric|min:0.1|max:10',
-            'course_id' => 'required|exists:courses,id', 
+            'course_ids' => 'required|array',  // Handle multiple courses as an array
+            'course_ids.*' => 'exists:courses,id',  // Each course ID must exist in the courses table
             'professor_id' => 'required|exists:professors,id',
         ]);
 
-        $subject->update($validatedData);
+        // Update the subject
+        $subject->update([
+            'name' => $validatedData['name'],
+            'code' => $validatedData['code'],
+            'description' => $validatedData['description'],
+            'semester_id' => $validatedData['semester_id'],
+            'year_level' => $validatedData['year_level'],
+            'prerequisite_id' => $validatedData['prerequisite_id'],
+            'fee' => $validatedData['fee'],
+            'units' => $validatedData['units'],
+            'professor_id' => $validatedData['professor_id'],
+        ]);
+
+        // Sync the courses (attach the courses and detach any that aren't selected)
+        $subject->courses()->sync($validatedData['course_ids']);
 
         return redirect()->route('subjects.index')->with('success', 'Subject updated successfully!');
     }
@@ -97,8 +126,7 @@ class SubjectController extends Controller
     // Display a single subject
     public function show($id)
     {
-        $subject = Subject::with(['course', 'professor', 'semester'])->findOrFail($id);
+        $subject = Subject::with(['courses', 'professor', 'semester'])->findOrFail($id); // Make sure to eager load courses
         return view('subjects.show', compact('subject'));
     }
 }
-  

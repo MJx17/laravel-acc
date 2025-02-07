@@ -23,7 +23,6 @@ class Subject extends Model
         'prerequisite_id', // References another subject as a prerequisite
         'fee',           // Subject fee
         'units',         // Subject units
-        'course_id',
          'professor_id',
         'year_level',    // Year level the subject belongs to
     ];
@@ -60,11 +59,10 @@ class Subject extends Model
 
     // Many-to-Many: Relation to Courses
 
-    public function course()
+    public function courses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class, 'course_subject');
     }
-
     // Many-to-Many: Relation to Professors
   
     public function professor()

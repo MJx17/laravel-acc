@@ -22,15 +22,10 @@ return new class extends Migration
             $table->decimal('fee', 10, 2)->nullable(); // Subject fee (optional)
             $table->decimal('units', 3, 1)->unsigned(); // Number of units (e.g., 3.0, 1.5)
             $table->integer('year_level')->unsigned(); // Year level the subject belongs to
-            
-            // **NEW: Assign Course and Professor Directly**
-            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade'); // Course that the subject belongs to
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade'); // Professor assigned to teach this subject
-        
             $table->timestamps();
         });
         
-
         // Create the pivot table for student-subject enrollment
         Schema::create('student_subject', function (Blueprint $table) {
             $table->id();
@@ -47,17 +42,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
-            $table->foreignId('semester_id')->constrained('semesters')->onDelete('cascade'); // Add this if needed
-            $table->string('year_level');
-            $table->timestamps();
-        });
-        
-
-        // Pivot table for professor-subject relationship
-        Schema::create('professor_subject', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade'); // Links to professors table
-            $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade'); // Links to subjects table
+            // $table->foreignId('semester_id')->constrained('semesters')->onDelete('cascade'); // Add this if needed
+            // $table->string('year_level');
             $table->timestamps();
         });
     }
@@ -67,7 +53,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('professor_subject'); // Drop professor-subject pivot table
         Schema::dropIfExists('course_subject');   // Drop course-subject pivot table
         Schema::dropIfExists('student_subject');  // Drop student-subject pivot table
         Schema::dropIfExists('subjects');         // Drop subjects table

@@ -135,7 +135,7 @@ class StudentController extends Controller
         ]);
 
         // Redirect to home page with success message
-        return redirect()->route('home')->with('success', 'Enrollment successful!');
+        return redirect()->route('home')->with('success', 'Student Application successful!');
     }
 
     public function update(Request $request, $id)
