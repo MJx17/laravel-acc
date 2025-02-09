@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/css/app.css')
+    <!-- {!! Flasher::render() !!} -->
 
 </head>
 <body class="bg-gray-100">
@@ -21,7 +22,7 @@
         {{ $slot }} <!-- This is where your page-specific content goes -->
         
         <!-- Insert the Livewire component for the dual listbox here -->
-  
+   
     </div>
 
     <script>
@@ -52,6 +53,25 @@
         });
     </script>
 
+@include('sweetalert::alert')
+<script>
+    Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        background: '#2d89ef',
+        color: '#fff',
+        iconColor: 'yellow',
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -12,12 +12,7 @@
             <div class="text-xl font-semibold">{{ __('Dashboard') }}</div>
         </div>
 
-        <div class="flex justify-end space-x-4">
-            <button id="dark-mode-toggle" class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 focus:ring-2 focus:ring-gray-500">
-                Toggle Dark Mode
-            </button>
-        </div>
-
+     
        
         <!-- Right side profile and other buttons -->
         <div class="hidden md:flex items-center space-x-4">

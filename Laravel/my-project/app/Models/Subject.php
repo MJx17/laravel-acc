@@ -16,15 +16,18 @@ class Subject extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',          // Subject name
-        'code',          // Unique subject code
-        'block',         // Block or class group
-        'semester_id',   // References the Semester table
+        'name',           // Subject name
+        'code',           // Unique subject code
+        'block',          // Block or class group
+        'semester_id',    // References the Semester table
         'prerequisite_id', // References another subject as a prerequisite
-        'fee',           // Subject fee
-        'units',         // Subject units
-         'professor_id',
-        'year_level',    // Year level the subject belongs to
+        'fee',            // Subject fee
+        'units',          // Subject units
+        'professor_id',   // Assigned professor
+        'year_level',     // Year level the subject belongs to
+        'days',           // JSON array for multiple class days
+        'start_time',     // Class start time
+        'end_time',       // Class end time
     ];
 
     /**

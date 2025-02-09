@@ -21,10 +21,17 @@ return new class extends Migration
             $table->foreignId('prerequisite_id')->nullable()->constrained('subjects')->onDelete('set null'); // Optional prerequisite subject
             $table->decimal('fee', 10, 2)->nullable(); // Subject fee (optional)
             $table->decimal('units', 3, 1)->unsigned(); // Number of units (e.g., 3.0, 1.5)
-            $table->enum('year_level', ['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year', 'irregular']);
+            $table->enum('year_level', ['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year']);
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade'); // Professor assigned to teach this subject
+            
+            // New Scheduling Fields
+            $table->json('days'); // Store multiple days as JSON array
+            $table->time('start_time'); // Class start time
+            $table->time('end_time'); // Class end time
+            
             $table->timestamps();
         });
+        
         
         // Create the pivot table for student-subject enrollment
         Schema::create('student_subject', function (Blueprint $table) {

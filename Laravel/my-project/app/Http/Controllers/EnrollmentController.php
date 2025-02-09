@@ -141,18 +141,24 @@ class EnrollmentController extends Controller
         return redirect()->route('enrollments.index')->with('success', 'Enrollment deleted successfully!');
     }
 
-    // Fetch subjects dynamically based on course, semester, and year level
     public function getSubjects(Request $request)
     {
-        $subjects = Subject::where('year_level', $request->year_level) // Filter by year_level in subjects
-                           ->where('semester_id', $request->semester_id) // Filter by semester_id in subjects
-                           ->whereHas('courses', function ($query) use ($request) {
-                               $query->where('courses.id', $request->course_id); // Filter by the related course id
-                           })
-                           ->get();
+        $query = Subject::where('semester_id', $request->semester_id)
+                        ->whereHas('courses', function ($query) use ($request) {
+                            $query->where('courses.id', $request->course_id);
+                        });
+    
+        // Apply year_level filter only if it's not "irregular"
+        if ($request->year_level !== 'irregular') {
+            $query->where('year_level', $request->year_level);
+        }
+    
+        // Fetch subjects and group by year_level
+        $subjects = $query->get()->groupBy('year_level');
     
         return response()->json($subjects);
     }
+    
     
 
 
