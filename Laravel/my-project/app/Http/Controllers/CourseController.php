@@ -86,7 +86,7 @@ class CourseController extends Controller
         $course->update($request->all());
 
         return redirect()->route('courses.index')
-            ->with('success', 'Course updated successfully.');
+            ->with('updated', 'Course updated successfully.');
     }
 
     /**
@@ -98,6 +98,6 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('courses.index')
-            ->with('success', 'Course deleted successfully.');
+            ->with('deleted', 'Course deleted successfully.');
     }
 }

@@ -7,7 +7,7 @@
 
     <div class="py-10 flex justify-center">
         <div class="max-w-3xl w-full bg-white shadow-md rounded-xl p-6">
-             <h1 class="text-2xl text-blue-500 text-center py-5">Create Subject</h1>
+
             <form method="POST" action="{{ route('subjects.store') }}">
                
                 @csrf

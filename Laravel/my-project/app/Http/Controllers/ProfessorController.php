@@ -82,7 +82,7 @@ class ProfessorController extends Controller
         ]));
 
         // No department sync needed anymore
-        return redirect()->route('professors.index')->with('success', 'Professor updated successfully!');
+        return redirect()->route('professors.index')->with('updated', 'Professor updated successfully!');
     }
 
     // Remove the specified professor from the database
@@ -91,22 +91,46 @@ class ProfessorController extends Controller
         $professor = Professor::findOrFail($id);
         $professor->delete();
 
-        return redirect()->route('professors.index')->with('success', 'Professor deleted successfully!');
+        return redirect()->route('professors.index')->with('deleted', 'Professor deleted successfully!');
     }
 
     // Show the details of a specific professor
-    public function show($id)
-    {
-        $professor = Professor::findOrFail($id);
-        return view('professors.show', compact('professor'));
-    }
-
+  
     public function subjects($id)
     {
         $professor = Professor::findOrFail($id);
         $subjects = $professor->subjects()->with('students', 'courses')->paginate(10);
         
         return view('professors.subjects', compact('professor', 'subjects'));
+    }
+
+    public function show($id)
+    {
+        $professor = Professor::findOrFail($id);
+        
+        // Get subjects assigned to the professor with students count and details
+        $subjects = $professor->subjects()->withCount('students')->with('students')->get();
+
+        // Shorten day names
+        $dayShortcodes = [
+            'Monday' => 'M', 'Tuesday' => 'T', 'Wednesday' => 'W',
+            'Thursday' => 'Th', 'Friday' => 'F', 'Saturday' => 'Sa', 'Sunday' => 'Su'
+        ];
+
+        // Convert JSON days to shortened text
+        $subjects->transform(function ($subject) use ($dayShortcodes) {
+            // Ensure it's properly decoded
+            $daysArray = is_array($subject->days) ? $subject->days : json_decode($subject->days, true);
+
+            // Convert days to short format
+            $subject->formatted_days = collect($daysArray)
+                ->map(fn($day) => $dayShortcodes[$day] ?? $day)
+                ->implode(', ');
+
+            return $subject;
+        });
+
+        return view('professors.show', compact('professor', 'subjects'));
     }
     
     

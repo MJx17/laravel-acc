@@ -5,208 +5,157 @@
         </h2>
     </x-slot>
 
-    <div class="container mx-auto mt-6">
-        <form action="{{ route('subjects.update', $subject->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <!-- Subject Name -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Subject Name</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        value="{{ old('name', $subject->name) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
-                        required>
-                    @error('name') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
+    <div class="py-10 flex justify-center">
+        <div class="max-w-3xl w-full bg-white shadow-md rounded-xl p-6">
 
-                <!-- Subject Code -->
-                <div>
-                    <label for="code" class="block text-sm font-medium text-gray-700">Subject Code</label>
-                    <input 
-                        type="text" 
-                        id="code" 
-                        name="code" 
-                        value="{{ old('code', $subject->code) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
-                        required>
-                    @error('code') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
+            <form method="POST" action="{{ route('subjects.update', $subject->id) }}">
+                @csrf
+                @method('PUT')
 
-                <!-- Course -->
-                <div>
-                    <label for="course_id" class="block text-sm font-medium text-gray-700">Course</label>
-                    <select 
-                        id="course_id" 
-                        name="course_id" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                        <option value="">Select a Course</option>
-                        @foreach($courses as $course)
-                            <option 
-                                value="{{ $course->id }}" 
-                                {{ old('course_id', $subject->course_id) == $course->id ? 'selected' : '' }}>
-                                {{ $course->course_name }}
-                            </option>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Subject Name -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Subject Name</label>
+                        <input type="text" name="name" id="name" 
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('name', $subject->name) }}" required>
+                    </div>
+
+                    <!-- Subject Code -->
+                    <div>
+                        <label for="code" class="block text-sm font-medium text-gray-700">Subject Code</label>
+                        <input type="text" name="code" id="code"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('code', $subject->code) }}" required>
+                    </div>
+
+                    <!-- Semester & Year Level -->
+                    <div>
+                        <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
+                        <select name="semester_id" id="semester_id"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
+                            <option value="">Select Semester</option>
+                            @foreach($semesters as $semester)
+                                <option value="{{ $semester->id }}" {{ $subject->semester_id == $semester->id ? 'selected' : '' }}>
+                                    {{ $semester->semester }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="year_level" class="block text-sm font-medium text-gray-700">Year Level</label>
+                        <select id="year_level" name="year_level"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
+                            <option value="first_year" {{ $subject->year_level == 'first_year' ? 'selected' : '' }}>First Year</option>
+                            <option value="second_year" {{ $subject->year_level == 'second_year' ? 'selected' : '' }}>Second Year</option>
+                            <option value="third_year" {{ $subject->year_level == 'third_year' ? 'selected' : '' }}>Third Year</option>
+                            <option value="fourth_year" {{ $subject->year_level == 'fourth_year' ? 'selected' : '' }}>Fourth Year</option>
+                            <option value="fifth_year" {{ $subject->year_level == 'fifth_year' ? 'selected' : '' }}>Fifth Year</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="prerequisite_id" class="block text-sm font-medium text-gray-700">Prerequisite</label>
+                        <select name="prerequisite_id" id="prerequisite_id"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300">
+                            <option value="">None</option>
+                            @foreach($subjects as $subject)
+                                <option value="{{ $subject->id }}" {{ old('prerequisite_id') == $subject->id ? 'selected' : '' }}>
+                                    {{ $subject->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Professor -->
+                    <div>
+                        <label for="professor_id" class="block text-sm font-medium text-gray-700">Professor</label>
+                        <select name="professor_id" id="professor_id"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
+                            <option value="">Select Professor</option>
+                            @foreach($professors as $professor)
+                                <option value="{{ $professor->id }}" {{ $subject->professor_id == $professor->id ? 'selected' : '' }}>
+                                    {{ $professor->user->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Fee, Units, Start Time, End Time -->
+                    <div class="grid grid-cols-4 gap-4 col-span-2">
+                        <div>
+                            <label for="fee" class="block text-sm font-medium text-gray-700">Fee</label>
+                            <input type="number" name="fee" id="fee"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                                value="{{ old('fee', $subject->fee) }}" required>
+                        </div>
+                        <div>
+                            <label for="units" class="block text-sm font-medium text-gray-700">Units</label>
+                            <input type="number" name="units" id="units"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                                value="{{ old('units', $subject->units) }}" step="0.1" min="0.1" max="10" required>
+                        </div>
+                        <div>
+                            <label for="start_time" class="block text-sm font-medium text-gray-700">Start Time</label>
+                            <input type="time" name="start_time" id="start_time"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                                value="{{ old('start_time', $subject->start_time) }}" required>
+                        </div>
+                        <div>
+                            <label for="end_time" class="block text-sm font-medium text-gray-700">End Time</label>
+                            <input type="time" name="end_time" id="end_time"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                                value="{{ old('end_time', $subject->end_time) }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Courses -->
+                    <div>
+                        <label for="course_ids" class="block text-sm font-medium text-gray-700">Courses</label>
+                        <div class="grid grid-cols-1 gap-2 mt-2">
+                            @foreach($courses as $course)
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="course_ids[]" value="{{ $course->id }}" class="rounded border-gray-300"
+                                        {{ in_array($course->id, $subject->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                    <span class="text-gray-700">{{ $course->course_name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Days</label>
+                        <div class="flex flex-col space-y-2 mt-2">
+                        @php
+                            $selectedDays = old('days', $subject->days ?? []);
+                            if (!is_array($selectedDays)) {
+                                $selectedDays = explode(',', $selectedDays); // Convert string to array
+                            }
+                        @endphp
+                        @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="days[]" value="{{ $day }}" class="rounded border-gray-300"
+                                    {{ in_array($day, $selectedDays) ? 'checked' : '' }}> <!-- Retain checked state -->
+                                <span class="text-gray-700">{{ $day }}</span>
+                            </label>
                         @endforeach
-                    </select>
-                    @error('course_id') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
+
+                        </div>
+                    </div>
+
+
+                    
                 </div>
 
-                <!-- Professor -->
-                <div>
-                    <label for="professor_id" class="block text-sm font-medium text-gray-700">Professor</label>
-                    <select 
-                        id="professor_id" 
-                        name="professor_id" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                        <option value="">Select a Professor</option>
-                        @foreach($professors as $professor)
-                            <option 
-                                value="{{ $professor->id }}" 
-                                {{ old('professor_id', $subject->professor_id) == $professor->id ? 'selected' : '' }}>
-                                {{ $professor->full_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('professor_id') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
+                <!-- Submit Button -->
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                        Update 
+                    </button>
                 </div>
-
-                <!-- Description -->
-                <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea 
-                        id="description" 
-                        name="description" 
-                        rows="3" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">{{ old('description', $subject->description) }}</textarea>
-                    @error('description') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <!-- Block -->
-                <div>
-                    <label for="block" class="block text-sm font-medium text-gray-700">Block</label>
-                    <input 
-                        type="text" 
-                        id="block" 
-                        name="block" 
-                        value="{{ old('block', $subject->block) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                    @error('block') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <!-- Semester -->
-                <div>
-                    <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
-                    <select name="semester_id" id="semester_id" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="">Select a semester</option>
-                        @foreach($semesters as $semester)
-                            <option value="{{ $semester->id }}" {{ old('semester_id') == $semester->id ? 'selected' : '' }}>
-                                {{ $semester->semester }} - {{ $semester->academic_year }} 
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('semester_id')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Year Level -->
-                <div>
-                    <label for="year_level" class="block text-sm font-medium text-gray-700">Year Level</label>
-                    <input 
-                        type="number" 
-                        id="year_level" 
-                        name="year_level" 
-                        value="{{ old('year_level', $subject->year_level) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
-                        required>
-                    @error('year_level') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <!-- Prerequisite -->
-                <div>
-                    <label for="prerequisite_id" class="block text-sm font-medium text-gray-700">Prerequisite</label>
-                    <select 
-                        id="prerequisite_id" 
-                        name="prerequisite_id" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                        <option value="">Select Prerequisite</option>
-                        @foreach($subjects as $prerequisite)
-                            <option 
-                                value="{{ $prerequisite->id }}" 
-                                {{ old('prerequisite_id', $subject->prerequisite_id) == $prerequisite->id ? 'selected' : '' }}>
-                                {{ $prerequisite->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('prerequisite_id') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <!-- Fee -->
-                <div>
-                    <label for="fee" class="block text-sm font-medium text-gray-700">Fee</label>
-                    <input 
-                        type="number" 
-                        id="fee" 
-                        name="fee" 
-                        value="{{ old('fee', $subject->fee) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
-                        step="0.01" required>
-                    @error('fee') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <!-- Units -->
-                <div>
-                    <label for="units" class="block text-sm font-medium text-gray-700">Units</label>
-                    <input 
-                        type="number" 
-                        id="units" 
-                        name="units" 
-                        value="{{ old('units', $subject->units) }}" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
-                        required>
-                    @error('units') 
-                        <span class="text-red-500 text-xs">{{ $message }}</span> 
-                    @enderror
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="mt-6">
-
-                     <a href="{{ route('subjects.index')}}" 
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300">
-                        Cancel
-                    </a>
-                <button 
-                    type="submit" 
-                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Update Subject
-                </button>
-             
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </x-app-layout>

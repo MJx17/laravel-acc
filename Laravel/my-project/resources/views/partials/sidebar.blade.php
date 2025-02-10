@@ -28,14 +28,14 @@
             <!-- Admin Page - Accessible to Admins Only -->
             @if(auth()->user()->hasRole('admin'))
             <li>
-                <a href="{{ route('roles.index') }}" 
+                <!-- <a href="{{ route('roles.index') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Roles
                 </a>
                 <a href="{{ route('permissions.index') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Permissions
-                </a>
+                </a> -->
                 <a href="{{ route('users.index') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Users

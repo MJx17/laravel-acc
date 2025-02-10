@@ -6,14 +6,10 @@
     </x-slot>
 
     <div class="container mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-6">Courses</h1>
+  
 
         <!-- Success Message -->
-        @if(session('success'))
-            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
+      
 
         <!-- Add Course Button -->
         <div class="mb-6">
@@ -71,4 +67,7 @@
             </div>
         </div>
     </div>
+    @if(session('success'))
+            
+            @endif
 </x-app-layout>
