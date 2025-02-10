@@ -6,11 +6,7 @@
     </x-slot>
 
     <div class="container mx-auto mt-6">
-        <!-- Success Message -->
-        @if(session('success'))
-          
-        @endif
-
+        
         <!-- Create Button -->
         <div class="mb-4">
             <a href="{{ route('subjects.create') }}" 
@@ -24,30 +20,23 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
-                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject Code</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject Code</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject Name</th>
-        
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($subjects as $subject)
                         <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $subject->code }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $subject->code }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $subject->name }}</td>
-                         
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="{{ route('subjects.show', $subject->id) }}" 
-                                    class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="{{ route('subjects.edit', $subject->id) }}" 
-                                    class="text-yellow-600 hover:text-yellow-900 ml-4">Edit</a>
-                                <form action="{{ route('subjects.destroy', $subject->id) }}" method="POST" 
-                                    class="inline-block ml-4">
+                                <a href="{{ route('subjects.show', $subject->id) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                <a href="{{ route('subjects.edit', $subject->id) }}" class="text-yellow-600 hover:text-yellow-900 ml-4">Edit</a>
+                                <form action="{{ route('subjects.destroy', $subject->id) }}" method="POST" class="inline-block ml-4">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" 
-                                        class="text-red-600 hover:text-red-900" 
-                                        onclick="return confirm('Are you sure you want to delete this subject?')">
+                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this subject?')">
                                         Delete
                                     </button>
                                 </form>
@@ -55,7 +44,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="2" class="px-6 py-4 text-center text-gray-500">
+                            <td colspan="3" class="px-6 py-4 text-center text-gray-500">
                                 No subjects available.
                             </td>
                         </tr>
@@ -69,4 +58,8 @@
             {{ $subjects->links() }}
         </div>
     </div>
+
+    @if(session('success'))
+    @endif
+
 </x-app-layout>

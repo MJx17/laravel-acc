@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/css/app.css')
-    <!-- {!! Flasher::render() !!} -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
     <div class="app">
@@ -51,27 +50,81 @@
                 }
             });
         });
-    </script>
+    </script>   
+<style>
+    .swal-progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #facc15; /* Yellow */
+        animation: progressFade 6s linear forwards;
+        border-bottom-left-radius: 8px; /* Match toast border radius */
+        border-bottom-right-radius: 8px;
+    }
 
-@include('sweetalert::alert')
+    @keyframes progressFade {
+        from { width: 100%; }
+        to { width: 0%; }
+    }
+</style>
 <script>
-    Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        background: '#2d89ef',
-        color: '#fff',
-        iconColor: 'yellow',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
+    document.addEventListener('DOMContentLoaded', function () {
+        function showToast(type, title, background, iconColor, progressBarColor) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: type,
+                title: title,
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 6000,
+                timerProgressBar: true,
+                background: background,
+                color: '#333', // Dark text for better readability
+                iconColor: iconColor,
+                showClass: { popup: 'animate__animated animate__fadeInRight' },
+                hideClass: { popup: 'animate__animated animate__fadeOutRight' },
+                customClass: { popup: 'custom-toast' },
+                didRender: () => {
+                    const swalPopup = document.querySelector('.swal2-popup');
+                    if (swalPopup) {
+                        const progressBar = document.createElement('div');
+                        progressBar.classList.add('swal-progress-bar');
+                        progressBar.style.background = progressBarColor; // Set progress bar color
+                        swalPopup.appendChild(progressBar);
+                    }
+                }
+            });
         }
+
+        @if(session('success'))
+            showToast('success', "🎉 {{ session('success') }}", '#d1fae5', '#047857', '#6ee7b7'); // Pastel green bg
+        @endif
+
+        @if(session('error'))
+            showToast('error', "❌ {{ session('error') }}", '#fee2e2', '#dc2626', '#f87171'); // Pastel red bg
+        @endif
+
+        @if(session('warning'))
+            showToast('warning', "⚠️ {{ session('warning') }}", '#fef9c3', '#b45309', '#facc15'); // Pastel yellow bg
+        @endif
+
+        @if(session('updated'))
+            showToast('info', "✏️ {{ session('updated') }}", '#dbeafe', '#1e40af', '#93c5fd'); // Pastel blue bg
+        @endif
+
+        @if(session('deleted'))
+            showToast('error', "🗑️ {{ session('deleted') }}", '#fde2e4', '#9b2226', '#ff6b6b'); // Soft red bg for delete
+        @endif
     });
 </script>
+
+
+
+@include('sweetalert::alert')
+
 
 </body>
 </html>
