@@ -1,6 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
-
+import scrollbarHide from 'tailwind-scrollbar-hide';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -18,5 +18,5 @@ export default {
     },
 
     darkMode: 'class', // Enable class-based dark mode
-    plugins: [forms],
+    plugins: [forms, scrollbarHide], 
 };
