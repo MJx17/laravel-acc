@@ -35,7 +35,7 @@
     <!-- Show Button -->
                         <a href="{{ route('professors.show', $professor->id) }}" 
                         class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
-                            Show
+                            View
                         </a>
 
                         <!-- Edit Button -->

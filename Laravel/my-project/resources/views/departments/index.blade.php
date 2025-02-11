@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="container mx-auto py-4">
+    <div class="container mx-auto py-6 max-w-3xl">
         <!-- Success Message -->
         @if(session('success'))
             <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
@@ -26,19 +26,19 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-auto">Actions</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-auto">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($departments as $department)
-                        <tr>
-                            <td class="px-4 py-2 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-4 py-2 whitespace-nowrap">{{ $department->name }}</td>
-                            <td class="px-4 py-2 whitespace-nowrap">
-                            <a href="{{ route('departments.edit', $department->id) }}" 
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-6 py-3 text-center">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-3">{{ $department->name }}</td>
+                            <td class="px-6 py-3 text-center">
+                                <a href="{{ route('departments.edit', $department->id) }}" 
+                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                                     Edit
                                 </a>
 
@@ -56,7 +56,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-4 py-2 text-center text-gray-500">
+                            <td colspan="3" class="px-6 py-3 text-center text-gray-500">
                                 No departments found.
                             </td>
                         </tr>

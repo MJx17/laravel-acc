@@ -29,6 +29,21 @@
                             value="{{ old('code') }}" required>
                     </div>
 
+                    <div>
+                        <label for="room" class="block text-sm font-medium text-gray-700">Room</label>
+                        <input type="text" name="room" id="room"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('room') }}" required>
+                    </div>
+
+
+                    <div>
+                        <label for="block" class="block text-sm font-medium text-gray-700">block</label>
+                        <input type="text" name="block" id="block"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('block') }}" required>
+                    </div>
+
                     <!-- Semester & Year Level -->
                     <div>
                         <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>

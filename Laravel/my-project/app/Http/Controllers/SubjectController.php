@@ -47,6 +47,9 @@ class SubjectController extends Controller
             'days.*' => 'string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+            'room'  => 'nullable|string',
+            'block' => 'nullable|string',
+
         ]);
 
         $subject = Subject::create([
@@ -61,6 +64,8 @@ class SubjectController extends Controller
             'days' => json_encode($validatedData['days']),
             'start_time' => $validatedData['start_time'],
             'end_time' => $validatedData['end_time'],
+            'room'=> $validatedData['room'],
+            'block'=>$validatedData['block'],
         ]);
 
         $subject->courses()->attach($validatedData['course_ids']);
@@ -100,6 +105,8 @@ class SubjectController extends Controller
             'days.*' => 'string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+            'room'  => 'nullable|string',
+            'block' => 'nullable|string',
         ]);
 
         $subject->update([
@@ -114,6 +121,8 @@ class SubjectController extends Controller
             'days' => json_encode($validatedData['days']),
             'start_time' => $validatedData['start_time'],
             'end_time' => $validatedData['end_time'],
+            'room'=> $validatedData['room'],
+            'block'=>$validatedData['block'],
         ]);
 
         $subject->courses()->sync($validatedData['course_ids']);
@@ -136,4 +145,7 @@ class SubjectController extends Controller
         $subject = Subject::with(['courses', 'professor', 'semester'])->findOrFail($id);
         return view('subjects.show', compact('subject'));
     }
+
+
+    
 }

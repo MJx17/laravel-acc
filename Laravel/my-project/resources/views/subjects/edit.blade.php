@@ -29,6 +29,24 @@
                             value="{{ old('code', $subject->code) }}" required>
                     </div>
 
+
+                    <div>
+                        <label for="room" class="block text-sm font-medium text-gray-700">Room</label>
+                        <input type="text" name="room" id="room"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('room') }}" required>
+                    </div>
+
+
+                   
+                    <div>
+                        <label for="block" class="block text-sm font-medium text-gray-700">block</label>
+                        <input type="text" name="block" id="block"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            value="{{ old('block') }}" required>
+                    </div>
+
+
                     <!-- Semester & Year Level -->
                     <div>
                         <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
@@ -124,37 +142,41 @@
                         </div>
                     </div>
 
-
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Days</label>
-                        <div class="flex flex-col space-y-2 mt-2">
-                        @php
-                            $selectedDays = old('days', $subject->days ?? []);
-                            if (!is_array($selectedDays)) {
-                                $selectedDays = explode(',', $selectedDays); // Convert string to array
-                            }
-                        @endphp
-                        @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                            <label class="flex items-center space-x-2">
-                                <input type="checkbox" name="days[]" value="{{ $day }}" class="rounded border-gray-300"
-                                    {{ in_array($day, $selectedDays) ? 'checked' : '' }}> <!-- Retain checked state -->
-                                <span class="text-gray-700">{{ $day }}</span>
-                            </label>
-                        @endforeach
-
+                        <label for="days" class="block text-sm font-medium text-gray-700">Days</label>
+                        <div class="grid grid-cols-1 gap-2 mt-2">
+                            @php
+                                $selectedDays = old('days', json_decode($subject->days, true) ?? []);
+                            @endphp
+                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="days[]" value="{{ $day }}" class="rounded border-gray-300"
+                                        {{ in_array($day, $selectedDays) ? 'checked' : '' }}>
+                                    <span class="text-gray-700">{{ $day }}</span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
 
+                    
 
                     
                 </div>
 
+
                 <!-- Submit Button -->
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                        Update 
-                    </button>
-                </div>
+                <!-- Submit & Cancel Buttons -->
+             <div class="mt-6 flex justify-end space-x-2">
+                <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    Update
+                </button>
+                
+                <a href="{{ route('subjects.index') }}" 
+                    class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                    Cancel
+                </a>
+            </div>
+
             </form>
         </div>
     </div>

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->json('days'); // Store multiple days as JSON array
             $table->time('start_time'); // Class start time
             $table->time('end_time'); // Class end time
-            
+            $table->string('room')->nullable(); // Block or class group (optional)
             $table->timestamps();
         });
         
