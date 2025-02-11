@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Professor;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProfessorController extends Controller
@@ -11,19 +12,41 @@ class ProfessorController extends Controller
     // Show the form for creating a new professor
     public function create()
     {
-        // Fetch all courses
+        $existingProfessors = Professor::pluck('user_id'); // Get all professor user IDs
+        $users = User::role('professor')
+                    ->whereNotIn('id', $existingProfessors) // Exclude existing professors
+                    ->get();
+        
         $courses = Course::all();
+    
+        return view('professors.create', compact('users', 'courses'));
+    }
+    
 
-        // Pass the courses to the view
-        return view('professors.create', compact('courses'));
+    public function getProfessors()
+    {
+        $professors = User::role('professor')->get(); // Use Spatie's role() method
+
+        if ($professors->isEmpty()) {
+            return response()->json([
+                'message' => 'No professors found'
+            ], 404);
+        }
+
+        return response()->json([
+            'professors' => $professors
+        ], 200);
     }
 
     // Store a newly created professor in the database
     public function store(Request $request)
     {
-        // Validate incoming data
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => ['required', 'exists:users,id', function ($attribute, $value, $fail) {
+                if (!User::where('id', $value)->where('role', 'professor')->exists()) {
+                    $fail('The selected user is not a professor.');
+                }
+            }],
             'surname' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -33,21 +56,17 @@ class ProfessorController extends Controller
             'designation' => 'required|string|max:255',
         ]);
 
-        // Create the professor
-        $professor = Professor::create($request->only([
+        Professor::create($request->only([
             'user_id', 'surname', 'first_name', 'middle_name', 'sex', 'contact_number', 'email', 'designation'
         ]));
 
-        // No department sync needed anymore
         return redirect()->route('professors.index')->with('success', 'Professor created successfully!');
     }
 
     // Display a listing of the professors
     public function index()
     {
-        // Fetch all professors
         $professors = Professor::paginate(10);
-
         return view('professors.index', compact('professors'));
     }
 
@@ -55,17 +74,21 @@ class ProfessorController extends Controller
     public function edit($id)
     {
         $professor = Professor::findOrFail($id);
-        $courses = Course::all(); // Assuming you still want courses
+        $users = User::where('role', 'professor')->get(); // Fetch only professors
+        $courses = Course::all();
 
-        return view('professors.edit', compact('professor', 'courses'));
+        return view('professors.edit', compact('professor', 'users', 'courses'));
     }
 
     // Update the specified professor in the database
     public function update(Request $request, $id)
     {
-        // Validate incoming data
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => ['required', 'exists:users,id', function ($attribute, $value, $fail) {
+                if (!User::where('id', $value)->where('role', 'professor')->exists()) {
+                    $fail('The selected user is not a professor.');
+                }
+            }],
             'surname' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -75,13 +98,11 @@ class ProfessorController extends Controller
             'designation' => 'required|string|max:255',
         ]);
 
-        // Find the professor by ID and update
         $professor = Professor::findOrFail($id);
         $professor->update($request->only([
             'user_id', 'surname', 'first_name', 'middle_name', 'sex', 'contact_number', 'email', 'designation'
         ]));
 
-        // No department sync needed anymore
         return redirect()->route('professors.index')->with('updated', 'Professor updated successfully!');
     }
 
@@ -95,34 +116,18 @@ class ProfessorController extends Controller
     }
 
     // Show the details of a specific professor
-  
-    public function subjects($id)
-    {
-        $professor = Professor::findOrFail($id);
-        $subjects = $professor->subjects()->with('students', 'courses')->paginate(10);
-        
-        return view('professors.subjects', compact('professor', 'subjects'));
-    }
-
     public function show($id)
     {
         $professor = Professor::findOrFail($id);
-        
-        // Get subjects assigned to the professor with students count and details
         $subjects = $professor->subjects()->withCount('students')->with('students')->get();
 
-        // Shorten day names
         $dayShortcodes = [
             'Monday' => 'M', 'Tuesday' => 'T', 'Wednesday' => 'W',
             'Thursday' => 'Th', 'Friday' => 'F', 'Saturday' => 'Sa', 'Sunday' => 'Su'
         ];
 
-        // Convert JSON days to shortened text
         $subjects->transform(function ($subject) use ($dayShortcodes) {
-            // Ensure it's properly decoded
             $daysArray = is_array($subject->days) ? $subject->days : json_decode($subject->days, true);
-
-            // Convert days to short format
             $subject->formatted_days = collect($daysArray)
                 ->map(fn($day) => $dayShortcodes[$day] ?? $day)
                 ->implode(', ');
@@ -132,8 +137,12 @@ class ProfessorController extends Controller
 
         return view('professors.show', compact('professor', 'subjects'));
     }
-    
-    
-    
 
+    public function subjects($id)
+    {
+        $professor = Professor::findOrFail($id);
+        $subjects = $professor->subjects()->with('students', 'courses')->paginate(10);
+
+        return view('professors.subjects', compact('professor', 'subjects'));
+    }
 }

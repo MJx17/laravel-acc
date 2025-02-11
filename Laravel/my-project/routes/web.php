@@ -138,7 +138,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
 
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
-
+Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 
 
 Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])

@@ -41,6 +41,7 @@ class RegisteredProfessorUserController extends Controller
         // Assign the 'professor' role
         $user->assignRole('professor');
 
-        return back()->with('success', 'Professor account created successfully!');
+        return redirect()->route('professors.create')->with('success', 'Professor account created successfully!');
+
     }
 }
