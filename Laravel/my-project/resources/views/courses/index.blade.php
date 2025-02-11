@@ -24,21 +24,21 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course Code</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course Code</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course Name</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($courses as $course)
                         <tr class="hover:bg-gray-100">
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $course->course_code }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $course->course_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $course->department->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-4 py-2  whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="px-4 py-2  whitespace-nowrap">{{ $course->course_code }}</td>
+                            <td class="px-4 py-2  whitespace-nowrap">{{ $course->course_name }}</td>
+                            <td class="px-4 py-2  whitespace-nowrap">{{ $course->department->name }}</td>
+                            <td class="px-4 py-2  whitespace-nowrap">
                                 <!-- Edit Button -->
                                 <a href="{{ route('courses.edit', $course->id) }}" 
                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
