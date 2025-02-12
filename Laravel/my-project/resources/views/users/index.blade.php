@@ -10,31 +10,42 @@
 
         <!-- Table visible on large screens -->
         <div class="hidden lg:block">
-            <table class="table-auto w-full border-t border-b border-gray-300 shadow-sm">
+            <table class="table-auto w-full border-t border-b border-gray-300 shadow-sm bg-white" >
                 <thead>
                     <tr class="bg-gray-200 text-left">
-                        <th class="px-6 py-3 border-b border-gray-300">#</th>
-                        <th class="px-6 py-3 border-b border-gray-300">Name</th>
-                        <th class="px-6 py-3 border-b border-gray-300">Email</th>
-                        <th class="px-6 py-3 border-b border-gray-300">Username</th>
-                        <th class="px-6 py-3 border-b border-gray-300">Roles</th>
+                        <th class="px-4 py-2 border-b border-gray-300">#</th>
+                        <th class="px-4 py-2 border-b border-gray-300">Name</th>
+                        <th class="px-4 py-2 border-b border-gray-300">Email</th>
+                        <th class="px-4 py-2 border-b border-gray-300">Username</th>
+                        <th class="px-4 py-2 border-b border-gray-300">Roles</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr class="hover:bg-gray-100">
-                            <td class="px-6 py-3 border-b border-gray-300">{{ $loop->iteration }}</td>
+                        <tr class="hover:bg-gray-200 transition duration-200 border-gray-40 ">
+                            <td class="px-4 py-2 border-b border-gray-300">{{ $loop->iteration }}</td>
                             <td class="px4 py-2 border-b border-gray-300">{{ $user->name }}</td>
-                            <td class="px-6 py-3 border-b border-gray-300">{{ $user->email }}</td>
-                            <td class="px-6 py-3 border-b border-gray-300">{{ $user->username }}</td>
-                            <td class="px-6 py-3 border-b border-gray-300">
-                                @foreach ($user->roles as $role)
-                                    <span class="inline-block bg-blue-500 text-white text-sm px-2 rounded">
-                                        {{ $role->name }}
-                                    </span>
-                                @endforeach
-                            </td>
-                        </tr>
+                            <td class="px-4 py-2 border-b border-gray-300">{{ $user->email }}</td>
+                            <td class="px-4 py-2 border-b border-gray-300">{{ $user->username }}</td>
+                            <td class="px-4 py-2 border-b border-gray-300">
+                            @foreach ($user->roles as $role)
+                                @php
+                                    // Define background colors for each role
+                                    $roleColors = [
+                                        'admin' => 'bg-red-500',       // Red for Admin
+                                        'professor' => 'bg-blue-500',  // Blue for Professor
+                                        'student' => 'bg-green-500',   // Green for Student
+                                    ];
+                                    // Assign default gray if role is not listed
+                                    $bgColor = $roleColors[$role->name] ?? 'bg-gray-500';
+                                @endphp
+
+                                <span class="inline-block {{ $bgColor }} text-white text-sm px-2 rounded">
+                                    {{ $role->name }}
+                                </span>
+                            @endforeach
+                        </td>
+                         </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -59,5 +70,10 @@
                 @endforeach
             </div>
         </div>
+
+        <div class="mt-4">
+    {{ $users->links() }} <!-- Display pagination links -->
+</div>
+
     </div>
 </x-app-layout>

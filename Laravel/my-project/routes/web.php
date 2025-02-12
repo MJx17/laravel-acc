@@ -15,8 +15,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseSubjectController;
 use App\Http\Controllers\StudentSubjectController;
-
-
+use App\Http\Controllers\ProfessorGradingController;
+use App\Http\Controllers\FeePaymentController;
 
 
 // Home Route
@@ -104,37 +104,30 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 });
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () { 
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::resource('enrollments', EnrollmentController::class);
+    Route::resource('fee_payments', FeePaymentController::class);
+    Route::resource('subjects', SubjectController::class)->parameters([
+        'subjects' => 'id', // Use 'id' instead of 'subjects_id'
+    ]);
     Route::resource('departments', DepartmentController::class)->parameters([
         'departments' => 'department_id',
     ]);
-});
-
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('courses', CourseController::class)->parameters([
         'courses' => 'course_id',
     ]);
-});
-
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('professors', ProfessorController::class)->parameters([
         'professor' => 'professor_id',
     ]);
+});
 
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+   
     Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
          ->name('professors.subjects');
 });
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::resource('subjects', SubjectController::class)->parameters([
-        'subjects' => 'id', // Use 'id' instead of 'subjects_id'
-    ]);
-    
-});
-
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::resource('enrollments', EnrollmentController::class);
-});
 
 
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
@@ -151,6 +144,13 @@ Route::put('/student-subjects/{studentId}/update', [StudentSubjectController::cl
 
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])
+        ->name('professor.gradeStudents');
+
+    Route::put('/professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])
+        ->name('professor.updateGrades');
+});
 
 
 

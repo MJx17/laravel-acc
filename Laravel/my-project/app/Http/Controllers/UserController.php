@@ -8,8 +8,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        // Fetch all users with their roles
-        $users = User::with('roles')->get();
+        // Fetch users with roles and paginate results (10 users per page)
+        $users = User::with('roles')->paginate(10);
 
         return view('users.index', compact('users'));
     }

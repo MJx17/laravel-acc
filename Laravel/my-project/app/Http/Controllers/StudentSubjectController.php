@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Models\StudentSubject;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Subject;
+use Illuminate\Support\Facades\Auth;
 
 class StudentSubjectController extends Controller
 {
@@ -35,26 +38,57 @@ class StudentSubjectController extends Controller
 
     public function show($studentId)
     {
-        // Fetch the student with their enrolled subjects
-        $student = Student::with(['subjects' => function($query) {
-            $query->addSelect('subjects.id', 'subjects.name', 'subjects.code')
-                  ->withPivot('status', 'grade'); // Including the pivot data (status, grade)
-        }])->findOrFail($studentId);
+        // Fetch the student
+        $student = Student::findOrFail($studentId);
     
-        return view('student_subject.subjects', compact('student'));
+        // Fetch subjects with pagination
+        $subjects = $student->subjects()
+            ->select([
+                'subjects.id', 
+                'subjects.name', 
+                'subjects.code', 
+                'subjects.block',
+                'subjects.semester_id',
+                'subjects.prerequisite_id',
+                'subjects.fee',
+                'subjects.units',
+                'subjects.professor_id',
+                'subjects.year_level',
+                'subjects.days',
+                'subjects.start_time',
+                'subjects.end_time'
+            ])
+            ->withPivot('status', 'grade') // Include pivot data
+            ->paginate(10); // Show 10 subjects per page
+    
+        return view('student_subject.subjects', compact('student', 'subjects'));
     }
+    
 
-    public function edit($studentId, )
+    public function edit($studentId)
 {
     // Fetch the student and their enrolled subjects with pivot data
-    $student = Student::with(['subjects' => function($query) {
-        $query->addSelect('subjects.id', 'subjects.name', 'subjects.code')
-              ->withPivot('status', 'grade');
+    $student = Student::with(['subjects' => function ($query) {
+        $query->select(
+            'subjects.id',
+            'subjects.name',
+            'subjects.code',
+            'subjects.block',
+            'subjects.semester_id',
+            'subjects.prerequisite_id',
+            'subjects.fee',
+            'subjects.units',
+            'subjects.professor_id',
+            'subjects.year_level',
+            'subjects.days',
+            'subjects.start_time',
+            'subjects.end_time'
+        )->withPivot('status', 'grade');
     }])->findOrFail($studentId);
 
-    // Pass the student data to the view for editing
     return view('student_subject.edit', compact('student'));
 }
+
 
 public function update(Request $request, $studentId)
 {
@@ -81,6 +115,76 @@ public function update(Request $request, $studentId)
     return redirect()->route('student_subject.subjects', $studentId)
                      ->with('success', 'Subjects updated successfully.');
 }
+
+
+
+public function showSubjects()
+{
+    $subjects = Subject::with(['students' => function ($query) {
+        $query->select('students.id', 'students.fullname')
+              ->withPivot('status', 'grade'); // Include pivot data
+    }])->get();
+
+    return view('subjects.index', compact('subjects'));
+}
+
+public function updateGrades(Request $request)
+{
+    $request->validate([
+        'grades.*.student_id' => 'required|exists:students,id',
+        'grades.*.subject_id' => 'required|exists:subjects,id',
+        'grades.*.grade' => 'nullable|string|max:3',
+    ]);
+
+    foreach ($request->grades as $gradeData) {
+        DB::table('student_subject')
+            ->where('student_id', $gradeData['student_id'])
+            ->where('subject_id', $gradeData['subject_id'])
+            ->update(['grade' => $gradeData['grade']]);
+    }
+
+    return redirect()->back()->with('success', 'Grades updated successfully.');
+}
+
+
+public function showGrades()
+{
+    // Get the logged-in professor
+    $professor = Auth::user();
+
+    // Get subjects assigned to this professor
+    $subjects = Subject::where('professor_id', $professor->id)->with('students')->get();
+
+    return view('professors.grades', compact('subjects'));
+}
+
+public function submitGrades(Request $request)
+{
+    $professor = Auth::user();
+
+    // Validate request
+    $request->validate([
+        'grades.*.*' => 'nullable|numeric|min:0|max:100',
+    ]);
+
+    foreach ($request->grades as $studentId => $grades) {
+        foreach ($grades as $subjectId => $grade) {
+            $subject = Subject::findOrFail($subjectId);
+
+            // Ensure the subject belongs to the professor
+            if ($subject->professor_id != $professor->id) {
+                return back()->with('error', 'Unauthorized to update this subject.');
+            }
+
+            // Update grade in pivot table
+            $subject->students()->updateExistingPivot($studentId, ['grade' => $grade]);
+        }
+    }
+
+    return back()->with('success', 'Grades updated successfully.');
+}
+
+
 
     
 }

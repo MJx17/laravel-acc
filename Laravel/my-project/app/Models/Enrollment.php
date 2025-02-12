@@ -13,6 +13,8 @@ class Enrollment extends Model
         'semester_id',
         'course_id',
         'year_level',
+        'status'
+
     ];
 
     public function student()

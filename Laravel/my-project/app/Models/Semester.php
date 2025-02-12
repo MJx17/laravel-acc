@@ -24,9 +24,9 @@ class Semester extends Model
     public $timestamps = true;
 
     
-        public function getFullSemesterAttribute()
+    public function getFullSemesterAttribute()
     {
-        return $this->semester . ' - ' . $this->academic_year;
+        return $this->semester . ' Semester - ' . $this->academic_year;
     }
 
     public function subjects()

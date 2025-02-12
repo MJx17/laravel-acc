@@ -21,6 +21,8 @@ class CreateEnrollmentsTable extends Migration
             $table->enum('year_level', ['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year', 'irregular']);
             $table->json('subject_ids')->nullable(); // Store subject ids as a JSON array
             $table->timestamps(); // To track creation and update times
+
+            $table->enum('status', ['new', 'old', 'shifter'])->nullable();
         });
     }
 
