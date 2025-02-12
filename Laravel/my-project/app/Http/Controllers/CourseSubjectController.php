@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CourseSubject;
 use App\Models\Course;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class CourseSubjectController extends Controller
@@ -14,61 +15,89 @@ class CourseSubjectController extends Controller
         // Fetch all course-subject mappings with course and subject relations
         $courseSubjects = CourseSubject::with(['course', 'subject'])->get();
         
-        // Group courseSubjects by course
+        // Group by course_code instead of course_name
         $groupedCourses = $courseSubjects->groupBy(function ($item) {
-            return $item->course->course_name;
+            return $item->course->course_code;
         });
         
         return view('course-subjects.index', compact('groupedCourses'));
     }
     
-    
-    // Link a subject to a course
+    // Show form to assign subjects to a course
+    public function create()
+    {
+        $courses = Course::all();
+        $subjects = Subject::all();
+        
+        return view('course-subjects.create', compact('courses', 'subjects'));
+    }
+
+    // Show edit form with pre-selected subjects
+    public function edit($course_id)
+    {
+        $course = Course::findOrFail($course_id);
+        $subjects = Subject::all();
+
+        // Get already assigned subjects for this course
+        $assignedSubjects = CourseSubject::where('course_id', $course_id)
+                                         ->pluck('subject_id')
+                                         ->toArray();
+
+        return view('course-subjects.edit', compact('course', 'subjects', 'assignedSubjects'));
+    }
+
+    // Store subjects linked to a course
     public function store(Request $request)
     {
-        // Validate request
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'subject_id' => 'required|exists:subjects,id',
+            'subject_ids' => 'required|array',
+            'subject_ids.*' => 'exists:subjects,id',
         ]);
 
-        // Create a new CourseSubject mapping
-        $courseSubject = CourseSubject::create($request->all());
+        // Remove existing subjects for the course to avoid duplicates
+        CourseSubject::where('course_id', $request->course_id)->delete();
 
-        return response()->json(['message' => 'Subject linked to course successfully', 'data' => $courseSubject], 201);
+        // Assign new subjects
+        foreach ($request->subject_ids as $subjectId) {
+            CourseSubject::create([
+                'course_id' => $request->course_id,
+                'subject_id' => $subjectId
+            ]);
+        }
+
+        return redirect()->route('course-subjects.index')->with('success', 'Subjects assigned successfully.');
     }
 
-    // Show a specific course-subject mapping
-    public function show($id)
+    // Update subject assignments for a course
+    public function update(Request $request, $course_id)
     {
-        // Get a specific course-subject mapping with relationships
-        $courseSubject = CourseSubject::with(['course', 'subject'])->findOrFail($id);
-        return response()->json($courseSubject);
-    }
-
-    // Edit a course-subject mapping
-    public function update(Request $request, $id)
-    {
-        $courseSubject = CourseSubject::findOrFail($id);
-
-        // Validate request
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
-            'subject_id' => 'required|exists:subjects,id',
+            'subject_ids' => 'required|array',
+            'subject_ids.*' => 'exists:subjects,id',
         ]);
 
-        // Update the course-subject mapping
-        $courseSubject->update($request->all());
+        // Remove old subjects
+        CourseSubject::where('course_id', $course_id)->delete();
 
-        return response()->json(['message' => 'Course-Subject updated successfully', 'data' => $courseSubject]);
+        // Assign new subjects
+        foreach ($request->subject_ids as $subjectId) {
+            CourseSubject::create([
+                'course_id' => $course_id,
+                'subject_id' => $subjectId
+            ]);
+        }
+
+        return redirect()->route('course-subjects.index')->with('success', 'Course subjects updated successfully.');
     }
 
-    // Remove a subject from a course
-    public function destroy($id)
+    // Remove a specific subject from a course
+    public function destroy($course_id, $subject_id)
     {
-        $courseSubject = CourseSubject::findOrFail($id);
-        $courseSubject->delete();
-
-        return response()->json(['message' => 'Subject removed from course']);
+        CourseSubject::where('course_id', $course_id)
+                     ->where('subject_id', $subject_id)
+                     ->delete();
+    
+        return redirect()->route('course-subjects.index')->with('success', 'Subject removed from course.');
     }
 }

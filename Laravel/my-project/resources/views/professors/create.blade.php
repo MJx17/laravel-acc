@@ -56,10 +56,13 @@
             </div>
 
             <!-- Button aligned to the bottom right -->
-            <div class="flex justify-end">
+            <div class="flex justify-end gap-2">
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition">
                     Save
                 </button>
+                <a href="{{ route('professors.index') }}" class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-md hover:bg-red-600 focus:ring-2 focus:ring-gray-500">
+                        Cancel
+                 </a>
             </div>
 
         </form>

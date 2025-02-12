@@ -1,41 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Course Subject') }}
+            Edit Course: {{ $course->course_name }}
         </h2>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <form action="{{ route('course-subjects.update', $courseSubject->id) }}" method="POST">
+            <form action="{{ route('courses.update', $course->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
-                <div>
-                    <label for="course_id" class="block text-gray-700 dark:text-gray-200">Course</label>
-                    <select name="course_id" id="course_id" class="w-full border-gray-300 rounded mt-1">
-                        @foreach ($courses as $course)
-                            <option value="{{ $course->id }}" {{ $course->id == $courseSubject->course_id ? 'selected' : '' }}>
-                                {{ $course->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                <!-- Hidden input to store course ID -->
+                <input type="hidden" name="course_id" value="{{ $course->id }}">
 
+                <!-- Subject Selection (Checkboxes) -->
                 <div class="mt-4">
-                    <label for="subject_id" class="block text-gray-700 dark:text-gray-200">Subject</label>
-                    <select name="subject_id" id="subject_id" class="w-full border-gray-300 rounded mt-1">
+                    <label class="block text-gray-700 dark:text-gray-200 font-semibold">Assign Subjects to Course</label>
+
+                    @if($subjects->isEmpty())
+                        <p class="text-red-500 mt-2">No available subjects.</p>
+                    @else
                         @foreach ($subjects as $subject)
-                            <option value="{{ $subject->id }}" {{ $subject->id == $courseSubject->subject_id ? 'selected' : '' }}>
-                                {{ $subject->name }}
-                            </option>
+                            <div class="flex items-center mt-2">
+                                <input type="checkbox" name="subject_ids[]" value="{{ $subject->id }}" 
+                                    class="mr-2 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-400"
+                                    {{ in_array($subject->id, $assignedSubjects) ? 'checked' : '' }}>
+                                <label class="text-gray-700 dark:text-gray-200">{{ $subject->name }}</label>
+                            </div>
                         @endforeach
-                    </select>
+                    @endif
                 </div>
 
-                <div class="mt-6">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-                    <a href="{{ route('course-subjects.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</a>
+                <!-- Submit & Cancel Buttons -->
+                <div class="mt-6 flex justify-end gap-2">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                        Update
+                    </button>
+                    <a href="{{ route('courses.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded shadow">
+                        Cancel
+                    </a>
                 </div>
             </form>
         </div>

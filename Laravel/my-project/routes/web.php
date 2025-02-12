@@ -137,6 +137,9 @@ Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
 ->name('student_subject.subjects');  
 
+Route::resource('course-subjects', CourseSubjectController::class);
+
+
 
 Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subjects.show');
 Route::get('students/{studentId}/subjects/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');

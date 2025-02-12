@@ -64,9 +64,18 @@
                 @enderror
             </div>
 
-            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                Update Course
-            </button>
+              <!-- Submit Button -->
+              <<div class="mt-6 flex justify-end space-x-2">
+                <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    Update
+                </button>
+                <a href="{{ route('courses.index') }}" 
+                class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                    Cancel
+                </a>
+            </div>
+
+
         </form>
     </div>
 </x-app-layout>

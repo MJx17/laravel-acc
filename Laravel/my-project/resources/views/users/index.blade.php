@@ -23,7 +23,10 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="hover:bg-gray-200 transition duration-200 border-gray-40 ">
-                            <td class="px-4 py-2 border-b border-gray-300">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-2 border-b border-gray-300">
+                            {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
+                        </td>
+
                             <td class="px4 py-2 border-b border-gray-300">{{ $user->name }}</td>
                             <td class="px-4 py-2 border-b border-gray-300">{{ $user->email }}</td>
                             <td class="px-4 py-2 border-b border-gray-300">{{ $user->username }}</td>

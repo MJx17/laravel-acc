@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="container mx-auto py-8">
-        <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
             <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Add Course</h1>
 
             <form action="{{ route('courses.store') }}" method="POST">
@@ -68,10 +68,17 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                
+                <div class="mt-6 flex justify-end space-x-2">
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
                     Save
                 </button>
+           
+                <a href="{{ route('courses.index') }}" 
+                class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                    Cancel
+                </a>
+            </div>
             </form>
         </div>
     </div>

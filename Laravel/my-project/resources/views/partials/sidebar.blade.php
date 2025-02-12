@@ -60,9 +60,18 @@
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Professors
                 </a>
+                
+                <a href="{{ route('enrollments.index') }}"
+                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                   Enrollment
+                </a>
+                <a href="{{ route('course-subjects.index') }}"
+                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                  Enroll
+                </a>
                 <a href="{{ route('register_professor') }}"
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
-                   Prof User Creation
+                   Prof User Registration
                 </a>
             </li>
             @endif
@@ -70,7 +79,7 @@
             <!-- Professor Page - Accessible to Professors Only -->
             @if(auth()->user()->hasRole('professor'))
             <li>
-                <a href="{{ route('professor.dashboard') }}" 
+                <a href="{{ route('professor.subjects') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'professor.dashboard' ? 'bg-gray-700' : '' }}">
                    Professor Dashboard
                 </a>
