@@ -6,66 +6,73 @@
     </x-slot>
 
     <div class="container mx-auto py-8">
-        <h1 class="text-2xl font-bold mb-6">Add Course</h1>
+        <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Add Course</h1>
 
-        <form action="{{ route('courses.store') }}" method="POST">
-            @csrf
+            <form action="{{ route('courses.store') }}" method="POST">
+                @csrf
 
-            <div class="mb-4">
-                <label for="course_code" class="block font-medium">Course Code</label>
-                <input type="text" name="course_code" id="course_code" value="{{ old('course_code') }}" 
-                    class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                @error('course_code')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Course Code -->
+                <div class="mb-4">
+                    <label for="course_code" class="block font-medium text-gray-700">Course Code</label>
+                    <input type="text" name="course_code" id="course_code" value="{{ old('course_code') }}" 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 mt-1">
+                    @error('course_code')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="course_name" class="block font-medium">Course Name</label>
-                <input type="text" name="course_name" id="course_name" value="{{ old('course_name') }}" 
-                    class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                @error('course_name')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Course Name -->
+                <div class="mb-4">
+                    <label for="course_name" class="block font-medium text-gray-700">Course Name</label>
+                    <input type="text" name="course_name" id="course_name" value="{{ old('course_name') }}" 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 mt-1">
+                    @error('course_name')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="department_id" class="block font-medium">Department</label>
-                <select name="department_id" id="department_id" 
-                    class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @foreach ($departments as $department)
-                        <option value="{{ $department->id }}" 
-                            {{ old('department_id') == $department->id ? 'selected' : '' }}>
-                            {{ $department->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('department_id')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Department -->
+                <div class="mb-4">
+                    <label for="department_id" class="block font-medium text-gray-700">Department</label>
+                    <select name="department_id" id="department_id" 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 mt-1">
+                        @foreach ($departments as $department)
+                            <option value="{{ $department->id }}" 
+                                {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                                {{ $department->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('department_id')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="description" class="block font-medium">Description</label>
-                <textarea name="description" id="description" rows="3" 
-                    class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description') }}</textarea>
-                @error('description')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Description -->
+                <div class="mb-4">
+                    <label for="description" class="block font-medium text-gray-700">Description</label>
+                    <textarea name="description" id="description" rows="3" 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 mt-1">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="units" class="block font-medium">Units</label>
-                <input type="number" name="units" id="units" value="{{ old('units') }}" 
-                    class="w-full border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                @error('units')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Units -->
+                <div class="mb-6">
+                    <label for="units" class="block font-medium text-gray-700">Units</label>
+                    <input type="number" name="units" id="units" value="{{ old('units') }}" 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 mt-1">
+                    @error('units')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                Save
-            </button>
-        </form>
+                <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                    Save
+                </button>
+            </form>
+        </div>
     </div>
 </x-app-layout>

@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border shadow">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border shadow">
                      <div class="">
                         <h3 class="text-lg font-medium">
                             <strong>{{ $student->fullname }}</strong>
@@ -68,7 +68,7 @@
                             </thead>
                             <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200">
                                 @foreach($student->subjects as $subject)
-                                <tr>
+                                <tr class="hover:bg-gray-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                         {{ $subject->code }}
                                     </td>

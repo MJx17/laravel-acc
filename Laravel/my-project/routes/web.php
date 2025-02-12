@@ -106,7 +106,7 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('enrollments', EnrollmentController::class);
-    Route::resource('fee_payments', FeePaymentController::class);
+    Route::resource('fees', FeePaymentController::class);
     Route::resource('subjects', SubjectController::class)->parameters([
         'subjects' => 'id', // Use 'id' instead of 'subjects_id'
     ]);
@@ -137,22 +137,16 @@ Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
 ->name('student_subject.subjects');  
 
-Route::get('/student-subjects/{studentId}/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');
 
-// Route to handle the update request
-Route::put('/student-subjects/{studentId}/update', [StudentSubjectController::class, 'update'])->name('student_subjects.update');
+Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subjects.show');
+Route::get('students/{studentId}/subjects/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');
+Route::put('students/{studentId}/subjects', [StudentSubjectController::class, 'update'])->name('student_subjects.update');
 
-
-
+// Professor Grading Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])
-        ->name('professor.gradeStudents');
-
-    Route::put('/professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])
-        ->name('professor.updateGrades');
+    Route::get('professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])->name('professor.gradeStudents');
+    Route::put('professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])->name('professor.updateGrades');
 });
-
-
 
 
 
