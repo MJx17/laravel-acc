@@ -490,9 +490,11 @@ https://templatemo.com/tm-557-grad-school
             <h2>Let’s Keep In Touch</h2>
           </div>
         </div>
+        
+        
         <div class="col-md-6">
         
-        <!-- Do you need a working HTML contact-form script?
+         <!-- Do you need a working HTML contact-form script?
                 	
                     Please visit https://templatemo.com/contact page -->
                     
@@ -520,12 +522,17 @@ https://templatemo.com/tm-557-grad-school
               </div>
             </div>
           </form>
+
+
         </div>
+
         <div class="col-md-6">
           <div id="map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3881.9192070054037!2d123.72128428885495!3d13.355299700000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1adc91b728cb1%3A0x5b3e355634ab3779!2sAmando%20Cope%20College!5e0!3m2!1sen!2sph!4v1738855547113!5m2!1sen!2sph" style="border:0;"  width="100%" height="422px" frameborder="0" style="border:0" allowfullscreen></iframe>
           </div>
         </div>
+
+
       </div>
     </div>
   </section>

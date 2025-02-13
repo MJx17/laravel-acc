@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="overflow-hidden shadow-xl sm:rounded-lg p-6 bg-white">
+    <div class="overflow-hidden shadow-xl sm:rounded-lg p-6 bg-white">
             <h3 class="text-xl font-semibold mb-4">{{ $course->course_name }}</h3>
 
             @if (session('success'))
@@ -21,9 +21,9 @@
 
                 <!-- Subjects List -->
                 <h4 class="font-semibold mb-2">Select Subjects:</h4>
-                <div class="border border-gray-300 rounded-md p-4 h-[500px] overflow-y-auto">
+                <div class="border border-gray-300 rounded-md p-2 h-[400px] overflow-y-auto scrollbar-hide">
                     @foreach ($allSubjects as $subject)
-                        <div class="flex justify-between items-center border-t border-b border-gray-200 px-4 py-2">
+                        <div class="flex justify-between items-center border-t border-b border-gray-200 px-4 py-2 hover:bg-gray-200">
                             <span class="font-medium text-gray-700">{{ $subject->code }} - {{ $subject->name }}</span>
                             <input type="checkbox" 
                                    name="subject_ids[]" 

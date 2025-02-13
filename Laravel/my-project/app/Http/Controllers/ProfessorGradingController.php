@@ -29,26 +29,28 @@ class ProfessorGradingController extends Controller
 
     public function showStudentsForGrading($subjectId)
     {
-        $professor = Auth::user();
-        $admin = Auth::user();
+        $user = Auth::user();
     
-        if ($admin->hasRole('admin')) {
+        if ($user->hasRole('admin')) {
             // Admins can access any subject
             $subject = Subject::where('id', $subjectId)
                 ->with('students')
                 ->firstOrFail();
-        } elseif ($professor->hasRole('professor')) {
+        } elseif ($user->hasRole('professor')) {
+            // Get the professor record
+            $professor = $user->professor;
+    
             // Professors can only access their own subjects
             $subject = Subject::where('id', $subjectId)
-                ->where('professor_id', $professor->id)
+                ->where('professor_id', $professor->id) // Correctly checking professor's ID
                 ->with('students')
                 ->firstOrFail();
         } else {
-            // Other roles (e.g., students) get a 403 error
+            // Other roles get a 403 error
             abort(403, 'Unauthorized access.');
         }
     
-        return view('professors.grade_students', compact('subject', 'professor', 'admin'));
+        return view('professors.grade_students', compact('subject', 'user'));
     }
     
 

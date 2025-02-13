@@ -120,16 +120,19 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-   
-    Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
-         ->name('professors.subjects');
-});
-
+Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
+->name('professors.subjects');
 
 Route::resource('professors', ProfessorController::class)->parameters([
     'professor' => 'professor_id',
 ]);
+Route::get('/test-professor', function () {
+    return [
+        'user' => auth()->user(),
+        'professor' => auth()->user()->professor ?? 'No professor record found',
+    ];
+});
+
 
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
 Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);

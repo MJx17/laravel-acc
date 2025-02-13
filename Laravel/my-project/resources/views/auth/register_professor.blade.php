@@ -2,7 +2,15 @@
         <x-slot name="header">
                 <h2>{{ __('Register Professor') }}</h2>
             </x-slot>
-    <form method="POST" action="{{ route('register_professor') }}">
+            <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-300 to-green-600 p-4">
+        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            
+            <!-- Logo or Image -->
+            <div class="flex justify-center mb-6">
+            <img src="{{ asset('logo.jpg') }}" alt="logo" class="w-20 h-20 rounded-full">
+
+            </div>
+        <form method="POST" action="{{ route('register_professor') }}">
         @csrf
 
         <!-- Name -->
@@ -54,5 +62,7 @@
                 {{ __('Register') }}
             </x-primary-button>
         </div>
-    </form>
+        </form>
+    </div>
+ </div>
 </x-guest-layout>

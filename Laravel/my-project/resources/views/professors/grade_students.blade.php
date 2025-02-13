@@ -66,11 +66,33 @@
                                 <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg">
                                     Save 
                                 </button>
-                                <a href="{{ route('professors.show', $professor->id) }}" 
+                                @php
+                                // Default professor ID to null
+                                $professorId = null;
+
+                                // If the user is a professor, get their own professor ID
+                                if (auth()->user()->hasRole('professor') && auth()->user()->professor) {
+                                    $professorId = auth()->user()->professor->id;
+                                } 
+                                // If the user is an admin, no professor ID is needed
+                            @endphp
+
+                            @if(auth()->user()->hasRole('professor') && $professorId)
+                                <a href="{{ route('professors.show', $professorId) }}" 
                                 class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
                                     Cancel
                                 </a>
-                                
+                            @endif
+
+                            @if(auth()->user()->hasRole('admin'))
+                                <a href="javascript:history.back()"
+                                class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                                    Cancel
+                                </a>
+                            @endif
+
+
+
                             </div>
                         </form>
                     @endif

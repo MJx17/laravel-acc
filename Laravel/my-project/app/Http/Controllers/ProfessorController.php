@@ -115,28 +115,62 @@ class ProfessorController extends Controller
         return redirect()->route('professors.index')->with('deleted', 'Professor deleted successfully!');
     }
 
-    // Show the details of a specific professor
+    // // Show the details of a specific professor
+    // public function show($professor_id)
+    // {
+    //     $professor = Professor::findOrFail($professor_id);
+    //     $subjects = $professor->subjects()->withCount('students')->with('students')->get();
+
+    //     $dayShortcodes = [
+    //         'Monday' => 'M', 'Tuesday' => 'T', 'Wednesday' => 'W',
+    //         'Thursday' => 'Th', 'Friday' => 'F', 'Saturday' => 'Sa', 'Sunday' => 'Su'
+    //     ];
+
+    //     $subjects->transform(function ($subject) use ($dayShortcodes) {
+    //         $daysArray = is_array($subject->days) ? $subject->days : json_decode($subject->days, true);
+    //         $subject->formatted_days = collect($daysArray)
+    //             ->map(fn($day) => $dayShortcodes[$day] ?? $day)
+    //             ->implode(', ');
+
+    //         return $subject;
+    //     });
+
+    //     return view('professors.show', compact('professor', 'subjects'));
+    // }
+
     public function show($professor_id)
     {
+        $user = auth()->user(); // Get the logged-in user
+    
+        // Ensure the user is a professor and can only access their own professor profile
+        if ($user->hasRole('professor') && optional($user->professor)->id != $professor_id) {
+            abort(403, 'Unauthorized access');
+        }
+    
+        // Fetch the professor and related subjects
         $professor = Professor::findOrFail($professor_id);
         $subjects = $professor->subjects()->withCount('students')->with('students')->get();
-
+    
         $dayShortcodes = [
             'Monday' => 'M', 'Tuesday' => 'T', 'Wednesday' => 'W',
             'Thursday' => 'Th', 'Friday' => 'F', 'Saturday' => 'Sa', 'Sunday' => 'Su'
         ];
-
+    
         $subjects->transform(function ($subject) use ($dayShortcodes) {
             $daysArray = is_array($subject->days) ? $subject->days : json_decode($subject->days, true);
             $subject->formatted_days = collect($daysArray)
                 ->map(fn($day) => $dayShortcodes[$day] ?? $day)
                 ->implode(', ');
-
+    
             return $subject;
         });
-
+    
         return view('professors.show', compact('professor', 'subjects'));
     }
+       
+  
+    
+
 
     public function subjects($id)
     {

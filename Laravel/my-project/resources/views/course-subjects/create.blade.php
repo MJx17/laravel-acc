@@ -20,9 +20,9 @@
 
                 <!-- Available Subjects Selection Using Checkboxes -->
                 <h4 class="font-semibold mb-2">Select Subjects to Assign:</h4>
-                <div class="border border-gray-300 rounded-md p-4">
+                <div class="border border-gray-300 rounded-md p-2 h-[400px] overflow-y-auto scrollbar-hide">
                     @foreach ($availableSubjects as $subject)
-                        <div class="flex justify-between items-center border-t border-b border-gray-200 px-4 py-2">
+                        <div class="flex justify-between items-center border-t border-b border-gray-200 px-4 py-2 hover:bg-gray-200">
                             <span class="font-medium text-gray-700">{{ $subject->code }} - {{ $subject->name }}</span>
                             <input type="checkbox" name="add_subjects[]" value="{{ $subject->id }}" id="subject-{{ $subject->id }}" class="ml-2">
                         </div>
