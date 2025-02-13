@@ -6,24 +6,52 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
 use App\Models\Student;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class ProfessorGradingController extends Controller
 {
     /**
      * Display the list of students enrolled in a specific subject assigned to the professor.
      */
+    // public function showStudentsForGrading($subjectId)
+    // {
+    //     $professor = Auth::user();
+
+    //     // Find the subject and ensure it belongs to the professor
+    //     $subject = Subject::where('id', $subjectId)
+    //         ->where('professor_id', $professor->id)
+    //         ->with('students')
+    //         ->firstOrFail();
+
+    //     return view('professors.grade_students', compact('subject', 'professor'));
+    // }
+
     public function showStudentsForGrading($subjectId)
     {
         $professor = Auth::user();
-
-        // Find the subject and ensure it belongs to the professor
-        $subject = Subject::where('id', $subjectId)
-            ->where('professor_id', $professor->id)
-            ->with('students')
-            ->firstOrFail();
-
-        return view('professors.grade_students', compact('subject'));
+        $admin = Auth::user();
+    
+        if ($admin->hasRole('admin')) {
+            // Admins can access any subject
+            $subject = Subject::where('id', $subjectId)
+                ->with('students')
+                ->firstOrFail();
+        } elseif ($professor->hasRole('professor')) {
+            // Professors can only access their own subjects
+            $subject = Subject::where('id', $subjectId)
+                ->where('professor_id', $professor->id)
+                ->with('students')
+                ->firstOrFail();
+        } else {
+            // Other roles (e.g., students) get a 403 error
+            abort(403, 'Unauthorized access.');
+        }
+    
+        return view('professors.grade_students', compact('subject', 'professor', 'admin'));
     }
+    
+
 
     /**
      * Update grades for students in the specific subject.

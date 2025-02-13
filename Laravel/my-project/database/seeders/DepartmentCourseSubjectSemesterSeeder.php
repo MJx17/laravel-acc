@@ -581,7 +581,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
 
                 // THIRD YEAR - 1st Semester
         $pom = Subject::create([
-            'name' => 'Production Operation Management (With Actual Manufacturing Plant Observation)',
+            'name' => 'Production Operation Management',
             'code' => 'POM',
             'semester_id' => $semester1->id,
             'fee' => 550,
@@ -945,7 +945,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
         $ba4->courses()->attach([ $course4->id,  $course5->id, ]); 
         $ba5->courses()->attach([ $course4->id,  $course5->id, ]); 
         $elec2->courses()->attach([ $course4->id,  $course5->id, ]); 
-        $pe4->courses()->attach([ $course4->id,  $course5->id, ]); 
+        $pe4->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
         
         
         //3rd year

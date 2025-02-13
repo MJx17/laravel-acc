@@ -116,9 +116,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('courses', CourseController::class)->parameters([
         'courses' => 'course_id',
     ]);
-    Route::resource('professors', ProfessorController::class)->parameters([
-        'professor' => 'professor_id',
-    ]);
+
 });
 
 
@@ -129,6 +127,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 });
 
 
+Route::resource('professors', ProfessorController::class)->parameters([
+    'professor' => 'professor_id',
+]);
 
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
 Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
@@ -137,7 +138,15 @@ Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
 ->name('student_subject.subjects');  
 
+
+
 Route::resource('course-subjects', CourseSubjectController::class);
+
+Route::get('/course-subjects/create/{course_code}', [CourseSubjectController::class, 'create'])
+    ->name('course-subjects.create');
+
+Route::post('/course-subjects/store/{course_code}', [CourseSubjectController::class, 'store'])
+    ->name('course-subjects.store');
 
 
 
@@ -147,7 +156,7 @@ Route::put('students/{studentId}/subjects', [StudentSubjectController::class, 'u
 
 // Professor Grading Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])->name('professor.gradeStudents');
+    Route::get('professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])->name('professors.grade_students');
     Route::put('professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])->name('professor.updateGrades');
 });
 

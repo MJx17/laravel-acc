@@ -20,7 +20,7 @@
         "realrashid/sweet-alert": "^7.2",
         "spatie/browsershot": "^5.0",
         "spatie/laravel-pdf": "*",
-        "spatie/laravel-permission": "^6.10"
+        "spatie/laravel-permission": "^6.13"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

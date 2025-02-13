@@ -7,90 +7,85 @@
 
     <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Courses and Subjects</h3>
+            <!-- Dynamic Course Name -->
+            <h3 id="courseName" class="text-xl font-semibold mb-4">
+                {{ optional($groupedCourses->first())['course_name'] ?? 'Select a Course' }}
+            </h3>
 
             <!-- Course Selection Tabs -->
-            <div class="flex space-x-4 mb-4" id="courseTabs">
-                @foreach ($groupedCourses as $courseCode => $courseSubjects)
-                    <button 
+            <div class="overflow-x-auto whitespace-nowrap mb-4 scrollbar-hidden h-50">
+                <div class="flex justify-center space-x-4 mb-4" id="courseTabs">
+                    @foreach ($groupedCourses as $courseCode => $courseData)
+                    <button
                         class="course-tab px-4 py-2 rounded-md transition duration-300 bg-gray-200 text-gray-700"
                         data-course="{{ $courseCode }}"
-                    >
+                        data-course-name="{{ $courseData['course_name'] }}">
                         {{ $courseCode }}
                     </button>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
 
             <!-- Shelves (Only Render Active Shelf) -->
-            @foreach ($groupedCourses as $courseCode => $courseSubjects)
-                <div class="course-shelf bg-white shadow-lg rounded-lg p-4 hidden" id="shelf-{{ $courseCode }}">
-                    <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Course Code: {{ $courseCode }}</h4>
+            @foreach ($groupedCourses as $courseCode => $courseData)
+            <div class="course-shelf p-4 hidden " id="shelf-{{ $courseCode }}">
+                <ul class="mt-3 max-h-[400px] overflow-y-auto scrollbar-hide border-t border-b border-gray-300 ">
+                    @foreach ($courseData['subjects'] as $courseSubject)
+                    <li class="flex justify-between items-center bg-gray-100 p-3 border-b border-gray-300 rounded-md hover:bg-gray-200">
+                        <span class="text-gray-700 font-semibold">{{ $courseSubject->subject->code }}</span>
+                        <span class="text-gray-900">{{ $courseSubject->subject->name }}</span>
+                    </li>
 
-                    <ul class="mt-3 space-y-2">
-                        @foreach ($courseSubjects as $courseSubject)
-                            <li class="flex justify-between items-center bg-gray-100 p-2 rounded-md">
-                                <span>{{ $courseSubject->subject->name }}</span>
+                    @endforeach
+                </ul>
 
-                                <div class="flex space-x-2">
-                                    <!-- Edit Button -->
-                                    <a href="{{ route('course-subjects.edit', $courseSubject->id) }}" class="text-blue-500 hover:text-blue-700">
-                                        Edit
-                                    </a>
-
-                                    <!-- Delete Button -->
-                                    <form action="{{ route('course-subjects.destroy', $courseSubject->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this subject?')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                                    </form>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                <!-- Manage Subjects Button -->
+                <div class="mt-4 flex justify-end gap-2">
+                    <a href="{{ route('course-subjects.edit', $courseCode) }}" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                         Edit
+                    </a>
+                    <a href="{{ route('course-subjects.create', $courseCode) }}" 
+                        class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                        Add
+                    </a>
                 </div>
+            </div>
             @endforeach
         </div>
     </div>
-   
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             let tabs = document.querySelectorAll(".course-tab");
             let shelves = document.querySelectorAll(".course-shelf");
+            let courseNameHeader = document.getElementById("courseName");
 
-            // Function to show the selected course and hide others
-            function showCourse(courseCode) {
+            function showCourse(courseCode, courseName) {
                 shelves.forEach(shelf => {
-                    if (shelf.id === `shelf-${courseCode}`) {
-                        shelf.classList.remove("hidden");
-                    } else {
-                        shelf.classList.add("hidden");
-                    }
+                    shelf.classList.toggle("hidden", shelf.id !== `shelf-${courseCode}`);
                 });
 
                 tabs.forEach(tab => {
-                    if (tab.getAttribute("data-course") === courseCode) {
-                        tab.classList.add("bg-blue-500", "text-white");
-                        tab.classList.remove("bg-gray-200", "text-gray-700");
-                    } else {
-                        tab.classList.remove("bg-blue-500", "text-white");
-                        tab.classList.add("bg-gray-200", "text-gray-700");
-                    }
+                    let isActive = tab.getAttribute("data-course") === courseCode;
+                    tab.classList.toggle("bg-blue-500", isActive);
+                    tab.classList.toggle("text-white", isActive);
+                    tab.classList.toggle("bg-gray-200", !isActive);
+                    tab.classList.toggle("text-gray-700", !isActive);
                 });
+
+                courseNameHeader.textContent = courseName;
             }
 
-            // Add event listener to all course tabs
             tabs.forEach(tab => {
-                tab.addEventListener("click", function () {
-                    let courseCode = this.getAttribute("data-course");
-                    showCourse(courseCode);
+                tab.addEventListener("click", function() {
+                    showCourse(this.getAttribute("data-course"), this.getAttribute("data-course-name"));
                 });
             });
 
-            // Show the first course by default
             if (tabs.length > 0) {
-                showCourse(tabs[0].getAttribute("data-course"));
+                showCourse(tabs[0].getAttribute("data-course"), tabs[0].getAttribute("data-course-name"));
             }
         });
     </script>
-
 </x-app-layout>

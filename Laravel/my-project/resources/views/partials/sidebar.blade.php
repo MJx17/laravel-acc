@@ -40,14 +40,7 @@
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Users
                 </a>
-                <a href="{{ route('student.indexAdmin') }}" 
-                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
-                   Student List
-                </a>
-                <a href="{{ route('departments.index') }}" 
-                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
-                   Departments
-                </a>
+              
                 <a href="{{ route('courses.index') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500{{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Courses
@@ -65,26 +58,33 @@
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                    Enrollment
                 </a>
+               
+                <a href="{{ route('student.indexAdmin') }}" 
+                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                   Student List
+                </a>
+                <a href="{{ route('departments.index') }}" 
+                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                   Departments
+                </a>
                 <a href="{{ route('course-subjects.index') }}"
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
-                  Enroll
+                  Course Subjects
                 </a>
-                <a href="{{ route('register_professor') }}"
-                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
-                   Prof User Registration
-                </a>
+               
             </li>
             @endif
 
             <!-- Professor Page - Accessible to Professors Only -->
-            @if(auth()->user()->hasRole('professor'))
+           
             <li>
-                <a href="{{ route('professor.subjects') }}" 
-                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'professor.dashboard' ? 'bg-gray-700' : '' }}">
-                   Professor Dashboard
-                </a>
+            <a href="{{ route('professors.show', $professor->id) }}" 
+                  class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'professor.dashboard' ? 'bg-gray-700' : '' }}">
+                  asd
+               </a>
+
             </li>
-            @endif
+       
         </ul>
     </div>
 </div>

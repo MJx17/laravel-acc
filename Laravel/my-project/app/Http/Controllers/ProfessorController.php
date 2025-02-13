@@ -116,9 +116,9 @@ class ProfessorController extends Controller
     }
 
     // Show the details of a specific professor
-    public function show($id)
+    public function show($professor_id)
     {
-        $professor = Professor::findOrFail($id);
+        $professor = Professor::findOrFail($professor_id);
         $subjects = $professor->subjects()->withCount('students')->with('students')->get();
 
         $dayShortcodes = [

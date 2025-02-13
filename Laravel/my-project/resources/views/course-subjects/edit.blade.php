@@ -1,43 +1,47 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Edit Course: {{ $course->course_name }}
+            {{ __('Edit Subjects for ') }} {{ $course->course_name }}
         </h2>
     </x-slot>
 
-    <div class="max-w-xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <form action="{{ route('courses.update', $course->id) }}" method="POST">
+    <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow-xl sm:rounded-lg p-6 bg-white">
+            <h3 class="text-xl font-semibold mb-4">{{ $course->course_name }}</h3>
+
+            @if (session('success'))
+                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('course-subjects.update', $course->course_code) }}" method="POST">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
 
-                <!-- Hidden input to store course ID -->
-                <input type="hidden" name="course_id" value="{{ $course->id }}">
-
-                <!-- Subject Selection (Checkboxes) -->
-                <div class="mt-4">
-                    <label class="block text-gray-700 dark:text-gray-200 font-semibold">Assign Subjects to Course</label>
-
-                    @if($subjects->isEmpty())
-                        <p class="text-red-500 mt-2">No available subjects.</p>
-                    @else
-                        @foreach ($subjects as $subject)
-                            <div class="flex items-center mt-2">
-                                <input type="checkbox" name="subject_ids[]" value="{{ $subject->id }}" 
-                                    class="mr-2 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-400"
-                                    {{ in_array($subject->id, $assignedSubjects) ? 'checked' : '' }}>
-                                <label class="text-gray-700 dark:text-gray-200">{{ $subject->name }}</label>
-                            </div>
-                        @endforeach
-                    @endif
+                <!-- Subjects List -->
+                <h4 class="font-semibold mb-2">Select Subjects:</h4>
+                <div class="border border-gray-300 rounded-md p-4 h-[500px] overflow-y-auto">
+                    @foreach ($allSubjects as $subject)
+                        <div class="flex justify-between items-center border-t border-b border-gray-200 px-4 py-2">
+                            <span class="font-medium text-gray-700">{{ $subject->code }} - {{ $subject->name }}</span>
+                            <input type="checkbox" 
+                                   name="subject_ids[]" 
+                                   value="{{ $subject->id }}" 
+                                   id="subject-{{ $subject->id }}" 
+                                   class="ml-2"
+                                   @if($assignedSubjects->contains($subject->id)) checked @endif>
+                        </div>
+                    @endforeach
                 </div>
 
-                <!-- Submit & Cancel Buttons -->
-                <div class="mt-6 flex justify-end gap-2">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-                        Update
+                <!-- Submit Button -->
+                <div class="mt-4 flex justify-end gap-2">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        Save 
                     </button>
-                    <a href="{{ route('courses.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded shadow">
+                    <a href="{{ route('course-subjects.index') }}" 
+                       class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
                         Cancel
                     </a>
                 </div>

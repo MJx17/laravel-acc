@@ -13,7 +13,8 @@
         @include('partials.navbar')
 
         <!-- Sidebar -->
-        @include('partials.sidebar')
+        @include('partials.sidebar', ['professor' => auth()->user()->professor])
+
     </div>
 
     <!-- Main Content -->
@@ -69,6 +70,7 @@
         to { width: 0%; }
     }
 </style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         function showToast(type, title, background, iconColor, progressBarColor) {
@@ -99,25 +101,34 @@
             });
         }
 
-        @if(session('success'))
-            showToast('success', "🎉 {{ session('success') }}", '#d1fae5', '#047857', '#6ee7b7'); // Pastel green bg
-        @endif
+        // Example of session data embedded in the HTML
+        const sessionData = {
+            success: "{{ session('success') }}",
+            error: "{{ session('error') }}",
+            warning: "{{ session('warning') }}",
+            updated: "{{ session('updated') }}",
+            deleted: "{{ session('deleted') }}"
+        };
 
-        @if(session('error'))
-            showToast('error', "❌ {{ session('error') }}", '#fee2e2', '#dc2626', '#f87171'); // Pastel red bg
-        @endif
+        if (sessionData.success) {
+            showToast('success', `🎉 ${sessionData.success}`, '#d1fae5', '#047857', '#6ee7b7');
+        }
 
-        @if(session('warning'))
-            showToast('warning', "⚠️ {{ session('warning') }}", '#fef9c3', '#b45309', '#facc15'); // Pastel yellow bg
-        @endif
+        if (sessionData.error) {
+            showToast('error', `❌ ${sessionData.error}`, '#fee2e2', '#dc2626', '#f87171');
+        }
 
-        @if(session('updated'))
-            showToast('info', "✏️ {{ session('updated') }}", '#dbeafe', '#1e40af', '#93c5fd'); // Pastel blue bg
-        @endif
+        if (sessionData.warning) {
+            showToast('warning', `⚠️ ${sessionData.warning}`, '#fef9c3', '#b45309', '#facc15');
+        }
 
-        @if(session('deleted'))
-            showToast('error', "🗑️ {{ session('deleted') }}", '#fde2e4', '#9b2226', '#ff6b6b'); // Soft red bg for delete
-        @endif
+        if (sessionData.updated) {
+            showToast('info', `✏️ ${sessionData.updated}`, '#dbeafe', '#1e40af', '#93c5fd');
+        }
+
+        if (sessionData.deleted) {
+            showToast('error', `🗑️ ${sessionData.deleted}`, '#fde2e4', '#9b2226', '#ff6b6b');
+        }
     });
 </script>
 

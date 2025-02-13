@@ -28,7 +28,7 @@
                             <td class="px-4 py-2 border-t border-b ">{{ $student->first_name }} {{ $student->surname }}</td>
                             <td class="px-4 py-2 border-t border-b">{{ $student->email_address }}</td>
                             <td class="px-4 py-2 border-t border-b">{{ $student->mobile_number }}</td>
-                            <td class="px-4 py-2 border-t border-b">{{ $student->year_level }}</td>
+                            <td class="px-4 py-2 border-t border-b">{{ Str::title(str_replace('_', ' ', $student->year_level)) }}</td>
                             <td class="px-4 py-2 border-t border-b">
                                 <!-- Styled action buttons -->
                                 <a href="{{ route('student.edit', $student->id) }}" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-200">Edit</a>

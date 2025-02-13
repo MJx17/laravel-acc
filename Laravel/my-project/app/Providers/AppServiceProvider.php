@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\CheckWildcardPermission;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,5 +35,15 @@ class AppServiceProvider extends ServiceProvider
 
         // Register the Livewire component
         Livewire::component('dual-listbox', \App\Http\Livewire\DualListbox::class);
+
+
+       
+
     }
+
+    
+   
+     
+  
+    
 }

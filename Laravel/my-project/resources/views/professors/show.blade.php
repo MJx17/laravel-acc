@@ -25,22 +25,21 @@
                     </p>
                 </div>
             </div>
-            
+
             <!-- Right Section: Subjects & Enrollments -->
             <div class="lg:col-span-2 bg-white shadow-lg rounded-lg p-6 ">
-            <h3 class="text-xl font-semibold mb-4">📚 Assigned Subjects</h3>
-                
+                <h3 class="text-xl font-semibold mb-4">📚 Assigned Subjects</h3>
+
                 <!-- Search Bar -->
                 <div x-data="{ search: '' }">
-                    <input 
-                        type="text" 
-                        placeholder="Search subjects..." 
+                    <input
+                        type="text"
+                        placeholder="Search subjects..."
                         class="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 mb-4"
-                        x-model="search"
-                    />
+                        x-model="search" />
 
                     <!-- Subjects Table -->
-                    <div class="overflow-x-auto h-[800px] overflow-y-auto scrollbar-hide">
+                    <div class="overflow-x-auto h-[500px] overflow-y-auto scrollbar-hide">
                         <table class="w-full border-collapse ">
                             <thead class="bg-gray-200 text-left">
                                 <tr>
@@ -48,59 +47,88 @@
                                     <th class="px-4 py-2">Day</th>
                                     <th class="px-4 py-2">Time</th>
                                     <th class="px-4 py-2">Students</th>
-                                    <th class="px-4 py-2">Enrolled</th>
+                                    <th class="px-4 py-2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($subjects as $subject)
-                                    <tr 
-                                        class="bg-gray-50 even:bg-gray-100"
-                                        x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())"
-                                    >
-                                        <!-- Subject Name -->
-                                        <td class="px-4 py-2 font-semibold">{{ $subject->name }}</td>
-                                        
-                                        <!-- Day -->
-                                        <td class="px-4 py-2">{{ $subject->formatted_days }}</td>
+                                <tr
+                                    class="bg-white hover:bg-gray-200 border-b"
+                                    x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())">
+                                    <!-- Subject Name -->
+                                    <td class="px-4 py-2 font-semibold">{{ $subject->name }}</td>
 
-                                        <!-- Time -->
-                                        <td class="px-4 py-2">{{ $subject->start_time }} - {{ $subject->end_time }}</td>
+                                    <!-- Day -->
+                                    <td class="px-4 py-2">{{ $subject->formatted_days }}</td>
 
-                                        <!-- Student Count -->
-                                        <td class="px-4 py-2 text-center">{{ $subject->students_count }}</td>
-                                        
-                                        <!-- Students Dropdown -->
-                                        <td class="px-4 py-2">
-                                            <div x-data="{ open: false, searchStudent: '' }">
-                                                <button 
-                                                    @click="open = !open" 
-                                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                                >
-                                                    Show
-                                                </button>
+                                    <!-- Time -->
+                                    <td class="px-4 py-2">{{ $subject->start_time }} - {{ $subject->end_time }}</td>
 
-                                                <div x-show="open" class="mt-2 p-2 bg-white shadow rounded-md border border-gray-300">
-                                                    <!-- Search for Students -->
-                                                    <input 
-                                                        type="text" 
-                                                        placeholder="Search students..." 
-                                                        class="w-full p-1 border rounded-md mb-2"
-                                                        x-model="searchStudent"
-                                                    />
-                                                    <ul>
+                                    <!-- Student Count -->
+                                    <td class="px-4 py-2 text-center">{{ $subject->students_count }}</td>
+
+                                    <td class="px-4 py-2 flex items-center space-x-2">
+                                        <div x-data="{ open: false, searchStudent: '' }">
+                                            <!-- Show Button -->
+                                            <button
+                                                @click="open = true"
+                                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                                Show
+                                            </button>
+
+                                            <!-- Modal (Only visible when 'open' is true) -->
+                                            <div
+                                                x-show="open"
+                                                class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                                                <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                                                    <!-- Close Button -->
+                                                    <button
+                                                        @click="open = false"
+                                                        class="absolute top-2 right-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                                        ✕
+                                                    </button>
+
+                                                    <!-- Modal Title -->
+                                                    <h2 class="text-xl font-bold mb-4">Enrolled Students</h2>
+
+                                                    <!-- Search Box -->
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Search students..."
+                                                        class="w-full p-2 border rounded mb-2"
+                                                        x-model="searchStudent" />
+
+                                                    <!-- Student List -->
+                                                    <ul class="max-h-60 overflow-y-auto border p-2 rounded">
                                                         @foreach($subject->students as $student)
-                                                            <li 
-                                                                class="py-1 px-2 border-b text-gray-800"
-                                                                x-show="$el.textContent.toLowerCase().includes(searchStudent.toLowerCase())"
-                                                            >
-                                                                {{ $student->fullname }}
-                                                            </li>
+                                                        <li
+                                                            class="py-2 px-3 border-b text-gray-800"
+                                                            x-show="$el.textContent.toLowerCase().includes(searchStudent.toLowerCase())">
+                                                            {{ $student->fullname }}
+                                                        </li>
                                                         @endforeach
                                                     </ul>
+
+                                                    <!-- Close Button -->
+                                                    <button
+                                                        @click="open = false"
+                                                        class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full">
+                                                        Close
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+
+                                        <!-- Grade Button -->
+                                        <a href="{{ route('professors.grade_students', $subject->id) }}"
+                                            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                                            Grade
+                                        </a>
+                                 
+                                    </td>
+
+
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
