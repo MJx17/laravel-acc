@@ -13,8 +13,7 @@
         @include('partials.navbar')
 
         <!-- Sidebar -->
-        @include('partials.sidebar', ['professor' => auth()->user()->professor])
-
+        @include('partials.sidebar')
     </div>
 
     <!-- Main Content -->

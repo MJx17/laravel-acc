@@ -76,15 +76,14 @@
             @endif
 
             <!-- Professor Page - Accessible to Professors Only -->
-           
+            @if(auth()->user()->hasRole('professor'))
             <li>
-            <a href="{{ route('professors.show', $professor->id) }}" 
-                  class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'professor.dashboard' ? 'bg-gray-700' : '' }}">
-                  asd
-               </a>
-
+                <a href="{{ route('professors.show'), $professor->id}}" 
+                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'professor.dashboard' ? 'bg-gray-700' : '' }}">
+                   
+                </a>
             </li>
-       
+            @endif
         </ul>
     </div>
 </div>
