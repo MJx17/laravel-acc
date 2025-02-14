@@ -983,8 +983,6 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
 
 
 
-
-
      
 
         function getSubjects($yearLevel, $semesterId, $courseId)
@@ -1034,6 +1032,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
                 'year_level' => $yearLevel,
                 'semester_id' => $semesterId,
                 'course_id' => $courseId,
+                'category' => 'new',
             ],
             ['subject_ids' => json_encode($subjectIds)]
         );

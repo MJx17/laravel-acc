@@ -45,17 +45,13 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ ucfirst($enrollment->category) }}</td>
 
                             <td class="px-6 py-4 whitespace-nowrap">
-                              <a href="{{ route('enrollments.fees', $enrollment->id) }}" 
-                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                                    View
-                                </a>
                                 <a href="{{ route('enrollments.edit', $enrollment->id) }}" 
                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                                     Edit
                                 </a>
 
                                 <!-- Delete Button -->
-                                <form action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="inline-block ">
+                                <form action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="inline-block ml-4">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 

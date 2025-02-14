@@ -20,7 +20,7 @@
             <li>
                 <a href="{{ route('student.create') }}" 
                    class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ str_starts_with(Route::currentRouteName(), 'enrollment') ? 'bg-gray-700' : '' }}">
-                   Enrollment
+                   My Details
                 </a>
             </li>
             @endif
@@ -77,9 +77,17 @@
 
             @if(auth()->user()->hasRole('professor'))
                <li>
-                  <a href="{{ route('professors.show', auth()->user()->professor->id) }}"
+               <a href="{{ route('professors.subjects', auth()->user()->professor->id) }}"
                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
                        Subjects
+                  </a>
+                  <a href="{{ route('professors.show', auth()->user()->professor->id) }}"
+                  class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                       Assement
+                  </a>
+                  <a href="{{ route('professors.show', auth()->user()->professor->id) }}"
+                  class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ Route::currentRouteName() == 'admin.dashboard' ? 'bg-gray-700' : '' }}">
+                       Details
                   </a>
                </li>
             @endif

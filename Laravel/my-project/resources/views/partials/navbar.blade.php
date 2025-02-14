@@ -9,17 +9,17 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8M4 18h12"></path>
                 </svg>
             </button>
-            <div class="text-xl font-semibold">{{ __('Dashboard') }}</div>
+            <div class="text-xl font-semibold">{{ __('ACC') }}</div>
         </div>
 
      
        
         <!-- Right side profile and other buttons -->
         <div class="hidden md:flex items-center space-x-4">
-            <a href="{{ route('profile.edit') }}" class="hover:bg-gray-700 px-4 py-2 rounded">{{ __('Profile') }}</a>
+            <a href="{{ route('profile.edit') }}" class="hover:bg-green-500 px-4 py-2 rounded">{{ __('Profile') }}</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="hover:bg-gray-700 px-4 py-2 rounded">{{ __('Log Out') }}</button>
+                <button type="submit" class="hover:bg-green-500 px-4 py-2 rounded">{{ __('Log Out') }}</button>
             </form>
         </div>
     </div>

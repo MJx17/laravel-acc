@@ -6,8 +6,9 @@
     </x-slot>
 
     @if($user->student)
-    <p>You are already enrolled.</p>
+    <p>You are already signed up. <a href="{{ route('student.indexStudent') }}" class="text-blue-500 underline">Go to Student Info</a></p>
     @else
+    <p>You are not signed up yet.</p>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <form action="{{ route('student.store') }}" method="POST" class="form-container w-full  mx-auto p-12 bg-white shadow-lg rounded-lg" enctype="multipart/form-data">

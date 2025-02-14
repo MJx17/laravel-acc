@@ -43,9 +43,8 @@
                         <table class="w-full border-collapse ">
                             <thead class="bg-gray-200 text-left">
                                 <tr>
-                                    <th class="px-4 py-2">Subject</th>
-                                    <th class="px-4 py-2">Day</th>
-                                    <th class="px-4 py-2">Time</th>
+                                    <th class="px-4 py-2">Code</th>
+                                    <th class="px-4 py-2">Subject </th>
                                     <th class="px-4 py-2">Students</th>
                                     <th class="px-4 py-2">Actions</th>
                                 </tr>
@@ -56,13 +55,13 @@
                                     class="bg-white hover:bg-gray-200 border-b"
                                     x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())">
                                     <!-- Subject Name -->
+                                     
+                                    <td class="px-4 py-2 font-semibold">{{ $subject->code }}</td>
+
                                     <td class="px-4 py-2 font-semibold">{{ $subject->name }}</td>
 
                                     <!-- Day -->
-                                    <td class="px-4 py-2">{{ $subject->formatted_days }}</td>
-
-                                    <!-- Time -->
-                                    <td class="px-4 py-2">{{ $subject->start_time }} - {{ $subject->end_time }}</td>
+                            
 
                                     <!-- Student Count -->
                                     <td class="px-4 py-2 text-center">{{ $subject->students_count }}</td>

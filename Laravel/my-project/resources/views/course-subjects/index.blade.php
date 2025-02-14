@@ -8,7 +8,7 @@
     <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-xl sm:rounded-lg p-6">
             <!-- Dynamic Course Name -->
-            <h3 id="courseName" class="text-xl font-semibold mb-4">
+            <h3 id="courseName" class="text-xl text-center  font-semibold mb-4">
                 {{ optional($groupedCourses->first())['course_name'] ?? 'Select a Course' }}
             </h3>
 

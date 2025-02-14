@@ -16,8 +16,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseSubjectController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\ProfessorGradingController;
-use App\Http\Controllers\FeePaymentController;
-
+use App\Http\Controllers\FeeController;
+use App\Http\Controllers\PaymentController;
 
 // Home Route
 Route::get('/', function () {
@@ -106,7 +106,11 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('enrollments', EnrollmentController::class);
-    Route::resource('fees', FeePaymentController::class);
+    
+    Route::resource('fees', FeeController::class);
+
+    Route::resource('payment', PaymentController::class);
+
     Route::resource('subjects', SubjectController::class)->parameters([
         'subjects' => 'id', // Use 'id' instead of 'subjects_id'
     ]);
@@ -116,16 +120,36 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('courses', CourseController::class)->parameters([
         'courses' => 'course_id',
     ]);
+    Route::resource('professors', ProfessorController::class)
+        ->parameters(['professor' => 'professor_id'])
+        ->except(['show']); // Exclude 'show' because it's restricted to professors only
+        Route::resource('course-subjects', CourseSubjectController::class);
+
+    Route::get('/course-subjects/create/{course_code}', [CourseSubjectController::class, 'create'])
+        ->name('course-subjects.create');
+
+    Route::post('/course-subjects/store/{course_code}', [CourseSubjectController::class, 'store'])
+        ->name('course-subjects.store');
+
+
+});
+
+Route::middleware(['auth', 'verified', 'role:professor|admin'])->group(function () {
+    Route::get('professors/{professor_id}', [ProfessorController::class, 'show'])
+        ->name('professors.show');
+        
+    Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
+        ->name('professors.subjects');
+
+    Route::get('/professors/{professor}/profile', [ProfessorController::class, 'profile'])
+    ->name('professors.profile');
+
 
 });
 
 
-Route::get('professors/{professor_id}/subjects', [ProfessorController::class, 'subjects'])
-->name('professors.subjects');
 
-Route::resource('professors', ProfessorController::class)->parameters([
-    'professor' => 'professor_id',
-]);
+
 Route::get('/test-professor', function () {
     return [
         'user' => auth()->user(),
@@ -142,14 +166,7 @@ Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 's
 ->name('student_subject.subjects');  
 
 
-
-Route::resource('course-subjects', CourseSubjectController::class);
-
-Route::get('/course-subjects/create/{course_code}', [CourseSubjectController::class, 'create'])
-    ->name('course-subjects.create');
-
-Route::post('/course-subjects/store/{course_code}', [CourseSubjectController::class, 'store'])
-    ->name('course-subjects.store');
+Route::get('/enrollments/{id}/details', [EnrollmentController::class, 'fees'])->name('enrollments.fees');
 
 
 

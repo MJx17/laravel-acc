@@ -70,6 +70,7 @@ class ProfessorController extends Controller
         return view('professors.index', compact('professors'));
     }
 
+
     // Show the form for editing the specified professor
     public function edit($id)
     {
@@ -140,12 +141,7 @@ class ProfessorController extends Controller
 
     public function show($professor_id)
     {
-        $user = auth()->user(); // Get the logged-in user
-    
-        // Ensure the user is a professor and can only access their own professor profile
-        if ($user->hasRole('professor') && optional($user->professor)->id != $professor_id) {
-            abort(403, 'Unauthorized access');
-        }
+       
     
         // Fetch the professor and related subjects
         $professor = Professor::findOrFail($professor_id);
@@ -168,13 +164,31 @@ class ProfessorController extends Controller
         return view('professors.show', compact('professor', 'subjects'));
     }
        
-  
+    public function profile(Professor $professor)
+    {
+        $user = auth()->user(); // Get the logged-in user
+    
+        // Ensure the user is a professor and can only access their own profile
+        if ($user->hasRole('professor') && optional($user->professor)->id !== $professor->id) {
+            abort(403, 'Unauthorized access');
+        }
+    
+        return view('professors.profile', compact('professor'));
+    }
     
 
 
-    public function subjects($id)
+    public function subjects($professor_id)
     {
-        $professor = Professor::findOrFail($id);
+
+        $user = auth()->user(); // Get the logged-in user
+    
+        // Ensure the user is a professor and can only access their own professor profile
+        if ($user->hasRole('professor') && optional($user->professor)->id != $professor_id) {
+            abort(403, 'Unauthorized access');
+        }
+        
+        $professor = Professor::findOrFail($professor_id);
         $subjects = $professor->subjects()->with('students', 'courses')->paginate(10);
 
         return view('professors.subjects', compact('professor', 'subjects'));

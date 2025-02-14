@@ -17,12 +17,17 @@ class StudentController extends Controller
     // Show the enrollment form
     public function create()
     {
-        // Get the currently authenticated user
         $user = Auth::user();
+        
+        // If the user is already a student, redirect them to student-info
+        if ($user->student) {
+            return redirect()->route('student.indexStudent')->with('message', 'You are already signed up.');
+        }
+    
         $courses = Course::all();
-        // Pass the user to the view
         return view('student.create', compact('user', 'courses'));
     }
+    
 
     // Store the enrollment data
     public function store(Request $request)

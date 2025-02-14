@@ -13,7 +13,7 @@ class Enrollment extends Model
         'semester_id',
         'course_id',
         'year_level',
-        'status'
+        'category'
 
     ];
 
@@ -36,4 +36,17 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Course::class);  // Added the course relationship
     }
+
+    public function fees()
+    {
+        return $this->hasOne(Fee::class, 'enrollment_id'); // Adjust table name if necessary
+    }
+
+    
+
+
+public function payment()
+{
+    return $this->hasOne(Payment::class);
+}
 }

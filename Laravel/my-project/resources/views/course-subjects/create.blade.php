@@ -7,7 +7,7 @@
 
     <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-xl sm:rounded-lg p-6 bg-white">
-            <h3 class="text-xl font-semibold mb-4">{{ $course->course_name }}</h3>
+            <h3 class="text-xl text-center font-semibold mb-4">{{ $course->course_name }}</h3>
 
             @if (session('success'))
                 <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
