@@ -7,6 +7,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pdf\PdfController;
+use App\Http\Controllers\SubjectPdfController;
+
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\Auth\RegisteredProfessorUserController;
@@ -52,16 +54,14 @@ Route::post('/admin/register-professor', [RegisteredProfessorUserController::cla
 
 
 
-Route::middleware('auth', 'verified','role:student', )->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|student'])->group(function () {
     Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
     Route::post('/student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/student-info', [StudentController::class, 'indexStudent'])->name('student.indexStudent');
-    // Route::get('/enrollment/blank-form/download', [StudentController::class, 'downloadBlankForm'])
-    //     ->name('enrollment.downloadBlankForm');
-    // Route to download the filled enrollment form (PDF)
-    Route::get('/enrollment/filled-form/download/{id}', [StudentController::class, 'downloadFilledForm'])
-        ->name('enrollment.downloadFilledForm');
-   
+    Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subjects.show');
+
+    Route::get('/enrollments/{id}/details', [EnrollmentController::class, 'fees'])->name('enrollments.fees');
+
 });
 
 
@@ -80,6 +80,8 @@ Route::middleware('auth', 'verified','role:admin')->group(function () {
     
     // Delete student data
     Route::delete('student/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
+    Route::get('students/{studentId}/subjects/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');
+Route::put('students/{studentId}/subjects', [StudentSubjectController::class, 'update'])->name('student_subjects.update');
 
 });
 
@@ -143,6 +145,9 @@ Route::middleware(['auth', 'verified', 'role:professor|admin'])->group(function 
 
     Route::get('/professors/{professor}/profile', [ProfessorController::class, 'profile'])
     ->name('professors.profile');
+     Route::get('professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])->name('professors.grade_students');
+    Route::put('professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])->name('professor.updateGrades');
+
 
 
 });
@@ -166,19 +171,18 @@ Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 's
 ->name('student_subject.subjects');  
 
 
-Route::get('/enrollments/{id}/details', [EnrollmentController::class, 'fees'])->name('enrollments.fees');
 
 
+// Route to show the subjects in a view (no download yet)
+Route::get('/subjects-pdf', [SubjectPdfController::class, 'showSubjectsPDF'])->name('subjects-pdf');
 
-Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subjects.show');
-Route::get('students/{studentId}/subjects/edit', [StudentSubjectController::class, 'edit'])->name('student_subjects.edit');
-Route::put('students/{studentId}/subjects', [StudentSubjectController::class, 'update'])->name('student_subjects.update');
+// Update the route to accept studentId as a parameter
+Route::get('/download-subjects-pdf/{studentId}', [SubjectPdfController::class, 'downloadSubjectsPDF'])->name('download-subjects-pdf');
+
 
 // Professor Grading Routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('professor/subjects/{subjectId}/students', [ProfessorGradingController::class, 'showStudentsForGrading'])->name('professors.grade_students');
-    Route::put('professor/subjects/{subjectId}/grades', [ProfessorGradingController::class, 'updateGrades'])->name('professor.updateGrades');
-});
+
+   
 
 
 

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 
 class Subject extends Model
 {
     use HasFactory;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -30,6 +31,7 @@ class Subject extends Model
         'end_time',       // Class end time
     ];
 
+    protected $appends = ['class_time', 'formatted_days'];
     /**
      * Relationships
      */
@@ -105,5 +107,29 @@ class Subject extends Model
     {
         return $this->belongsToMany(Enrollment::class);
     }
+
+    public function getFormattedDaysAttribute()
+    {
+        $dayMapping = [
+            'Monday' => 'M',
+            'Tuesday' => 'T',
+            'Wednesday' => 'W',
+            'Thursday' => 'Th',
+            'Friday' => 'F',
+            'Saturday' => 'S',
+            'Sunday' => 'Su'
+        ];
+
+        $daysArray = json_decode($this->days, true) ?? [];
+        return collect($daysArray)->map(fn($day) => $dayMapping[$day] ?? '')->implode(', ');
+    }
+
+    public function getClassTimeAttribute()
+    {
+        $start = Carbon::parse($this->start_time)->format('h:i A');
+        $end = Carbon::parse($this->end_time)->format('h:i A');
+        return "$start - $end";
+    }
+
 
 }

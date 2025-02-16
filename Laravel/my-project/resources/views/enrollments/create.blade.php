@@ -74,6 +74,7 @@
                 </div>
 
                 <input type="number" name="discount" id="discount" placeholder="Discount" class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500">
+                <input type="number" name="initial_payment" id="initial_payment" placeholder="Initial Payment" class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500">
             </div>
 
             <!-- Subjects Container - Now Full Width -->

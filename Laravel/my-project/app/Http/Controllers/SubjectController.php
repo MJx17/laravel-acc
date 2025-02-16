@@ -15,6 +15,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::paginate(10);
+        
         return view('subjects.index', compact('subjects'));
     }
 
@@ -147,5 +148,5 @@ class SubjectController extends Controller
     }
 
 
-    
+            
 }

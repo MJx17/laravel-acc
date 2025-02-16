@@ -10,13 +10,18 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'enrollment_id',
-        'initial_payment',
+        'fee_id',
         'prelims_payment',
+        'prelims_paid',
         'midterms_payment',
+        'midterms_paid',
         'pre_final_payment',
-        'final_payment'
+        'pre_final_paid',
+        'final_payment',
+        'final_paid',
+        'status',
     ];
+    
 
     // Relationship: A payment belongs to an enrollment
     public function enrollment()

@@ -97,23 +97,33 @@ class Student extends Model
     /**
      * Dynamically get the year level based on enrolled subjects and other criteria.
      */
-    public function getYearLevelAttribute()
-    {
-        // Logic to determine year level based on enrolled subjects or course progress
-        // Example: Check how many subjects have been completed and derive year level.
-        // You can use the count of subjects or subject units to derive this value dynamically.
-        $enrolledSubjectsCount = $this->subjects()->count();
-        
-        if ($enrolledSubjectsCount <= 5) {
-            return 'first_year';
-        } elseif ($enrolledSubjectsCount <= 10) {
-            return 'second_year';
-        } elseif ($enrolledSubjectsCount <= 15) {
-            return 'third_year';
-        } else {
-            return 'fourth_year';
+
+     public function getFormattedYearLevelAttribute()
+     {
+         $yearLevels = [
+             'first_year' => 'First Year',
+             'second_year' => 'Second Year',
+             'third_year' => 'Third Year',
+             'fourth_year' => 'Fourth Year',
+             'fifth_year' => 'Fifth Year',
+             // Add more levels if necessary
+         ];
+ 
+         return $yearLevels[$this->year_level] ?? 'N/A';
+     }
+
+     public function getYearLevelByStudentId($studentId)
+        {
+            // Get the enrollment for the student based on student_id
+            $enrollment = Enrollment::where('student_id', $studentId)->first();
+
+            // Check if the enrollment exists and return the formatted year level
+            if ($enrollment) {
+                return $enrollment->formatted_year_level; // This uses the accessor we defined earlier
+            }
+
+            return 'N/A'; // Return 'N/A' if no enrollment is found
         }
-    }
 
     public function getFullNameAttribute()
     {

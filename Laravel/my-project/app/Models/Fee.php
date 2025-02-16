@@ -29,10 +29,10 @@ class Fee extends Model
     // Computed Total Fee After Discount
     public function getTotalFeeAttribute()
     {
-        return ($this->tuition_fee + $this->lab_fee + $this->miscellaneous_fee + $this->other_fee) - $this->discount;
+        return ($this->tuition_fee + $this->lab_fee + $this->miscellaneous_fee + $this->other_fee) - $this->discount -$this->initial_payment;
     }
-    public function payment()
+    public function payments()
     {
-        return $this->hasOne(Payment::class);
+        return $this->hasOne(Payment::class, 'fee_id'); // Ensure foreign key is correct
     }
 }

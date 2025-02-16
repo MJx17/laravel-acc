@@ -42,11 +42,26 @@ class Enrollment extends Model
         return $this->hasOne(Fee::class, 'enrollment_id'); // Adjust table name if necessary
     }
 
-    
+    public function payments()
+    {
+       return 
+            
+        $this->hasOne(Payment::class, 'fee_id');
+    }
+    // In your Enrollment Model
 
+    public function getFormattedYearLevelAttribute()
+    {
+        $yearLevels = [
+            'first_year' => 'First Year',
+            'second_year' => 'Second Year',
+            'third_year' => 'Third Year',
+            'fourth_year' => 'Fourth Year',
+            'fifth_year' => 'Fifth Year',
+            // Add more levels if necessary
+        ];
 
-public function payment()
-{
-    return $this->hasOne(Payment::class);
-}
+        return $yearLevels[$this->year_level] ?? 'N/A';
+    }
+
 }

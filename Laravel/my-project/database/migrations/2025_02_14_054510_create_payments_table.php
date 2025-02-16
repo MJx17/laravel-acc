@@ -27,7 +27,7 @@ return new class extends Migration {
 
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('enrollment_id')->constrained('enrollments')->onDelete('cascade');
+            $table->foreignId('fee_id')->constrained('fees')->onDelete('cascade');
             $table->decimal('prelims_payment', 10, 2)->default(0);
             $table->boolean('prelims_paid')->default(false);
             $table->decimal('midterms_payment', 10, 2)->default(0);

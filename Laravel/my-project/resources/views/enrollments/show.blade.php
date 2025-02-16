@@ -27,8 +27,8 @@
 
                 <!-- Tuition Fees -->
                 <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Tuition Fees</h3>
-                @if($enrollment->fees)
-                    <p class="text-gray-700 dark:text-gray-300"><strong>Total Fees:</strong> ₱{{ number_format($enrollment->fees->total, 2) }}</p>
+                @if($enrollment->fee)
+                    <p class="text-gray-700 dark:text-gray-300"><strong>Total Fees:</strong> ₱{{ number_format($enrollment->fee->total, 2) }}</p>
                 @else
                     <p class="text-gray-500 dark:text-gray-400">Fees have not been set for this enrollment.</p>
                 @endif

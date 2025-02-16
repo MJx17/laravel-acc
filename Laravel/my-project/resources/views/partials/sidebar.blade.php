@@ -16,14 +16,15 @@
             </li>
 
             <!-- Enrollment Page - Accessible to Admins and Students Only -->
-            @if(auth()->user()->hasRole('') || auth()->user()->hasRole('student'))
-            <li>
-                <a href="{{ route('student.create') }}" 
-                   class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ str_starts_with(Route::currentRouteName(), 'enrollment') ? 'bg-gray-700' : '' }}">
-                   My Details
-                </a>
-            </li>
+            @if(auth()->check() && (auth()->user()->hasRole('') || auth()->user()->hasRole('student')))
+               <li>
+                  <a href="{{ route('student.create') }}" 
+                     class="block py-2 px-4 w-full text-center font-medium text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-green-500 {{ str_starts_with(Route::currentRouteName(), 'enrollment') ? 'bg-gray-700' : '' }}">
+                     My Details
+                  </a>
+               </li>
             @endif
+
 
             <!-- Admin Page - Accessible to Admins Only -->
             @if(auth()->user()->hasRole('admin'))
