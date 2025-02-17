@@ -9,7 +9,6 @@ use App\Models\Semester;
 use App\Models\Subject;
 use App\Models\CourseSubject;
 use App\Models\Fee;
-use App\Models\Payment;
 use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +30,6 @@ class EnrollmentController extends Controller
         $students = Student::whereNotIn('id', $excludedStudentIds)->get();
         $courses = Course::all();
         $semesters = Semester::all();
-        $fees = Fee::all();
         $subjects = collect(); // Empty collection by default
 
         if ($request->has(['course_id', 'semester_id', 'year_level'])) {
@@ -213,77 +211,49 @@ public function store(Request $request)
                 'updated_at' => now(),
             ];
         }
+
         StudentSubject::insert($studentSubjects); // Bulk insert
 
         // Calculate total fee and initial payment
-                // Calculate total fee as the sum of fee components
-            $tuitionFee = $validated['tuition_fee'];
-            $labFee = $validated['lab_fee'] ?? 0;
-            $miscellaneousFee = $validated['miscellaneous_fee'] ?? 0;
-            $otherFee = $validated['other_fee'] ?? 0;
-            $discount = $validated['discount'] ?? 0;
+        $tuitionFee = $validated['tuition_fee'];
+        $labFee = $validated['lab_fee'] ?? 0;
+        $miscellaneousFee = $validated['miscellaneous_fee'] ?? 0;
+        $otherFee = $validated['other_fee'] ?? 0;
+        $discount = $validated['discount'] ?? 0;
 
-            $totalFee = $tuitionFee + $labFee + $miscellaneousFee + $otherFee;
+        $totalFee = $tuitionFee + $labFee + $miscellaneousFee + $otherFee;
+        $netFee = $totalFee - $discount;
 
-            // Subtract the fixed discount from the total fee
-            $discountedTotal = $totalFee - $discount;
+        // Set initial payment as 25% of the total fee (or any other business rule)
+        $initialPayment = $netFee * 0.25; // Example: 25% as initial payment
 
-            // Use the provided initial payment from the request (or default to 0 if not provided)
-            $initialPayment = $validated['initial_payment'] ?? 0;
+        // Insert fees into students_fees table
+        Fee::create([
+            'enrollment_id' => $enrollment->id,
+            'tuition_fee' => $tuitionFee,
+            'lab_fee' => $labFee,
+            'miscellaneous_fee' => $miscellaneousFee,
+            'other_fee' => $otherFee,
+            'discount' => $discount,
+            'total' => $totalFee,
+            'initial_payment' => $initialPayment, // Add initial payment field
+        ]);
 
-            // Calculate the remaining balance after deducting the initial payment
-            $remainingBalance = $discountedTotal - $initialPayment;
-
-            // Insert fee record and capture the fee
-            $fee = Fee::create([
-                'enrollment_id'    => $enrollment->id,
-                'tuition_fee'      => $tuitionFee,
-                'lab_fee'          => $labFee,
-                'miscellaneous_fee'=> $miscellaneousFee,
-                'other_fee'        => $otherFee,
-                'discount'         => $discount,
-                'total'            => $totalFee,
-                'initial_payment'  => $initialPayment,
-            ]);
-
-            // Prepare payment details
-            if ($remainingBalance <= 0) {
-                // If the initial payment covers (or exceeds) the discounted total fee
-                $paymentsData = [
-                    'fee_id'            => $fee->id,
-                    'prelims_payment'   => 0,
-                    'prelims_paid'      => true,
-                    'midterms_payment'  => 0,
-                    'midterms_paid'     => true,
-                    'pre_final_payment' => 0,
-                    'pre_final_paid'    => true,
-                    'final_payment'     => 0,
-                    'final_paid'        => true,
-                    'amount_paid'       => $initialPayment,
-                    'balance'           => 0,
-                    'status'            => 'Paid',
-                ];
-            } else {
-                // Divide the remaining balance into 4 equal installments
-                $installment = $remainingBalance / 4;
-                $paymentsData = [
-                    'fee_id'            => $fee->id,
-                    'prelims_payment'   => $installment,
-                    'prelims_paid'      => false,
-                    'midterms_payment'  => $installment,
-                    'midterms_paid'     => false,
-                    'pre_final_payment' => $installment,
-                    'pre_final_paid'    => false,
-                    'final_payment'     => $installment,
-                    'final_paid'        => false,
-                    'amount_paid'       => $initialPayment,
-                    'balance'           => $remainingBalance,
-                    'status'            => 'Pending',
-                ];
-            }
-
-
-
+        // Insert payment details (divide total fee into four installments)
+        $paymentsData = [
+            'enrollment_id' => $enrollment->id,
+            'prelims_payment' => $netFee / 4,
+            'prelims_paid' => false,
+            'midterms_payment' => $netFee / 4,
+            'midterms_paid' => false,
+            'pre_final_payment' => $netFee / 4,
+            'pre_final_paid' => false,
+            'final_payment' => $netFee / 4,
+            'final_paid' => false,
+            'amount_paid' => $initialPayment,
+            'balance' => $netFee - $initialPayment,
+            'status' => 'Pending',
+        ];
 
         Payment::create($paymentsData); // Insert the payment record
 
@@ -385,44 +355,37 @@ public function store(Request $request)
 
     //     return view('enrollments.fees', compact('enrollment', 'totalFees'));
     // }
-    public function fees($id)
+
+public function fees($id)
 {
-    // Fetch enrollment details for the specific student
-    $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'fees.payments'])->findOrFail($id);
+    $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'payments'])->findOrFail($id);
 
-    // Fee calculations as before
-    if ($enrollment->fees) {
-        $tuitionFee = $enrollment->fees->tuition_fee ?? 0;
-        $labFee = $enrollment->fees->lab_fee ?? 0;
-        $miscFee = $enrollment->fees->miscellaneous_fee ?? 0;
-        $otherFee = $enrollment->fees->other_fee ?? 0;
-        $discount = $enrollment->fees->discount ?? 0;
-        $initialPayment = $enrollment->fees->initial_payment ?? 0;
+    // Compute total fees dynamically, including initial payment
+    $totalFees = $enrollment->fees ? 
+        ($enrollment->fees->tuition_fee + 
+        $enrollment->fees->lab_fee + 
+        $enrollment->fees->miscellaneous_fee + 
+        $enrollment->fees->other_fee) - 
+        $enrollment->fees->discount 
+        : 0;
 
-        $totalFees = ($tuitionFee + $labFee + $miscFee + $otherFee - $discount - $initialPayment);
-        $installmentAmount = $totalFees / 4;
-
-        $installmentsPaid = 0;
-        $remainingPayment = 0;
-
-        if ($enrollment->fees->payments) {
-            $payment = $enrollment->fees->payments;
-            // Payments logic here (as you had before)
-        }
-
-        $amountPaid = $initialPayment + $installmentsPaid;
-        $remainingBalance = max($remainingPayment, 0);
-    } else {
-        $totalFees = 0;
-        $installmentAmount = 0;
-        $amountPaid = 0;
-        $remainingBalance = 0;
+    // Compute total amount paid dynamically (including initial payment)
+    $amountPaid = $enrollment->fees->initial_payment ?? 0; // Include initial payment
+    if ($enrollment->payments) {
+        $amountPaid += (
+            $enrollment->payments->prelims_payment +
+            $enrollment->payments->midterms_payment +
+            $enrollment->payments->pre_final_payment +
+            $enrollment->payments->final_payment
+        );
     }
 
-    return view('enrollments.fees', compact('enrollment', 'totalFees', 'installmentAmount', 'amountPaid', 'remainingBalance', ));
+    // Compute remaining balance dynamically
+    $remainingBalance = $totalFees - $amountPaid;
+
+    return view('enrollments.fees', compact('enrollment', 'totalFees', 'amountPaid', 'remainingBalance'));
 }
 
-    
     
 
 

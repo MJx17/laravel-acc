@@ -41,8 +41,10 @@ class Payment extends Model
         $fee = $this->enrollment->fee; // Get related fee
         return $fee->total_fee - $this->total_paid;
     }
+  // Payment.php model
     public function fee()
     {
-        return $this->belongsTo(Fee::class);
+        return $this->belongsTo(Fee::class, 'fee_id');
     }
+
 }

@@ -36,7 +36,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($enrollments as $enrollment)
-                        <tr>
+                        <tr class="hover:bg-gray-200">
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $enrollment->student->full_name }}</td>
 

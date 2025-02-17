@@ -13,24 +13,24 @@
             <table class="table-auto w-full border-t border-b border-gray-300 shadow-sm bg-white" >
                 <thead>
                     <tr class="bg-gray-200 text-left">
-                        <th class="px-4 py-2 border-b border-gray-300">#</th>
-                        <th class="px-4 py-2 border-b border-gray-300">Name</th>
-                        <th class="px-4 py-2 border-b border-gray-300">Email</th>
-                        <th class="px-4 py-2 border-b border-gray-300">Username</th>
-                        <th class="px-4 py-2 border-b border-gray-300">Roles</th>
+                        <th class="px-4 py-4 border-b border-gray-300">#</th>
+                        <th class="px-4 py-4 border-b border-gray-300">Name</th>
+                        <th class="px-4 py-4 border-b border-gray-300">Email</th>
+                        <th class="px-4 py-4 border-b border-gray-300">Username</th>
+                        <th class="px-4 py-4 border-b border-gray-300">Roles</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="hover:bg-gray-200 transition duration-200 border-gray-40 ">
-                        <td class="px-4 py-2 border-b border-gray-300">
+                        <td class="px-4 py-4 border-b border-gray-300">
                             {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                         </td>
 
-                            <td class="px4 py-2 border-b border-gray-300">{{ $user->name }}</td>
-                            <td class="px-4 py-2 border-b border-gray-300">{{ $user->email }}</td>
-                            <td class="px-4 py-2 border-b border-gray-300">{{ $user->username }}</td>
-                            <td class="px-4 py-2 border-b border-gray-300">
+                            <td class="px4 py-4 border-b border-gray-300">{{ $user->name }}</td>
+                            <td class="px-4 py-4 border-b border-gray-300">{{ $user->email }}</td>
+                            <td class="px-4 py-4 border-b border-gray-300">{{ $user->username }}</td>
+                            <td class="px-4 py-4 border-b border-gray-300">
                             @foreach ($user->roles as $role)
                                 @php
                                     // Define background colors for each role

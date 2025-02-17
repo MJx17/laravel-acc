@@ -178,6 +178,12 @@ Route::get('/subjects-pdf', [SubjectPdfController::class, 'showSubjectsPDF'])->n
 
 // Update the route to accept studentId as a parameter
 Route::get('/download-subjects-pdf/{studentId}', [SubjectPdfController::class, 'downloadSubjectsPDF'])->name('download-subjects-pdf');
+// Route::get('/fees-pdf/{studentId}', [SubjectPdfController::class, 'fees'])->name('fees-pdf');
+
+
+Route::get('/fees-pdf/{id}', [SubjectPdfController::class, 'fees'])->name('pdf.fees');
+
+
 
 
 // Professor Grading Routes

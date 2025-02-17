@@ -10,239 +10,249 @@
             margin: 20px;
         }
 
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: left;
+        }
+
+        .logo img {
+            max-height: 80px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .section-title {
+            text-align: center;
+            font-weight: bold;
+            color: black;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
 
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
+        /* Add this to your existing CSS for better styling and separation of td and th */
+        td {
+            padding: 10px;
+            vertical-align: top;
+            border: 1px solid #ddd; /* Add border for td */
+        }
+
+        th {
+            padding: 10px;
+            background-color: #f2f2f2;
             text-align: left;
+            border: 1px solid #ddd; /* Add border for th */
+        }
+
+        /* Specific styles for each type of td */
+        .logo-cell {
+            text-align: left;
+            width: 33%;
+            border: none
+        }
+
+        .college-info-cell {
+            text-align: center;
+            width: 34%;
+            border: none
+        }
+
+        .student-photo-cell {
+            text-align: right;
+            width: 33%;
+            border: none
+        }
+
+        /* Adjust border color as needed */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-color: gray;
         }
 
         th {
             background-color: #f2f2f2;
         }
 
-        .info-container {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
+        .info-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
 
-        .info-container p {
-            margin: 5px 0;
+        .info-item {
+            width: 48%;
+        }
+
+        /* Remove border for header table */
+        .header-section table {
+            border: none;
+        }
+
+        /* Table container */
+        .student-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-bottom: 40px;
+            /* Add border width and color */
+        }
+
+        /* Label styling */
+        .student-info-table .label {
+            text-align: left;
             font-weight: bold;
+            color: #333;
+            padding-bottom: 5px;
+            padding-right: 20px;  /* Adds space between label and data */
+            display: block;
+         
         }
-        /* Header Section */
-.header-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 20px;
-    background-color: #f3f4f6; /* Light Gray */
-    border-bottom: 1px solid #d1d5db; /* Light Border */
-    border-radius: 8px;
-}
 
-.header-section .logo-section {
-    max-width: 150px; /* Set appropriate size for the logo */
-    margin-bottom: 20px;
-}
+        /* Data styling */
+        .student-info-table .data {
+            text-align: left;
+            color: #444;
+            padding-bottom: 5px;
+            position: relative;
+       
+        }
 
-.student-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Underline for data */
+        .student-info-table .data::after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #333; /* Underline color */
+        }
 
-.student-info h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1f2937; /* Dark Gray */
-    margin-bottom: 8px;
-}
-
-.student-info p {
-    font-size: 18px;
-    color: #4b5563; /* Mid Gray */
-    margin-bottom: 4px;
-}
-
-.student-image {
-    width: 160px;
-    height: 160px;
-    overflow: hidden;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.student-image-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Student Detailed Information Section */
-.student-info-details {
-    padding: 20px;
-    border: 1px solid #d1d5db;
-    background-color: #f3f4f6;
-    border-radius: 8px;
-}
-
-.section-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 12px;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 16px;
-}
-
-.info-item {
-    display: flex;
-    justify-content: space-between;
-}
-
-.label {
-    font-weight: 600;
-    color: #1f2937;
-}
-
-.value {
-    font-weight: 400;
-    color: #4b5563;
-}
-
-.full-width-info {
-    grid-column: span 2;
-}
-
-.full-width-info .info-item {
-    justify-content: flex-start;
-    margin-bottom: 8px;
-}
-
+        /* Styling for spacing between label and data */
+        .student-info-table td {
+            padding: 10px 20px;
+            vertical-align: top;
+        }
     </style>
 </head>
 <body>
 
-        
-
-            <!-- Student Information -->
-            <!-- Student Information and Image -->
-    <!-- Header Section (Logo + Student Info + Image) -->
 <div class="header-section">
-    <!-- Logo Section (left side) -->
-   <!-- Display the logo if Base64 data is available -->
-   @if ($logo)
-        <img src="{{ $logo }}" alt="Logo" width="100">
-    @else
-        <p>Logo not found</p>
-    @endif
-
-    <!-- Student Information Section (middle part) -->
-    <div class="student-info">
-        <h2 class="college-name">Amando Cope College</h2>
-        <p class="address">Baranghawon, Tabaco City</p>
-        <p class="contact">(052) 487-4455</p>
-    </div>
-
-    <!-- Student Image Section (right side) -->
-    <div class="student-image">
-         <!-- Display Student Image -->
-         <img src="{{ $studentImage }}" alt="Student Image">
-    </div>
-</div>
-
-<!-- Student Detailed Information Section -->
-<div class="student-info-details">
-    <p class="section-title">Student Information</p>
-
-    <div class="info-grid">
-        <div class="info-item">
-            <span class="label">Name:</span>
-            <span class="value">{{ $studentInfo['name'] ?? 'N/A' }}</span>
-        </div>
-        <div class="info-item">
-            <span class="label">Student #:</span>
-            <span class="value">{{ $studentInfo['student_id'] ?? 'N/A' }}</span>
-        </div>
-    </div>
-
-    <div class="info-grid">
-        <div class="info-item">
-            <span class="label">Semester:</span>
-            <span class="value">{{ $studentInfo['semester'] ?? 'N/A' }}</span>
-        </div>
-        <div class="info-item">
-            <span class="label">Year Level:</span>
-            <span class="value">{{ $studentInfo['year_level'] ?? 'N/A' }}</span>
-        </div>
-    </div>
-
-    <div class="info-grid">
-        <div class="info-item">
-            <span class="label">Category:</span>
-            <span class="value">{{ $studentInfo['category'] ?? 'N/A' }}</span>
-        </div>
-        <div class="info-item">
-            <span class="label">School Year:</span>
-            <span class="value">{{ $studentInfo['academic_year'] ?? 'N/A' }}</span>
-        </div>
-    </div>
-
-    <!-- Course & Major in one full-width column -->
-    <div class="full-width-info">
-        <div class="info-item">
-            <span class="label">Course:</span>
-            <span class="value">{{ $studentInfo['course'] ?? 'N/A' }}</span>
-        </div>
-        <div class="info-item">
-            <span class="label">Major:</span>
-            <span class="value">{{ $studentInfo['major'] ?? 'N/A' }}</span>
-        </div>
-    </div>
-</div>
-
-
-      
-
-
-    <!-- Subjects Table -->
-    <table>
-        <thead>
+        <table style="width: 100%; border-spacing: 0;">
             <tr>
-                <th>Code</th>
-                <th>Units</th>
-                <th>Days</th>
-                <th>Time</th>
-                <th>Room</th>
-                <th>Professor</th>
+                <td class="logo-cell" style="width: 33%; text-align: left; padding: 10px;">
+                    <img src="{{ $studentInfo['logo'] }}" alt="Logo" style="max-height: 180px; width: auto;">
+                </td>
+
+                <td class="college-info-cell" style="width: 34%; text-align: center; padding: 10px; padding-top: 50px;">
+                    <h2 class="college-name" style="font-size: 18px; margin: 0 0 5px 0;">Amando Cope College</h2>
+                    <p class="address" style="margin: 0 0 5px 0; font-size: 14px;">Baranghawon, Tabaco City</p>
+                    <p class="contact" style="margin: 0; font-size: 14px;">(052) 487-4455</p>
+                </td>
+
+                <td class="student-photo-cell" style="width: 33%; text-align: right; padding: 10px;">
+                    @if ($studentInfo['image'])
+                        <img src="{{ $studentInfo['image'] }}" alt="Student Image"
+                            style="width: 140px; height: 140px; object-fit: cover; margin-top: 20px;">
+                    @else
+                        <div
+                            style="width: 140px; height: 140px; background-color: #ccc; display: flex; justify-content: center; margin-left: 60px;  align-items: center; margin-top: 20px;">
+                            <span style="color: #fff; font-size: 12px; font-weight: bold;">Student Photo</span>
+                        </div>
+                    @endif
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($subjects as $subject)
-                <tr>
-                    <td>{{ $subject->code }}</td>
-                    <td>{{ $subject->units }}</td>
-                    <td>{{ $subject->formatted_days }}</td>
-                    <td>{{ $subject->class_time }}</td>
-                    <td>{{ $subject->room }}</td>
-                    <td>{{ $subject->professor->fullname ?? 'N/A' }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+        </table>
+    </div>
+
+<div class="student-info-details">
+    <p class="section-title">Enrollment Details</p>
+
+    <!-- Updated table for student info -->
+    <table class="student-info-table">
+        <!-- First Row with grouped data (Surname, First Name, Middle Name) -->
+        <tr >
+            <td class="label">Surname</td>
+            <td class="data">{{ $studentInfo['surname'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">First Name</td>
+            <td class="data">{{ $studentInfo['first_name'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Middle Name</td>
+            <td class="data">{{ $studentInfo['middle_name'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Student Number</td>
+            <td class="data">{{ $studentInfo['student_id'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Semester</td>
+            <td class="data">{{ $studentInfo['semester'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Year Level</td>
+            <td class="data">{{ $studentInfo['year_level'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">School Year</td>
+            <td class="data">{{ $studentInfo['academic_year'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Category</td>
+            <td class="data">{{ $studentInfo['category'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Course</td>
+            <td class="data">{{ $studentInfo['course'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Major</td>
+            <td class="data">{{ $studentInfo['major'] ?? 'N/A' }}</td>
+        </tr>
     </table>
+</div>
+
+<!-- Subjects Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Units</th>
+            <th>Days</th>
+            <th>Time</th>
+            <th>Room</th>
+            <th>Professor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($subjects as $subject)
+            <tr>
+                <td>{{ $subject->code }}</td>
+                <td>{{ $subject->units }}</td>
+                <td>{{ $subject->formatted_days }}</td>
+                <td>{{ $subject->class_time }}</td>
+                <td>{{ $subject->room }}</td>
+                <td>{{ $subject->professor->fullname ?? 'N/A' }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+
 
 </body>
 </html>

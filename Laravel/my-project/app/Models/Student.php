@@ -111,6 +111,19 @@ class Student extends Model
  
          return $yearLevels[$this->year_level] ?? 'N/A';
      }
+     public function getFormattedLivingSituationAttribute()
+     {
+         $livingSituation = [
+             'with_guardian' => 'With Guardian',
+             'with_family' => 'With Family',
+             'with_relatives' => 'With Relatives',
+             'boarding_house' => 'Boarding House',
+             // Add more levels if necessary
+         ];
+ 
+         return $livingSituation[$this->living_situation] ?? 'N/A';
+     }
+
 
      public function getYearLevelByStudentId($studentId)
         {

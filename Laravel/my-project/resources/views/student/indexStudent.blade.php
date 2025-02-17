@@ -97,7 +97,7 @@
         <div id="motherShelf" class="mt-4 overflow-x-auto">
             <table class="w-full border-collapse min-w-[300px] sm:min-w-full">
                 <tbody>
-                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                <tr class="hover:bg-gray-100 border-t border-gray-300">
                         <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Mother's Name</td>
                         <td class="p-4 text-gray-700">{{ $student->mothers_name }}</td>
                     </tr>
@@ -109,9 +109,119 @@
                         <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Address</td>
                         <td class="p-4 text-gray-700">{{ $student->mothers_address }}</td>
                     </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Contact Number</td>
+                        <td class="p-4 text-gray-700">{{ $student->mothers_contact_number }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Occupation</td>
+                        <td class="p-4 text-gray-700">{{ $student->mothers_occupation }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer</td>
+                        <td class="p-4 text-gray-700">{{ $student->mothers_employer }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer's Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->mothers_employer_address }}</td>
+                    </tr>
+                 
                 </tbody>
             </table>
         </div>
+
+
+        <div id="fatherShelf" class="mt-4 overflow-x-auto " style="display: none;">
+            <table class="w-full border-collapse min-w-[300px] sm:min-w-full">
+                <tbody>
+                <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Fathers's Name</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_name }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Educational Attainment</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_educational_attainment }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_address }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Contact Number</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_contact_number }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Occupation</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_occupation }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_employer }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer's Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->fathers_employer_address }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div id="guardianShelf" class="mt-4 overflow-x-auto " style="display: none;">
+            <table class="w-full border-collapse min-w-[300px] sm:min-w-full">
+                <tbody>
+                <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Guardians's Name</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_name }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Educational Attainment</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_educational_attainment }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_address }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Contact Number</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_contact_number }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Occupation</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_occupation }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_employer }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Employer's Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->guardians_employer_address }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="livingShelf" class="mt-4 overflow-x-auto " style="display: none;">
+            <table class="w-full border-collapse min-w-[300px] sm:min-w-full">
+                <tbody>
+                <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Guardians's Name</td>
+                        <td class="p-4 text-gray-700">{{ $student->formatted_living_situation }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Educational Attainment</td>
+                        <td class="p-4 text-gray-700">{{ $student->living_address }}</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-t border-gray-300">
+                        <td class="p-4 text-gray-600 font-medium whitespace-nowrap">Address</td>
+                        <td class="p-4 text-gray-700">{{ $student->living_contact_number }}</td>
+                    </tr>
+                 
+                </tbody>
+            </table>
+        </div>
+
 
         <!-- Repeat for Father, Guardian, and Living Situation with appropriate IDs -->
     </div>
@@ -127,27 +237,27 @@
 </div>
 
 
-    <script>
-        document.getElementById('motherTab').addEventListener('click', function() {
-            switchShelf('motherShelf');
-        });
-        document.getElementById('fatherTab').addEventListener('click', function() {
-            switchShelf('fatherShelf');
-        });
-        document.getElementById('guardianTab').addEventListener('click', function() {
-            switchShelf('guardianShelf');
-        });
-        document.getElementById('livingTab').addEventListener('click', function() {
-            switchShelf('livingShelf');
-        });
+<script>
+    document.getElementById('motherTab').addEventListener('click', function() {
+        switchShelf('motherShelf');
+    });
+    document.getElementById('fatherTab').addEventListener('click', function() {
+        switchShelf('fatherShelf');
+    });
+    document.getElementById('guardianTab').addEventListener('click', function() {
+        switchShelf('guardianShelf');
+    });
+    document.getElementById('livingTab').addEventListener('click', function() {
+        switchShelf('livingShelf');
+    });
 
-        function switchShelf(shelfId) {
-            // Hide all shelves
-            const shelves = document.querySelectorAll('[id$="Shelf"]');
-            shelves.forEach(shelf => shelf.classList.add('hidden'));
+    function switchShelf(shelfId) {
+        // Hide all shelves by setting display to none
+        const shelves = document.querySelectorAll('[id$="Shelf"]');
+        shelves.forEach(shelf => shelf.style.display = 'none');
 
-            // Show the selected shelf
-            document.getElementById(shelfId).classList.remove('hidden');
-        }
-    </script>
+        // Show the selected shelf
+        document.getElementById(shelfId).style.display = 'block';
+    }
+</script>
 </x-app-layout>
