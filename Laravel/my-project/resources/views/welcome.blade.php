@@ -116,6 +116,8 @@ https://templatemo.com/tm-557-grad-school
                 <h4><i class="fa fa-pencil"></i>College Courses</h4>
               </div>
               <div class="content-hide">
+          
+
               <h3>Courses</h3>
     <ul>
         <li><strong>Business Administration</strong></li>
@@ -136,6 +138,10 @@ https://templatemo.com/tm-557-grad-school
         <li><strong>Computer Science</strong></li>
         <li><strong>Nursing</strong></li>
     </ul>
+
+
+
+
                 <div class="scroll-to-section"><a href="#section2">More Info.</a></div>
             </div>
             </div>
@@ -148,10 +154,11 @@ https://templatemo.com/tm-557-grad-school
                 <h4><i class="fa fa-graduation-cap"></i>SHS Strands</h4>
               </div>
               <div class="content-hide">
-                <p>Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet. Donec maximus elementum ex. Cras convallis ex rhoncus, laoreet libero eu, vehicula libero.</p>
-                <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
-                <div class="scroll-to-section"><a href="#section3">Details</a></div>
+                <p> Our specialized tracks and programs are designed to help you succeed in your chosen field.</p>
+                <p class="hidden-sm">Choose from Academic, Technical-Vocational-Livelihood (TVL), Sports, or Arts and Design tracks to shape your future.</p>
+                <div class="scroll-to-section"><a href="#section3">Learn More</a></div>
             </div>
+
             </div>
           </div>
         </div>
@@ -162,8 +169,13 @@ https://templatemo.com/tm-557-grad-school
                 <h4><i class="fa fa-book"></i>Classes</h4>
               </div>
               <div class="content-hide">
-                <p>Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet. Donec maximus elementum ex. Cras convallis ex rhoncus, laoreet libero eu, vehicula libero.</p>
-                <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
+     
+              <p> Join a dynamic learning environment designed to help you excel academically and professionally.</p>
+
+    
+   
+
+
                 <div class="scroll-to-section"><a href="#section4">Read More</a></div>
             </div>
             </div>
@@ -178,7 +190,7 @@ https://templatemo.com/tm-557-grad-school
       <div class="row">
         <div class="col-md-12">
           <div class="section-heading">
-            <h2>Why choose Grad School?</h2>
+            <h2>Why choose Amando?</h2>
           </div>
         </div>
         <div class="col-md-12">
@@ -186,40 +198,43 @@ https://templatemo.com/tm-557-grad-school
             <ul>
               <li><a href='#tabs-1'>Best Education</a></li>
               <li><a href='#tabs-2'>Top Management</a></li>
-              <li><a href='#tabs-3'>Quality Meeting</a></li>
+              <li><a href='#tabs-3'>Academic Collaboration</a></li>
             </ul>
             <section class='tabs-content'>
               <article id='tabs-1'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-01.png" alt="">
+                    <img src="assets/images/2.png" alt="">
                   </div>
                   <div class="col-md-6">
                     <h4>Best Education</h4>
-                    <p>Grad School is free educational HTML template with Bootstrap 4.5.2 CSS layout. Feel free to use it for educational or commercial purposes. You may want to make <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a little donation</a> to TemplateMo. Please tell your friends about us. Thank you.</p>
+                  
+<p>Our college offers a comprehensive and accessible learning environment with cutting-edge programs and expert faculty. Whether you're pursuing your undergraduate degree, professional studies, or preparing for graduate school, we provide resources to support your success. Feel free to explore the wide range of academic and extracurricular opportunities available. We invite you to make a contribution to help us continue offering high-quality education, and don’t forget to share our mission with others. Thank you for your support!</p>
+
                   </div>
                 </div>
               </article>
               <article id='tabs-2'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-02.png" alt="">
+                    <img src="assets/images/1.png" alt="">
                   </div>
                   <div class="col-md-6">
-                    <h4>Top Level</h4>
-                    <p>You can modify this HTML layout by editing contents and adding more pages as you needed. Since this template has options to add dropdown menus, you can put many HTML pages.</p> 
-                    <p>Suspendisse tincidunt, magna ut finibus rutrum, libero dolor euismod odio, nec interdum quam felis non ante.</p>
-                  </div>
+                  <h4>Top-Tier Programs</h4>
+                  <p>Our college provides an exceptional learning experience, with the flexibility to explore a wide range of academic programs and extracurricular activities. You can customize your academic journey by choosing from various disciplines, engaging with faculty, and participating in research projects and student organizations.</p>
+                  <p>With a focus on holistic development, we prepare you for success in both your career and life. Our curriculum is designed to foster critical thinking, creativity, and leadership skills, ensuring that you are ready to thrive in a rapidly evolving world.</p>
+
+                                    </div>
                 </div>
               </article>
               <article id='tabs-3'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-03.png" alt="">
+                    <img src="assets/images/3.png" alt="">
                   </div>
                   <div class="col-md-6">
-                    <h4>Quality Meeting</h4>
-                    <p>You are NOT allowed to redistribute this template ZIP file on any template collection website. However, you can use this template to convert into a specific theme for any kind of CMS platform such as WordPress. For more information, you shall <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact TemplateMo</a> now.</p>
+                    <h4>Academic Collaboration</h4>
+                    <p>We encourage students, faculty, and staff to collaborate on innovative projects, research, and academic events. Our college hosts regular meetings and conferences where you can engage with experts and peers in your field. For more information on upcoming academic events, feel free to <a rel="nofollow" href="https://www.facebook.com/amando.cope.9" target="_parent">contact our office</a> now.</p>
                   </div>
                 </div>
               </article>
@@ -461,11 +476,11 @@ https://templatemo.com/tm-557-grad-school
       <div class="row">
         <div class="col-md-6 align-self-center">
           <div class="left-content">
-            <span>our presentation is for you</span>
-            <h4>Watch the video to learn more <em>about Grad School</em></h4>
-            <p>You are NOT allowed to redistribute this template ZIP file on any template collection website. However, you can use this template to convert into a specific theme for any kind of CMS platform such as WordPress. You may <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact TemplateMo</a> for details.
-            <br><br>Suspendisse tincidunt, magna ut finibus rutrum, libero dolor euismod odio, nec interdum quam felis non ante.</p>
-            <div class="main-button"><a rel="nofollow" href="https://fb.com/templatemo" target="_parent">External URL</a></div>
+          <span>Your Future Starts Here</span>
+<h4>Watch the video to learn more <em>about Our School</em></h4>
+<p>Explore the opportunities our school provides for students to achieve academic excellence and personal growth.  
+<br><br>We offer a wide range of programs, dedicated faculty, and a supportive learning environment to help you succeed. Join us and take the first step toward a brighter future.</p>
+            <div class="main-button"><a rel="nofollow" href="https://www.facebook.com/amando.cope.9" target="_parent">Visit Us</a></div>
           </div>
         </div>
         <div class="col-md-6">
