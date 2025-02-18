@@ -48,8 +48,8 @@ class SubjectController extends Controller
             'days.*' => 'string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
-            'room'  => 'nullable|string',
-            'block' => 'nullable|string',
+            'room'  => 'required|string',
+            'block' => 'required|string'
 
         ]);
 
@@ -106,8 +106,8 @@ class SubjectController extends Controller
             'days.*' => 'string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
-            'room'  => 'nullable|string',
-            'block' => 'nullable|string',
+            'room'  => 'required|string',
+            'block' => 'required|string'
         ]);
 
         $subject->update([

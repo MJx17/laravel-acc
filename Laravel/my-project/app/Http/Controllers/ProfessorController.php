@@ -22,6 +22,42 @@ class ProfessorController extends Controller
         return view('professors.create', compact('users', 'courses'));
     }
     
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => ['required', 'exists:users,id', function ($attribute, $value, $fail) {
+                // Check if the user has the 'professor' role using Spatie's hasRole method
+                $user = User::find($value);
+                if (!$user || !$user->hasRole('professor')) {
+                    \Log::info("Validation failed for user_id: $value");
+                    $fail('The selected user is not a professor.');
+                }
+            }],
+            'surname' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'sex' => 'required|string',
+            'contact_number' => 'required|string|max:20',
+            'email' => 'required|email|unique:professors',
+            'designation' => 'required|string|max:255',
+        ]);
+    
+        // Store professor information
+        Professor::create([
+            'user_id' => $request->user_id,
+            'surname' => $request->surname,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'sex' => $request->sex,
+            'contact_number' => $request->contact_number,
+            'email' => $request->email,
+            'designation' => $request->designation,
+        ]);
+    
+        return redirect()->route('professors.index')->with('success', 'Professor created successfully!');
+    }
+    
+    
 
     public function getProfessors()
     {
@@ -39,30 +75,7 @@ class ProfessorController extends Controller
     }
 
     // Store a newly created professor in the database
-    public function store(Request $request)
-    {
-        $request->validate([
-            'user_id' => ['required', 'exists:users,id', function ($attribute, $value, $fail) {
-                if (!User::where('id', $value)->where('role', 'professor')->exists()) {
-                    $fail('The selected user is not a professor.');
-                }
-            }],
-            'surname' => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'sex' => 'required|string',
-            'contact_number' => 'required|string|max:20',
-            'email' => 'required|email|unique:professors',
-            'designation' => 'required|string|max:255',
-        ]);
-
-        Professor::create($request->only([
-            'user_id', 'surname', 'first_name', 'middle_name', 'sex', 'contact_number', 'email', 'designation'
-        ]));
-
-        return redirect()->route('professors.index')->with('success', 'Professor created successfully!');
-    }
-
+   
     // Display a listing of the professors
     public function index()
     {
@@ -86,7 +99,10 @@ class ProfessorController extends Controller
     {
         $request->validate([
             'user_id' => ['required', 'exists:users,id', function ($attribute, $value, $fail) {
-                if (!User::where('id', $value)->where('role', 'professor')->exists()) {
+                // Check if the user has the 'professor' role using Spatie's hasRole method
+                $user = User::find($value);
+                if (!$user || !$user->hasRole('professor')) {
+                    \Log::info("Validation failed for user_id: $value");
                     $fail('The selected user is not a professor.');
                 }
             }],

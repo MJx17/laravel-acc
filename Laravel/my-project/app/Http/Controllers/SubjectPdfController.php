@@ -135,53 +135,59 @@ public function fees($id)
     ];
 
     // Fee calculations
-    $totalFee = 0;
-    $overallStatus = 'No Fees Found';
+    $totalFees = 0;
     $remainingBalance = 0;
-    $amountPaid = 0;
+    $installmentAmount = 0;
+    $overallStatus = 'Paid';
+    $balance = 0; // This will be the sum of all fees minus discounts and initial payment
+    $remainingPayment = 0;
+    $payment = null;
 
-    
-    
-    if ($fees) {
-        $tuitionFee = $fees->tuition_fee ?? 0;
-        $labFee = $fees->lab_fee ?? 0;
-        $miscellaneousFee = $fees->miscellaneous_fee ?? 0;
-        $otherFee = $fees->other_fee ?? 0;
-        $discount = $fees->discount ?? 0;
-        $initialPayment = $fees->initial_payment ?? 0;
-    
-        // Calculate total fee after applying discount and initial payment
-        $totalFee = ($tuitionFee + $labFee + $miscellaneousFee + $otherFee - $discount - $initialPayment);
-    
-        // Initialize remaining balance with total fee
-        $remainingBalance = $totalFee;
-    
-        // Calculate the amount paid from initial payment and installment payments
-        $amountPaid = $initialPayment;
-    
-        if ($payment) {
-            // Subtract payments made (prelims, midterms, etc.) from remaining balance
-            $remainingBalance -= $payment->prelims_paid ? $payment->prelims_payment : 0;
-            $amountPaid += $payment->prelims_paid ? $payment->prelims_payment : 0;
-    
-            $remainingBalance -= $payment->midterms_paid ? $payment->midterms_payment : 0;
-            $amountPaid += $payment->midterms_paid ? $payment->midterms_payment : 0;
-    
-            $remainingBalance -= $payment->pre_final_paid ? $payment->pre_final_payment : 0;
-            $amountPaid += $payment->pre_final_paid ? $payment->pre_final_payment : 0;
-    
-            $remainingBalance -= $payment->final_paid ? $payment->final_payment : 0;
-            $amountPaid += $payment->final_paid ? $payment->final_payment : 0;
-    
-            // Determine overall status based on remaining balance
-            $overallStatus = ($remainingBalance > 0) ? 'Pending' : 'Paid';
+    if ($enrollment->fees && $enrollment->fees->payments) {
+        $payment = $enrollment->fees->payments;
+
+        // Fees calculation
+        $tuitionFee = $enrollment->fees->tuition_fee ?? 0;
+        $labFee = $enrollment->fees->lab_fee ?? 0;
+        $miscFee = $enrollment->fees->miscellaneous_fee ?? 0;
+        $otherFee = $enrollment->fees->other_fee ?? 0;
+        $discount = $enrollment->fees->discount ?? 0;
+        $initialPayment = $enrollment->fees->initial_payment ?? 0;
+
+        // Step 1: Calculate the total fees (sum of all fees)
+        $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
+
+        // Step 2: Calculate the balance after discount and initial payment
+        $balance = $totalFees - $discount - $initialPayment;
+
+        // Step 3: Calculate remaining balance after payments
+        $remainingBalance = $balance;
+
+        // Deduct payments made
+        if ($payment->prelims_paid) {
+            $remainingBalance -= $payment->prelims_payment;
         }
-    } else {
-        // Default values if no fee details are found
-        $totalFee = 0;
-        $remainingBalance = 0;
-        $amountPaid = 0;
-        $overallStatus = 'No Fees Found';
+        if ($payment->midterms_paid) {
+            $remainingBalance -= $payment->midterms_payment;
+        }
+        if ($payment->pre_final_paid) {
+            $remainingBalance -= $payment->pre_final_payment;
+        }
+        if ($payment->final_paid) {
+            $remainingBalance -= $payment->final_payment;
+        }
+
+        // Ensure no negative remaining balance
+        $remainingBalance = max($remainingBalance, 0);
+
+        // Step 4: Calculate installment amount (remaining balance divided by 4)
+        $installmentAmount = $remainingBalance / 4;
+
+        // Overall status calculation (whether all payments are made)
+        $overallStatus = 'Paid';
+        if (!$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid) {
+            $overallStatus = 'Pending';
+        }
     }
     
     // Return the results (can be passed to a view or returned as an array, as needed)
@@ -195,7 +201,7 @@ public function fees($id)
         'payment' => $payment, 
         'remainingBalance' => $remainingBalance,
         'overallStatus' => $overallStatus,
-        'totalFees' => $totalFee,
+        'balance' => $balance
     ]);
 
     $pdf->setOptions([
@@ -209,6 +215,30 @@ public function fees($id)
         ->header('Content-Type', 'application/pdf')
         ->header('Content-Disposition', 'inline; filename="enrolled_subjects_' . $id . '.pdf"');
 }
+
+
+public function store(Request $request)
+{
+    $request->validate([
+        'enrollment_id' => 'required|exists:enrollments,id',
+        'financier' => 'nullable|in:Parents,Relatives,Guardian,Myself',
+        'company_name' => 'nullable|string|max:255',
+        'company_address' => 'nullable|string',
+        'scholarship' => 'nullable|string|max:255',
+        'income' => 'nullable|string',
+        'contact_number' => 'nullable|string|max:20',
+        'relative_name' => 'nullable|string|max:255',
+        'relationship' => 'nullable|string|max:255',
+        'position_course' => 'nullable|string|max:255',
+        'relative_contact_number' => 'nullable|string|max:20',
+    ]);
+
+    FinancialInformation::create($request->all());
+
+    return back()->with('success', 'Financial information saved!');
+}
+
+
 
     
 }

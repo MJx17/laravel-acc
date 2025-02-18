@@ -20,7 +20,8 @@ class Subject extends Model
         'name',           // Subject name
         'code',           // Unique subject code
         'block',          // Block or class group
-        'semester_id',    // References the Semester table
+        'semester_id', 
+        'room',   // References the Semester table
         'prerequisite_id', // References another subject as a prerequisite
         'fee',            // Subject fee
         'units',          // Subject units

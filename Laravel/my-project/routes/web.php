@@ -21,7 +21,7 @@ use App\Http\Controllers\ProfessorGradingController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\PaymentController;
 
-// Home Route
+// Home Routeuse Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -183,6 +183,9 @@ Route::get('/download-subjects-pdf/{studentId}', [SubjectPdfController::class, '
 
 Route::get('/fees-pdf/{id}', [SubjectPdfController::class, 'fees'])->name('pdf.fees');
 
+Route::get('/financial-letter', function () {
+    return view('pdf.financial'); // Display the Blade template
+});
 
 
 

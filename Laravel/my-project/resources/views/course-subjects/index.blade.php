@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="max-w-3xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-xl sm:rounded-lg p-6">
             <!-- Dynamic Course Name -->
             <h3 id="courseName" class="text-xl text-center  font-semibold mb-4">

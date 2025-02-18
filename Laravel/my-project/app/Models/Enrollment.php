@@ -64,4 +64,9 @@ class Enrollment extends Model
         return $yearLevels[$this->year_level] ?? 'N/A';
     }
 
+    public function financialInformation()
+    {
+        return $this->hasOne(FinancialInformation::class);
+    }
+
 }

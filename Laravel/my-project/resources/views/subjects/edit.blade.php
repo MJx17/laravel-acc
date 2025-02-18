@@ -34,7 +34,7 @@
                         <label for="room" class="block text-sm font-medium text-gray-700">Room</label>
                         <input type="text" name="room" id="room"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-                            value="{{ old('room') }}" required>
+                            value="{{ old('room', $subject->room)}}" required>
                     </div>
 
 
@@ -43,7 +43,7 @@
                         <label for="block" class="block text-sm font-medium text-gray-700">block</label>
                         <input type="text" name="block" id="block"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-                            value="{{ old('block') }}" required>
+                            value="{{ old('block', $subject->block) }}" required>
                     </div>
 
 

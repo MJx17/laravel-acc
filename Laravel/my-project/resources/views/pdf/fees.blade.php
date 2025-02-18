@@ -150,6 +150,14 @@
             padding: 10px 20px;
             vertical-align: top;
         }
+
+
+        .page-break {
+            page-break-before: always;
+            /* or page-break-after: always; */
+            break-before: always;
+            /* For modern browsers supporting the CSS 'break' property */
+        }
     </style>
 </head>
 
@@ -262,101 +270,113 @@
 
 
     <!-- Page Break before Fees Information -->
-    <div class="page-break"></div>
+    <div class="page-break">
 
-    <!-- Fees Information -->
-    @if($fees)
-    <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
-        <thead class="bg-gray-200 dark:bg-gray-700">
-            <tr>
-                <th class="border px-4 py-2 text-left">Fee Type</th>
-                <th style="font-family: DejaVu Sans;" class="border px-4 py-2 text-right">Amount (₱)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="border px-4 py-2">Tuition Fee</td>
-                <td class="border px-4 py-2 text-right">{{ number_format($fees->tuition_fee, 2) }}</td>
-            </tr>
-            <tr>
-                <td class="border px-4 py-2">Lab Fee</td>
-                <td class="border px-4 py-2 text-right">{{ number_format($fees->lab_fee, 2) }}</td>
-            </tr>
-            <tr>
-                <td class="border px-4 py-2">Miscellaneous Fee</td>
-                <td class="border px-4 py-2 text-right">{{ number_format($fees->miscellaneous_fee, 2) }}</td>
-            </tr>
-            <tr>
-                <td class="border px-4 py-2">Other Fee</td>
-                <td class="border px-4 py-2 text-right">{{ number_format($fees->other_fee, 2) }}</td>
-            </tr>
-            <tr>
-                <td class="border px-4 py-2">Initial Payment</td>
-                <td class="border px-4 py-2 text-right">-{{ number_format($fees->initial_payment, 2) }}</td>
-            </tr>
-            <tr>
-                <td class="border px-4 py-2">Discount</td>
-                <td class="border px-4 py-2 text-right">-{{ number_format($fees->discount, 2) }}</td>
-            </tr>
-        </tbody>
-        <tfoot class="bg-gray-200 dark:bg-gray-700">
-            <tr>
-                <td class="border px-4 py-2 font-bold">Total Fees</td>
-                <td style="font-family: DejaVu Sans;" class="border px-4 py-2 font-bold text-right">
-                    ₱{{ number_format($totalFees, 2) }}</td>
-            </tr>
-        </tfoot>
-    </table>
-@else
-    <p class="text-gray-500 dark:text-gray-400">No fee details available.</p>
-@endif
+        <!-- Fees Information -->
+        @if($fees)
+            <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
+                <thead class="bg-gray-200 dark:bg-gray-700">
+                    <tr>
+                        <th class="border px-4 py-2 text-left">Fee Type</th>
+                        <th style="font-family: DejaVu Sans;" class="border px-4 py-2 text-right">Amount (₱)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border px-4 py-2">Tuition Fee</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($fees->tuition_fee, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Lab Fee</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($fees->lab_fee, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Miscellaneous Fee</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($fees->miscellaneous_fee, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Other Fee</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($fees->other_fee, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Initial Payment</td>
+                        <td class="border px-4 py-2 text-right">-{{ number_format($fees->initial_payment, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Discount</td>
+                        <td class="border px-4 py-2 text-right">-{{ number_format($fees->discount, 2) }}</td>
+                    </tr>
+                </tbody>
+                <tfoot class="bg-gray-200 dark:bg-gray-700">
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Total Fees</td>
+                        <td style="font-family: DejaVu Sans;" class="border px-4 py-2 font-bold text-right">
+                            ₱{{ number_format($balance, 2) }}</tddecimals:>
+                    </tr>
+                </tfoot>
+            </table>
+        @else
+            <p class="text-gray-500 dark:text-gray-400">No fee details available.</p>
+        @endif
 
 
-    <div class="page-break"></div>
+
+
+
+
+
+        @if($payment)
+            <h3 style="padding-top: 10px;" class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Payment
+                Details
+            </h3>
+            <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
+                <thead class="bg-gray-200 dark:bg-gray-700">
+                    <tr>
+                        <th class="border px-4 py-2 text-left">Payment Type</th>
+                        <th style="font-family: DejaVu Sans;" class="border px-4 py-2 text-right">Amount (₱)</th>
+                        <th class="border px-4 py-2 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border px-4 py-2">Prelims Payment</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($payment->prelims_payment, 2) }}</td>
+                        <td class="border px-4 py-2 text-center">{{ $payment->prelims_paid ? 'Paid' : 'Pending' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Midterms Payment</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($payment->midterms_payment, 2) }}</td>
+                        <td class="border px-4 py-2 text-center">{{ $payment->midterms_paid ? 'Paid' : 'Pending' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Pre-final Payment</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($payment->pre_final_payment, 2) }}</td>
+                        <td class="border px-4 py-2 text-center">{{ $payment->pre_final_paid ? 'Paid' : 'Pending' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Final Payment</td>
+                        <td class="border px-4 py-2 text-right">{{ number_format($payment->final_payment, 2) }}</td>
+                        <td class="border px-4 py-2 text-center">{{ $payment->final_paid ? 'Paid' : 'Pending' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Remaining Balance</td>
+                        <td style="font-family: DejaVu Sans;" class="border px-4 py-2 font-bold text-right">
+                            ₱{{ number_format($remainingBalance, 2) }}</td>
+                        <td class="border px-4 py-2 font-bold text-center">{{ $overallStatus }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            <p class="text-gray-500 dark:text-gray-400">No payment details available.</p>
+        @endif
+
+
+    </div>
+
+
+  
 
     <!-- Payment Information -->
-    @if($payment)
-        <h3 style="padding-top: 10px;" class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Payment Details</h3>
-        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
-            <thead class="bg-gray-200 dark:bg-gray-700">
-                <tr>
-                    <th class="border px-4 py-2 text-left">Payment Type</th>
-                    <th style="font-family: DejaVu Sans;" class="border px-4 py-2 text-right">Amount (₱)</th>
-                    <th class="border px-4 py-2 text-center">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="border px-4 py-2">Prelims Payment</td>
-                    <td class="border px-4 py-2 text-right">{{ number_format($payment->prelims_payment, 2) }}</td>
-                    <td class="border px-4 py-2 text-center">{{ $payment->prelims_paid ? 'Paid' : 'Pending' }}</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">Midterms Payment</td>
-                    <td class="border px-4 py-2 text-right">{{ number_format($payment->midterms_payment, 2) }}</td>
-                    <td class="border px-4 py-2 text-center">{{ $payment->midterms_paid ? 'Paid' : 'Pending' }}</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">Pre-final Payment</td>
-                    <td class="border px-4 py-2 text-right">{{ number_format($payment->pre_final_payment, 2) }}</td>
-                    <td class="border px-4 py-2 text-center">{{ $payment->pre_final_paid ? 'Paid' : 'Pending' }}</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">Final Payment</td>
-                    <td class="border px-4 py-2 text-right">{{ number_format($payment->final_payment, 2) }}</td>
-                    <td class="border px-4 py-2 text-center">{{ $payment->final_paid ? 'Paid' : 'Pending' }}</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2 font-bold">Remaining Balance</td>
-                     <td style="font-family: DejaVu Sans;"class="border px-4 py-2 font-bold text-right">
-                    ₱{{ number_format($remainingBalance, 2) }}</td>
-                    <td class="border px-4 py-2 font-bold text-center">{{ $overallStatus }}</td>
-                </tr>
-            </tbody>
-        </table>
-    @else
-        <p class="text-gray-500 dark:text-gray-400">No payment details available.</p>
-    @endif
 
 
 

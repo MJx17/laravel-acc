@@ -17,8 +17,13 @@
                     @foreach (['user_id' => 'User ID', 'surname' => 'Surname', 'first_name' => 'First Name', 'middle_name' => 'Middle Name (Optional)', 'sex' => 'Sex', 'contact_number' => 'Contact Number', 'email' => 'Email', 'designation' => 'Designation'] as $name => $label)
                         <div>
                             <label for="{{ $name }}" class="block text-xs font-medium text-gray-700">{{ $label }}</label>
-                            <input type="text" name="{{ $name }}" id="{{ $name }}" value="{{ old($name, $professor->$name) }}" 
-                                class="mt-1 w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            @if($name === 'user_id')
+                                <input type="text" name="{{ $name }}" id="{{ $name }}" value="{{ old($name, $professor->$name) }}" 
+                                    class="mt-1 w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" readonly>
+                            @else
+                                <input type="text" name="{{ $name }}" id="{{ $name }}" value="{{ old($name, $professor->$name) }}" 
+                                    class="mt-1 w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            @endif
                             @error($name)
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror

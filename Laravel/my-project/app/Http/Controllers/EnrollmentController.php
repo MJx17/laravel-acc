@@ -7,7 +7,7 @@ use App\Models\Student;
 use App\Models\Course;
 use App\Models\Semester;
 use App\Models\Subject;
-use App\Models\CourseSubject;
+use App\Models\Payment;
 use App\Models\Fee;
 use App\Models\StudentSubject;
 use Illuminate\Http\Request;
@@ -42,251 +42,8 @@ class EnrollmentController extends Controller
         return view('enrollments.create', compact('students', 'courses', 'semesters', 'subjects'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'student_id' => 'required|exists:students,id',
-    //         'semester_id' => 'required|exists:semesters,id',
-    //         'course_id' => 'required|exists:courses,id',
-    //         'year_level' => 'required|string',
-    //         'subjects' => 'required|array',
-    //         'subjects.*' => 'exists:subjects,id',
-    //         'category'  => 'required|string'
-    //     ]);
-    
-    //     try {
-    //         DB::beginTransaction(); // Start transaction
-    
-    //         // Create enrollment
-    //         $enrollment = Enrollment::create([
-    //             'student_id' => $validated['student_id'],
-    //             'semester_id' => $validated['semester_id'],
-    //             'course_id' => $validated['course_id'],
-    //             'year_level' => $validated['year_level'],
-    //             'subject_ids' => json_encode($validated['subjects']),
-    //             'category'  => $validated['category'],
-    //         ]);
-    
-    //         // Update student category to 'enrolled'
-    //         Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
-    
-    //         // Insert subjects into student_subjects table
-    //         $studentSubjects = [];
-    //         foreach ($validated['subjects'] as $subject_id) {
-    //             $studentSubjects[] = [
-    //                 'student_id' => $validated['student_id'],
-    //                 'subject_id' => $subject_id,
-    //                 'enrollment_id' => $enrollment->id,
-    //                 'created_at' => now(),
-    //                 'updated_at' => now(),
-    //             ];
-    //         }
-    
-    //         // Bulk insert for better performance
-    //         StudentSubject::insert($studentSubjects);
-    
-    //         DB::commit(); // Commit transaction
-    
-    //         return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully!');
-    //     } catch (\Exception $e) {
-    //         DB::rollBack(); // Rollback in case of an error
-    //         return back()->with('error', 'Failed to create enrollment: ' . $e->getMessage());
-    //     }
-    // }
 
-
-
-
-//     public function store(Request $request)
-// {
-//     $validated = $request->validate([
-//         'student_id' => 'required|exists:students,id',
-//         'semester_id' => 'required|exists:semesters,id',
-//         'course_id' => 'required|exists:courses,id',
-//         'year_level' => 'required|string',
-//         'subjects' => 'required|array',
-//         'subjects.*' => 'exists:subjects,id',
-//         'category'  => 'required|string',
-//         'tuition_fee' => 'required|numeric',
-//         'lab_fee' => 'nullable|numeric',
-//         'miscellaneous_fee' => 'nullable|numeric',
-//         'other_fee' => 'nullable|numeric',
-//         'discount' => 'nullable|numeric'
-//     ]);
-
-//     try {
-//         DB::beginTransaction(); // Start transaction
-
-//         // Create enrollment
-//         $enrollment = Enrollment::create([
-//             'student_id' => $validated['student_id'],
-//             'semester_id' => $validated['semester_id'],
-//             'course_id' => $validated['course_id'],
-//             'year_level' => $validated['year_level'],
-//             'subject_ids' => json_encode($validated['subjects']),
-//             'category'  => $validated['category'],
-//         ]);
-
-//         // Update student status to 'enrolled'
-//         Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
-
-//         // Insert subjects into student_subjects table
-//         $studentSubjects = [];
-//         foreach ($validated['subjects'] as $subject_id) {
-//             $studentSubjects[] = [
-//                 'student_id' => $validated['student_id'],
-//                 'subject_id' => $subject_id,
-//                 'enrollment_id' => $enrollment->id,
-//                 'created_at' => now(),
-//                 'updated_at' => now(),
-//             ];
-//         }
-
-//         StudentSubject::insert($studentSubjects); // Bulk insert
-
-//         // Insert fees into students_fees table
-//         Fee::create([
-//             'enrollment_id' => $enrollment->id,
-//             'tuition_fee' => $validated['tuition_fee'],
-//             'lab_fee' => $validated['lab_fee'] ?? 0,
-//             'miscellaneous_fee' => $validated['miscellaneous_fee'] ?? 0,
-//             'other_fee' => $validated['other_fee'] ?? 0,
-//             'discount' => $validated['discount'] ?? 0,
-//             'total' => ($validated['tuition_fee'] + ($validated['lab_fee'] ?? 0) + 
-//             ($validated['miscellaneous_fee'] ?? 0) + ($validated['other_fee'] ?? 0)) - 
-//            ($validated['discount'] ?? 0),
-//         ]);
-
-//         DB::commit(); // Commit transaction
-
-//         return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully with fees!');
-//     } catch (\Exception $e) {
-//         DB::rollBack(); // Rollback in case of an error
-//         return back()->with('error', 'Failed to create enrollment: ' . $e->getMessage());
-//     }
-// }
-
-
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'student_id' => 'required|exists:students,id',
-        'semester_id' => 'required|exists:semesters,id',
-        'course_id' => 'required|exists:courses,id',
-        'year_level' => 'required|string',
-        'subjects' => 'required|array',
-        'subjects.*' => 'exists:subjects,id',
-        'category'  => 'required|string',
-        'tuition_fee' => 'required|numeric',
-        'lab_fee' => 'nullable|numeric',
-        'miscellaneous_fee' => 'nullable|numeric',
-        'other_fee' => 'nullable|numeric',
-        'discount' => 'nullable|numeric'
-    ]);
-
-    try {
-        DB::beginTransaction(); // Start transaction
-
-        // Create enrollment
-        $enrollment = Enrollment::create([
-            'student_id' => $validated['student_id'],
-            'semester_id' => $validated['semester_id'],
-            'course_id' => $validated['course_id'],
-            'year_level' => $validated['year_level'],
-            'subject_ids' => json_encode($validated['subjects']),
-            'category'  => $validated['category'],
-        ]);
-
-        // Update student status to 'enrolled'
-        Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
-
-        // Insert subjects into student_subjects table
-        $studentSubjects = [];
-        foreach ($validated['subjects'] as $subject_id) {
-            $studentSubjects[] = [
-                'student_id' => $validated['student_id'],
-                'subject_id' => $subject_id,
-                'enrollment_id' => $enrollment->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        StudentSubject::insert($studentSubjects); // Bulk insert
-
-        // Calculate total fee and initial payment
-        $tuitionFee = $validated['tuition_fee'];
-        $labFee = $validated['lab_fee'] ?? 0;
-        $miscellaneousFee = $validated['miscellaneous_fee'] ?? 0;
-        $otherFee = $validated['other_fee'] ?? 0;
-        $discount = $validated['discount'] ?? 0;
-
-        $totalFee = $tuitionFee + $labFee + $miscellaneousFee + $otherFee;
-        $netFee = $totalFee - $discount;
-
-        // Set initial payment as 25% of the total fee (or any other business rule)
-        $initialPayment = $netFee * 0.25; // Example: 25% as initial payment
-
-        // Insert fees into students_fees table
-        Fee::create([
-            'enrollment_id' => $enrollment->id,
-            'tuition_fee' => $tuitionFee,
-            'lab_fee' => $labFee,
-            'miscellaneous_fee' => $miscellaneousFee,
-            'other_fee' => $otherFee,
-            'discount' => $discount,
-            'total' => $totalFee,
-            'initial_payment' => $initialPayment, // Add initial payment field
-        ]);
-
-        // Insert payment details (divide total fee into four installments)
-        $paymentsData = [
-            'enrollment_id' => $enrollment->id,
-            'prelims_payment' => $netFee / 4,
-            'prelims_paid' => false,
-            'midterms_payment' => $netFee / 4,
-            'midterms_paid' => false,
-            'pre_final_payment' => $netFee / 4,
-            'pre_final_paid' => false,
-            'final_payment' => $netFee / 4,
-            'final_paid' => false,
-            'amount_paid' => $initialPayment,
-            'balance' => $netFee - $initialPayment,
-            'status' => 'Pending',
-        ];
-
-        Payment::create($paymentsData); // Insert the payment record
-
-        DB::commit(); // Commit transaction
-
-        return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully with fees and payment schedule!');
-    } catch (\Exception $e) {
-        DB::rollBack(); // Rollback in case of an error
-        return back()->with('error', 'Failed to create enrollment: ' . $e->getMessage());
-    }
-}
-
-
-
-    // Show the form to edit an enrollment
-    public function edit($id)
-    {
-        $enrollment = Enrollment::findOrFail($id);
-        $students = Student::all();
-        $courses = Course::all();
-        $semesters = Semester::all();
-        $selectedSubjects = json_decode($enrollment->subjects, true) ?? [];
-
-        $subjects = Subject::where('course_id', $enrollment->course_id)
-                           ->where('year_level', $enrollment->year_level)
-                           ->where('semester_id', $enrollment->semester_id)
-                           ->get();
-
-        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects'));
-    }
-
-    // Update an enrollment
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
@@ -295,21 +52,96 @@ public function store(Request $request)
             'year_level' => 'required|string',
             'subjects' => 'required|array',
             'subjects.*' => 'exists:subjects,id',
-            'category'  => 'required|string'
+            'category' => 'required|string',
+            'tuition_fee' => 'required|numeric',
+            'lab_fee' => 'nullable|numeric',
+            'miscellaneous_fee' => 'nullable|numeric',
+            'other_fee' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'initial_payment' => 'required|numeric',
         ]);
-
-        $enrollment = Enrollment::findOrFail($id);
-        $enrollment->update([
-            'student_id' => $validated['student_id'],
-            'semester_id' => $validated['semester_id'],
-            'course_id' => $validated['course_id'],
-            'year_level' => $validated['year_level'],
-            'subject_ids' => json_encode($validated['subjects']),
-            'category'  => $validated['category'],
-        ]);
-
-        return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
+    
+        try {
+            DB::beginTransaction(); // Start transaction
+    
+            // Create enrollment
+            $enrollment = Enrollment::create([
+                'student_id' => $validated['student_id'],
+                'semester_id' => $validated['semester_id'],
+                'course_id' => $validated['course_id'],
+                'year_level' => $validated['year_level'],
+                'subject_ids' => json_encode($validated['subjects']),
+                'category' => $validated['category'],
+            ]);
+    
+            // Update student status to 'enrolled'
+            Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
+    
+            // Insert subjects into student_subjects table
+            $studentSubjects = [];
+            foreach ($validated['subjects'] as $subject_id) {
+                $studentSubjects[] = [
+                    'student_id' => $validated['student_id'],
+                    'subject_id' => $subject_id,
+                    'enrollment_id' => $enrollment->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+            StudentSubject::insert($studentSubjects); // Bulk insert
+    
+            // Calculate total fee and initial payment
+            $tuitionFee = (float)$validated['tuition_fee'];
+            $labFee = (float)($validated['lab_fee'] ?? 0);
+            $miscellaneousFee = (float)($validated['miscellaneous_fee'] ?? 0);
+            $otherFee = (float)($validated['other_fee'] ?? 0);
+            $discount = (float)($validated['discount'] ?? 0);
+            $initialPayment = (float)$validated['initial_payment'];
+    
+            $totalFee = $tuitionFee + $labFee + $miscellaneousFee + $otherFee - $discount - $initialPayment;
+    
+            // Insert fees into students_fees table
+            $fee = Fee::create([
+                'enrollment_id' => $enrollment->id,
+                'tuition_fee' => $tuitionFee,
+                'lab_fee' => $labFee,
+                'miscellaneous_fee' => $miscellaneousFee,
+                'other_fee' => $otherFee,
+                'discount' => $discount,
+                'total' => $totalFee,
+                'initial_payment' => $initialPayment,
+            ]);
+    
+            // Calculate installment amounts
+            $installmentAmount = $totalFee > 0 ? $totalFee / 4 : 0;
+    
+            // Insert payment details (divide total fee into four installments)
+            $paymentsData = [
+                'fee_id' => $fee->id,
+                'prelims_payment' => $installmentAmount,
+                'prelims_paid' => false,
+                'midterms_payment' => $installmentAmount,
+                'midterms_paid' => false,
+                'pre_final_payment' => $installmentAmount,
+                'pre_final_paid' => false,
+                'final_payment' => $installmentAmount,
+                'final_paid' => false,
+                'amount_paid' => 0, // Set initial amount paid to 0
+                'balance' => $totalFee, // Full balance initially
+                'status' => 'Pending',
+            ];
+    
+            Payment::create($paymentsData); // Insert the payment record
+    
+            DB::commit(); // Commit transaction
+    
+            return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully with fees and payment schedule!');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback in case of an error
+            return back()->with('error', 'Failed to create enrollment: ' . $e->getMessage());
+        }
     }
+    
 
     // Delete an enrollment
     public function destroy($id)
@@ -323,71 +155,242 @@ public function store(Request $request)
     public function getSubjects(Request $request)
     {
         $query = Subject::where('semester_id', $request->semester_id)
-                        ->whereHas('courses', function ($query) use ($request) {
-                            $query->where('courses.id', $request->course_id);
-                        });
-    
+            ->whereHas('courses', function ($query) use ($request) {
+                $query->where('courses.id', $request->course_id);
+            });
+
         // Apply year_level filter only if it's not "irregular"
         if ($request->year_level !== 'irregular') {
             $query->where('year_level', $request->year_level);
         }
-    
+
         // Fetch subjects and group by year_level
         $subjects = $query->get()->groupBy('year_level');
-    
+
         return response()->json($subjects);
     }
-    
-    
-    // public function fees($id)
-    // {
-    //     // Eager load the related student, subjects, and fees
-    //     $enrollment = Enrollment::with(['student', 'subjects', 'fees'])->findOrFail($id);
-        
-    //     // Compute total fees dynamically
-    //     $totalFees = $enrollment->fees ? 
-    //         ($enrollment->fees->tuition_fee + 
-    //         $enrollment->fees->lab_fee + 
-    //         $enrollment->fees->miscellaneous_fee + 
-    //         $enrollment->fees->other_fee) - 
-    //         $enrollment->fees->discount 
-    //         : 0;
 
-    //     return view('enrollments.fees', compact('enrollment', 'totalFees'));
-    // }
 
 public function fees($id)
 {
-    $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'payments'])->findOrFail($id);
+    $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'fees.payments'])->findOrFail($id);
 
-    // Compute total fees dynamically, including initial payment
-    $totalFees = $enrollment->fees ? 
-        ($enrollment->fees->tuition_fee + 
-        $enrollment->fees->lab_fee + 
-        $enrollment->fees->miscellaneous_fee + 
-        $enrollment->fees->other_fee) - 
-        $enrollment->fees->discount 
-        : 0;
+    // Initialize variables
+    $totalFees = 0;
+    $remainingBalance = 0;
+    $installmentAmount = 0;
+    $overallStatus = 'Paid';
+    $balance = 0; // This will be the sum of all fees minus discounts and initial payment
+    $remainingPayment = 0;
+    $payment = null;
 
-    // Compute total amount paid dynamically (including initial payment)
-    $amountPaid = $enrollment->fees->initial_payment ?? 0; // Include initial payment
-    if ($enrollment->payments) {
-        $amountPaid += (
-            $enrollment->payments->prelims_payment +
-            $enrollment->payments->midterms_payment +
-            $enrollment->payments->pre_final_payment +
-            $enrollment->payments->final_payment
-        );
+    if ($enrollment->fees && $enrollment->fees->payments) {
+        $payment = $enrollment->fees->payments;
+
+        // Fees calculation
+        $tuitionFee = $enrollment->fees->tuition_fee ?? 0;
+        $labFee = $enrollment->fees->lab_fee ?? 0;
+        $miscFee = $enrollment->fees->miscellaneous_fee ?? 0;
+        $otherFee = $enrollment->fees->other_fee ?? 0;
+        $discount = $enrollment->fees->discount ?? 0;
+        $initialPayment = $enrollment->fees->initial_payment ?? 0;
+
+        // Step 1: Calculate the total fees (sum of all fees)
+        $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
+
+        // Step 2: Calculate the balance after discount and initial payment
+        $balance = $totalFees - $discount - $initialPayment;
+
+        // Step 3: Calculate remaining balance after payments
+        $remainingBalance = $balance;
+
+        // Deduct payments made
+        if ($payment->prelims_paid) {
+            $remainingBalance -= $payment->prelims_payment;
+        }
+        if ($payment->midterms_paid) {
+            $remainingBalance -= $payment->midterms_payment;
+        }
+        if ($payment->pre_final_paid) {
+            $remainingBalance -= $payment->pre_final_payment;
+        }
+        if ($payment->final_paid) {
+            $remainingBalance -= $payment->final_payment;
+        }
+
+        // Ensure no negative remaining balance
+        $remainingBalance = max($remainingBalance, 0);
+
+        // Step 4: Calculate installment amount (remaining balance divided by 4)
+        $installmentAmount = $remainingBalance / 4;
+
+        // Overall status calculation (whether all payments are made)
+        $overallStatus = 'Paid';
+        if (!$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid) {
+            $overallStatus = 'Pending';
+        }
     }
 
-    // Compute remaining balance dynamically
-    $remainingBalance = $totalFees - $amountPaid;
-
-    return view('enrollments.fees', compact('enrollment', 'totalFees', 'amountPaid', 'remainingBalance'));
+    // Return the view with the necessary data
+    return view('enrollments.fees', compact('enrollment', 'totalFees', 'balance', 'installmentAmount', 'payment', 'remainingBalance', 'overallStatus'));
 }
 
     
 
 
-    
+
+    // // Show the form to edit an enrollment
+    // public function edit($id)
+    // {
+    //     $enrollment = Enrollment::findOrFail($id);
+    //     $students = Student::all();
+    //     $courses = Course::all();
+    //     $semesters = Semester::all();
+    //     $selectedSubjects = json_decode($enrollment->subjects, true) ?? [];
+
+    //     $subjects = Subject::where('course_id', $enrollment->course_id)
+    //                        ->where('year_level', $enrollment->year_level)
+    //                        ->where('semester_id', $enrollment->semester_id)
+    //                        ->get();
+
+    //     return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects'));
+    // }
+
+    // // Update an enrollment
+    // public function update(Request $request, $id)
+    // {
+    //     $validated = $request->validate([
+    //         'student_id' => 'required|exists:students,id',
+    //         'semester_id' => 'required|exists:semesters,id',
+    //         'course_id' => 'required|exists:courses,id',
+    //         'year_level' => 'required|string',
+    //         'subjects' => 'required|array',
+    //         'subjects.*' => 'exists:subjects,id',
+    //         'category'  => 'required|string'
+    //     ]);
+
+    //     $enrollment = Enrollment::findOrFail($id);
+    //     $enrollment->update([
+    //         'student_id' => $validated['student_id'],
+    //         'semester_id' => $validated['semester_id'],
+    //         'course_id' => $validated['course_id'],
+    //         'year_level' => $validated['year_level'],
+    //         'subject_ids' => json_encode($validated['subjects']),
+    //         'category'  => $validated['category'],
+    //     ]);
+
+    //     return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
+    // }
+
+
+    public function edit($id)
+    {
+        $enrollment = Enrollment::findOrFail($id);
+        $students = Student::all();
+        $courses = Course::all();
+        $semesters = Semester::all();
+        $subjects = Subject::where('course_id', $enrollment->course_id)
+            ->where('semester_id', $enrollment->semester_id)
+            ->where('year_level', $enrollment->year_level)
+            ->get();
+
+        $selectedSubjects = json_decode($enrollment->subject_ids, true);
+        $fee = Fee::where('enrollment_id', $id)->first();
+
+        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects', 'fee'));
+    }
+
+
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'student_id' => 'sometimes|exists:students,id',
+            'semester_id' => 'sometimes|exists:semesters,id',
+            'course_id' => 'sometimes|exists:courses,id',
+            'year_level' => 'sometimes|string',
+            'subjects' => 'sometimes|array',
+            'subjects.*' => 'exists:subjects,id',
+            'category' => 'sometimes|string',
+            'tuition_fee' => 'sometimes|numeric',
+            'lab_fee' => 'sometimes|nullable|numeric',
+            'miscellaneous_fee' => 'sometimes|nullable|numeric',
+            'other_fee' => 'sometimes|nullable|numeric',
+            'discount' => 'sometimes|nullable|numeric',
+            'initial_payment' => 'sometimes|numeric',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Find existing enrollment
+            $enrollment = Enrollment::findOrFail($id);
+
+            // Update only the provided fields
+            $enrollment->update($request->only([
+                'student_id',
+                'semester_id',
+                'course_id',
+                'year_level',
+                'category'
+            ]));
+
+            // Update student status if student_id is updated
+            if ($request->has('student_id')) {
+                Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
+            }
+
+            // Update subjects if provided
+            if ($request->has('subjects')) {
+                StudentSubject::where('enrollment_id', $id)->delete();
+                $studentSubjects = array_map(fn($subject_id) => [
+                    'student_id' => $validated['student_id'] ?? $enrollment->student_id,
+                    'subject_id' => $subject_id,
+                    'enrollment_id' => $id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ], $validated['subjects']);
+
+                StudentSubject::insert($studentSubjects);
+            }
+
+            // Update fees only if any fee-related field is sent
+            $fee = Fee::where('enrollment_id', $id)->first();
+            if ($fee) {
+                $fee->update($request->only([
+                    'tuition_fee',
+                    'lab_fee',
+                    'miscellaneous_fee',
+                    'other_fee',
+                    'discount',
+                    'initial_payment'
+                ]));
+
+                // Recalculate balance and update payments
+                $totalFee = $fee->tuition_fee + $fee->lab_fee + $fee->miscellaneous_fee + $fee->other_fee - $fee->discount;
+                $payment = Payment::where('fee_id', $fee->id)->first();
+
+                if ($payment) {
+                    $balance = $totalFee - $payment->amount_paid;
+                    $payment->update([
+                        'prelims_payment' => $balance / 4,
+                        'midterms_payment' => $balance / 4,
+                        'pre_final_payment' => $balance / 4,
+                        'final_payment' => $balance / 4,
+                        'balance' => $balance,
+                        'status' => $balance > 0 ? 'Pending' : 'Paid',
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Failed to update enrollment: ' . $e->getMessage());
+        }
+    }
+
+
+
 }
