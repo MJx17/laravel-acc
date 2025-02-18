@@ -192,54 +192,52 @@
                 </div>
 
                 <!-- Payment Tab -->
-                    <div x-show="activeTab === 'payment'" class="mt-4">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Payment Details</h3>
-                        @if($enrollment->fees && $payment)
-                            <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
-                                <thead class="bg-gray-200 dark:bg-gray-700">
-                                    <tr>
-                                        <th class="border px-4 py-2 text-left">Payment Type</th>
-                                        <th class="border px-4 py-2 text-right">Amount (₱)</th>
-                                        <th class="border px-4 py-2 text-center">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="border px-4 py-2">Prelims Payment</td>
-                                        <td class="border px-4 py-2 text-right">{{ number_format($payment->prelims_payment, 2) }}</td>
-                                        <td class="border px-4 py-2 text-center">{{ $payment->prelims_paid ? 'Paid' : 'Pending' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border px-4 py-2">Midterms Payment</td>
-                                        <td class="border px-4 py-2 text-right">{{ number_format($payment->midterms_payment, 2) }}</td>
-                                        <td class="border px-4 py-2 text-center">{{ $payment->midterms_paid ? 'Paid' : 'Pending' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border px-4 py-2">Pre-final Payment</td>
-                                        <td class="border px-4 py-2 text-right">{{ number_format($payment->pre_final_payment, 2) }}</td>
-                                        <td class="border px-4 py-2 text-center">{{ $payment->pre_final_paid ? 'Paid' : 'Pending' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border px-4 py-2">Final Payment</td>
-                                        <td class="border px-4 py-2 text-right">{{ number_format($payment->final_payment, 2) }}</td>
-                                        <td class="border px-4 py-2 text-center">{{ $payment->final_paid ? 'Paid' : 'Pending' }}</td>
-                                    </tr>
-                          
-                               
-                                    <tr>
-                                        <td class="border px-4 py-2 font-bold">Remaining Balance</td>
-                                        <td class="border px-4 py-2 font-bold text-right">₱{{ number_format($remainingBalance, 2) }}</td>
-                                        <td class="border px-4 py-2 font-bold text-center">{{ $overallStatus }}</td>
-                                    </tr>
-                                  
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="text-gray-500 dark:text-gray-400">No payments recorded.</p>
-                        @endif
-                    </div>
+                <div x-show="activeTab === 'payment'" class="mt-4">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Payment Details</h3>
+                    @if($enrollment->fees && $payment)
+                        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
+                            <thead class="bg-gray-200 dark:bg-gray-700">
+                                <tr>
+                                    <th class="border px-4 py-2 text-left">Payment Type</th>
+                                    <th class="border px-4 py-2 text-right">Amount (₱)</th>
+                                    <th class="border px-4 py-2 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border px-4 py-2">Prelims Payment</td>
+                                    <td class="border px-4 py-2 text-right">{{ number_format($payment->prelims_payment ?? 0, 2) }}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $payment->prelims_paid ? 'Paid' : 'Pending' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">Midterms Payment</td>
+                                    <td class="border px-4 py-2 text-right">{{ number_format($payment->midterms_payment ?? 0, 2) }}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $payment->midterms_paid ? 'Paid' : 'Pending' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">Pre-final Payment</td>
+                                    <td class="border px-4 py-2 text-right">{{ number_format($payment->pre_final_payment ?? 0, 2) }}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $payment->pre_final_paid ? 'Paid' : 'Pending' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">Final Payment</td>
+                                    <td class="border px-4 py-2 text-right">{{ number_format($payment->final_payment ?? 0, 2) }}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $payment->final_paid ? 'Paid' : 'Pending' }}</td>
+                                </tr>
 
-    
+                                <!-- Remaining Balance Calculation -->
+                                <tr>
+                                    <td class="border px-4 py-2 font-bold">Remaining Balance</td>
+                                    <td class="border px-4 py-2 font-bold text-right">₱{{ number_format($remainingBalance ?? 0, 2) }}</td>
+                                    <td class="border px-4 py-2 font-bold text-center">{{ $overallStatus }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @else
+                        <p class="text-gray-500 dark:text-gray-400">No payments recorded.</p>
+                    @endif
+                </div>
+
 
 
 

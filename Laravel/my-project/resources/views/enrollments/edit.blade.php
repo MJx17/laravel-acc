@@ -102,7 +102,40 @@
                         value="{{ old('initial_payment', $enrollment->fees->initial_payment) }}">
                 </div>
 
-                <!-- Subjects Section - Full Width Grid on All Devices -->
+                <!-- Payment Status Section -->
+
+                <!-- Payment Status Section -->
+     <!-- Payment Status Section -->
+<!-- Payment Status Section -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Payment Status</h3>
+                <div class="grid grid-cols-1 gap-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="prelims_paid" value="1" 
+                            {{ old('prelims_paid', $payment->prelims_paid == 1) ? 'checked' : '' }} class="form-checkbox">
+                        <span class="ml-2">Prelims Paid</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="midterms_paid" value="1" 
+                            {{ old('midterms_paid', $payment->midterms_paid == 1) ? 'checked' : '' }} class="form-checkbox">
+                        <span class="ml-2">Midterms Paid</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="pre_final_paid" value="1" 
+                            {{ old('pre_final_paid', $payment->pre_final_paid == 1) ? 'checked' : '' }} class="form-checkbox">
+                        <span class="ml-2">Pre-Final Paid</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="final_paid" value="1" 
+                            {{ old('final_paid', $payment->final_paid == 1) ? 'checked' : '' }} class="form-checkbox">
+                        <span class="ml-2">Final Paid</span>
+                    </label>
+                </div>
+            </div>
+
+
+
+                <!-- Subjects Section -->
                 <div id="subjects-container" class="col-span-1 md:col-span-2 dark:bg-gray-800 p-4 rounded-lg mt-3">
                     <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Subjects</h3>
                     <p class="text-gray-500 dark:text-gray-400">
@@ -123,17 +156,18 @@
                 <!-- Submit & Cancel Buttons -->
                 <div class="col-span-1 md:col-span-2 flex justify-end gap-4 mt-6">
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition">
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300">
                         Update
                     </button>
                     <a href="{{ route('enrollments.index') }}"
-                        class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition">
+                        class="bg-gray-400 hover:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-300">
                         Cancel
                     </a>
                 </div>
             </form>
         </div>
     </div>
+
 
 
     <script>

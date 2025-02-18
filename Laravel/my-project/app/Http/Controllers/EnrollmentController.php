@@ -170,70 +170,69 @@ class EnrollmentController extends Controller
         return response()->json($subjects);
     }
 
-
-public function fees($id)
-{
-    $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'fees.payments'])->findOrFail($id);
-
-    // Initialize variables
-    $totalFees = 0;
-    $remainingBalance = 0;
-    $installmentAmount = 0;
-    $overallStatus = 'Paid';
-    $balance = 0; // This will be the sum of all fees minus discounts and initial payment
-    $remainingPayment = 0;
-    $payment = null;
-
-    if ($enrollment->fees && $enrollment->fees->payments) {
-        $payment = $enrollment->fees->payments;
-
-        // Fees calculation
-        $tuitionFee = $enrollment->fees->tuition_fee ?? 0;
-        $labFee = $enrollment->fees->lab_fee ?? 0;
-        $miscFee = $enrollment->fees->miscellaneous_fee ?? 0;
-        $otherFee = $enrollment->fees->other_fee ?? 0;
-        $discount = $enrollment->fees->discount ?? 0;
-        $initialPayment = $enrollment->fees->initial_payment ?? 0;
-
-        // Step 1: Calculate the total fees (sum of all fees)
-        $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
-
-        // Step 2: Calculate the balance after discount and initial payment
-        $balance = $totalFees - $discount - $initialPayment;
-
-        // Step 3: Calculate remaining balance after payments
-        $remainingBalance = $balance;
-
-        // Deduct payments made
-        if ($payment->prelims_paid) {
-            $remainingBalance -= $payment->prelims_payment;
-        }
-        if ($payment->midterms_paid) {
-            $remainingBalance -= $payment->midterms_payment;
-        }
-        if ($payment->pre_final_paid) {
-            $remainingBalance -= $payment->pre_final_payment;
-        }
-        if ($payment->final_paid) {
-            $remainingBalance -= $payment->final_payment;
-        }
-
-        // Ensure no negative remaining balance
-        $remainingBalance = max($remainingBalance, 0);
-
-        // Step 4: Calculate installment amount (remaining balance divided by 4)
-        $installmentAmount = $remainingBalance / 4;
-
-        // Overall status calculation (whether all payments are made)
+    public function fees($id)
+    {
+        $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'fees.payments'])->findOrFail($id);
+    
+        // Initialize variables
+        $totalFees = 0;
+        $remainingBalance = 0;
+        $installmentAmount = 0;
         $overallStatus = 'Paid';
-        if (!$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid) {
-            $overallStatus = 'Pending';
+        $balance = 0; // Sum of all fees minus discounts and initial payment
+        $remainingPayment = 0;
+        $payment = null;
+    
+        if ($enrollment->fees && $enrollment->fees->payments) {
+            $payment = $enrollment->fees->payments;
+    
+            // Fees calculation
+            $tuitionFee = $enrollment->fees->tuition_fee ?? 0;
+            $labFee = $enrollment->fees->lab_fee ?? 0;
+            $miscFee = $enrollment->fees->miscellaneous_fee ?? 0;
+            $otherFee = $enrollment->fees->other_fee ?? 0;
+            $discount = $enrollment->fees->discount ?? 0;
+            $initialPayment = $enrollment->fees->initial_payment ?? 0;
+    
+            // Step 1: Calculate the total fees (sum of all fees)
+            $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
+    
+            // Step 2: Calculate the balance after discount and initial payment
+            $balance = $totalFees - $discount - $initialPayment;
+    
+            // Step 3: Initialize remainingBalance to the balance
+            $remainingBalance = $balance;
+    
+            // Deduct payments made only for installments marked as 'Paid'
+            if ($payment->prelims_paid) {
+                $remainingBalance -= $payment->prelims_payment;
+            }
+            if ($payment->midterms_paid) {
+                $remainingBalance -= $payment->midterms_payment;
+            }
+            if ($payment->pre_final_paid) {
+                $remainingBalance -= $payment->pre_final_payment;
+            }
+            if ($payment->final_paid) {
+                $remainingBalance -= $payment->final_payment;
+            }
+    
+            // Ensure no negative remaining balance
+            $remainingBalance = max($remainingBalance, 0);
+    
+            // Step 4: Calculate installment amount (remaining balance divided by 4)
+            $installmentAmount = $remainingBalance / 4;
+    
+            // Overall status calculation (whether all payments are made)
+            if (!$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid) {
+                $overallStatus = 'Pending';
+            }
         }
+    
+        // Return the view with the necessary data
+        return view('enrollments.fees', compact('enrollment', 'totalFees', 'balance', 'installmentAmount', 'payment', 'remainingBalance', 'overallStatus'));
     }
-
-    // Return the view with the necessary data
-    return view('enrollments.fees', compact('enrollment', 'totalFees', 'balance', 'installmentAmount', 'payment', 'remainingBalance', 'overallStatus'));
-}
+    
 
     
 
@@ -282,7 +281,6 @@ public function fees($id)
     //     return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
     // }
 
-
     public function edit($id)
     {
         $enrollment = Enrollment::findOrFail($id);
@@ -293,13 +291,16 @@ public function fees($id)
             ->where('semester_id', $enrollment->semester_id)
             ->where('year_level', $enrollment->year_level)
             ->get();
-
+    
         $selectedSubjects = json_decode($enrollment->subject_ids, true);
-        $fee = Fee::where('enrollment_id', $id)->first();
-
-        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects', 'fee'));
+        $fee = Fee::where('enrollment_id', $id)->first(); // Get the fee for the enrollment
+    
+        // Fetch the payment related to this fee
+        $payment = $fee ? Payment::where('fee_id', $fee->id)->first() : null;
+    
+        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects', 'fee', 'payment'));
     }
-
+    
 
 
     public function update(Request $request, $id)
@@ -318,15 +319,19 @@ public function fees($id)
             'other_fee' => 'sometimes|nullable|numeric',
             'discount' => 'sometimes|nullable|numeric',
             'initial_payment' => 'sometimes|numeric',
+            'prelims_paid' => 'sometimes|boolean',
+            'midterms_paid' => 'sometimes|boolean',
+            'pre_final_paid' => 'sometimes|boolean',
+            'final_paid' => 'sometimes|boolean',
         ]);
-
+    
         try {
             DB::beginTransaction();
-
+    
             // Find existing enrollment
             $enrollment = Enrollment::findOrFail($id);
-
-            // Update only the provided fields
+    
+            // Update only the provided fields for the enrollment
             $enrollment->update($request->only([
                 'student_id',
                 'semester_id',
@@ -334,55 +339,79 @@ public function fees($id)
                 'year_level',
                 'category'
             ]));
-
-            // Update student status if student_id is updated
-            if ($request->has('student_id')) {
-                Student::where('id', $validated['student_id'])->update(['status' => 'enrolled']);
-            }
-
-            // Update subjects if provided
-            if ($request->has('subjects')) {
-                StudentSubject::where('enrollment_id', $id)->delete();
-                $studentSubjects = array_map(fn($subject_id) => [
-                    'student_id' => $validated['student_id'] ?? $enrollment->student_id,
-                    'subject_id' => $subject_id,
-                    'enrollment_id' => $id,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ], $validated['subjects']);
-
-                StudentSubject::insert($studentSubjects);
-            }
-
-            // Update fees only if any fee-related field is sent
+    
+            // Get the related fee
             $fee = Fee::where('enrollment_id', $id)->first();
+    
             if ($fee) {
+                // Update tuition fees and related fields if provided in the request
                 $fee->update($request->only([
                     'tuition_fee',
                     'lab_fee',
                     'miscellaneous_fee',
                     'other_fee',
                     'discount',
-                    'initial_payment'
+                    'initial_payment',
                 ]));
-
-                // Recalculate balance and update payments
-                $totalFee = $fee->tuition_fee + $fee->lab_fee + $fee->miscellaneous_fee + $fee->other_fee - $fee->discount;
+    
+                // Recalculate fees after the update
+                $tuitionFee = $fee->tuition_fee ?? 0;
+                $labFee = $fee->lab_fee ?? 0;
+                $miscFee = $fee->miscellaneous_fee ?? 0;
+                $otherFee = $fee->other_fee ?? 0;
+                $discount = $fee->discount ?? 0;
+                $initialPayment = $fee->initial_payment ?? 0;
+    
+                // Calculate total fees (sum of all fees)
+                $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
+    
+                // Calculate the balance after discount and initial payment
+                $balance = $totalFees - $discount - $initialPayment;
+    
+                // Get the related payment data
                 $payment = Payment::where('fee_id', $fee->id)->first();
-
+    
                 if ($payment) {
-                    $balance = $totalFee - $payment->amount_paid;
+                    // Update payment status based on the request (if payment exists)
                     $payment->update([
-                        'prelims_payment' => $balance / 4,
-                        'midterms_payment' => $balance / 4,
-                        'pre_final_payment' => $balance / 4,
-                        'final_payment' => $balance / 4,
-                        'balance' => $balance,
-                        'status' => $balance > 0 ? 'Pending' : 'Paid',
+                        'prelims_paid' => $request->has('prelims_paid') ? true : false,
+                        'midterms_paid' => $request->has('midterms_paid') ? true : false,
+                        'pre_final_paid' => $request->has('pre_final_paid') ? true : false,
+                        'final_paid' => $request->has('final_paid') ? true : false,
                     ]);
+    
+                    // Deduct payments made only for installments marked as 'Paid'
+                    if ($payment->prelims_paid) {
+                        $balance -= $payment->prelims_payment;
+                    }
+                    if ($payment->midterms_paid) {
+                        $balance -= $payment->midterms_payment;
+                    }
+                    if ($payment->pre_final_paid) {
+                        $balance -= $payment->pre_final_payment;
+                    }
+                    if ($payment->final_paid) {
+                        $balance -= $payment->final_payment;
+                    }
                 }
+    
+                // Ensure no negative remaining balance
+                $remainingBalance = max($balance, 0);
+    
+                // Calculate installment amount (remaining balance divided by 4)
+                $installmentAmount = $remainingBalance / 4;
+    
+                // Overall status calculation (whether all payments are made)
+                $overallStatus = (!$payment || !$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid)
+                    ? 'Pending'
+                    : 'Paid';
+    
+                // Optionally, you can return this data for the view or further processing
+            } else {
+                // Handle case where no fee is found for the enrollment
+                throw new \Exception('No fee record found for the provided enrollment.');
             }
-
+    
             DB::commit();
             return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
         } catch (\Exception $e) {
@@ -390,7 +419,7 @@ public function fees($id)
             return back()->with('error', 'Failed to update enrollment: ' . $e->getMessage());
         }
     }
-
-
+    
+    
 
 }
