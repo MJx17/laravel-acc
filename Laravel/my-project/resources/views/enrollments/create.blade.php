@@ -85,7 +85,7 @@
             </div>
 
 
-            <div class="cols-span-1 md:col-span-2  flex-1  bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="cols-span-1 md:col-span-2  flex-1 ">
                
                     @include('partials.financial')
                 

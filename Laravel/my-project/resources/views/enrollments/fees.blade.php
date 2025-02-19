@@ -28,6 +28,13 @@
                         class="px-4 py-2 flex-1 text-center hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                         Payment
                     </button>
+
+                    
+                    <button @click="activeTab = 'financial'"
+                        :class="{ 'bg-gray-200 dark:bg-gray-700 font-semibold': activeTab === 'payment' }"
+                        class="px-4 py-2 flex-1 text-center hover:bg-gray-100 dark:hover:bg-gray-600 transition">
+                        Financial
+                    </button>
                 </div>
 
                 <!-- Subjects Tab -->
@@ -238,7 +245,77 @@
                     @endif
                 </div>
 
-            
+
+
+                <div x-show="activeTab === 'financial'" class="mt-4">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-200">Financial Information</h3>
+                    @if($enrollment->financialInformation)
+                                        <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-md">
+                        <thead>
+                            <tr class="bg-gray-100 text-black">
+                                <th class="py-2 px-4 border">Description</th>
+                                <th class="py-2 px-4 border">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border">Financier</td>
+                                <td class="py-2 px-4 border">{{ $enrollment->financialInformation->financier ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border">Company Name</td>
+                                <td class="py-2 px-4 border">{{ $enrollment->financialInformation->company_name ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border">Company Address</td>
+                                <td class="py-2 px-4 border">{{ $enrollment->financialInformation->company_address ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border">Income</td>
+                                <td class="py-2 px-4 border">{{ $enrollment->financialInformation->income ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border">Scholarship</td>
+                                <td class="py-2 px-4 border">{{ $enrollment->financialInformation->scholarship ?? 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Separate Table for Relatives -->
+                    <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-md mt-4">
+                        <thead>
+                            <tr class="bg-gray-100 text-black">
+                                <th class="py-2 px-4 border">Relative Name</th>
+                                <th class="py-2 px-4 border">Relationship</th>
+                                <th class="py-2 px-4 border">Position Course</th>
+                                <th class="py-2 px-4 border">Contact Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $relativeNames = explode(', ', $enrollment->financialInformation->relative_names ?? '');
+                                $relationships = explode(', ', $enrollment->financialInformation->relationships ?? '');
+                                $positionCourses = explode(', ', $enrollment->financialInformation->position_courses ?? '');
+                                $relativeContactNumbers = explode(', ', $enrollment->financialInformation->relative_contact_numbers ?? '');
+                                $maxRows = max(count($relativeNames), count($relationships), count($positionCourses), count($relativeContactNumbers));
+                            @endphp
+                            
+                            @for ($i = 0; $i < $maxRows; $i++)
+                                <tr>
+                                    <td class="py-2 px-4 border">{{ $relativeNames[$i] ?? 'N/A' }}</td>
+                                    <td class="py-2 px-4 border">{{ $relationships[$i] ?? 'N/A' }}</td>
+                                    <td class="py-2 px-4 border">{{ $positionCourses[$i] ?? 'N/A' }}</td>
+                                    <td class="py-2 px-4 border">{{ $relativeContactNumbers[$i] ?? 'N/A' }}</td>
+                                </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+
+
+                    @else
+                    <p class="text-gray-500 dark:text-gray-400">Fees have not been set for this enrollment.</p>
+                    @endif
+                </div>
 
 
 

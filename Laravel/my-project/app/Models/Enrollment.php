@@ -66,7 +66,7 @@ class Enrollment extends Model
 
     public function financialInformation()
     {
-        return $this->hasOne(FinancialInformation::class);
+        return $this->hasOne(FinancialInformation::class,  'enrollment_id');
     }
 
 }
