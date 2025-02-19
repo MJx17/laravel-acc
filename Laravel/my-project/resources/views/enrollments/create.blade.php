@@ -6,7 +6,7 @@
     </x-slot>
 
 
-    <div class="max-w-5xl mx-auto py-12 px-6 sm:px-8 lg:px-10">
+<div class="max-w-5xl mx-auto py-12 px-6 sm:px-8 lg:px-10">
     <div class="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-8">
         <form method="POST" action="{{ route('enrollments.store') }}" class="grid grid-cols-1 md:grid-cols-2 gap-8">
             @csrf
@@ -82,6 +82,13 @@
                 <p class="text-gray-500 dark:text-gray-400">
                     Select a course, semester, and year level to see subjects.
                 </p>
+            </div>
+
+
+            <div class="cols-span-1 md:col-span-2  flex-1  bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+               
+                    @include('partials.financial')
+                
             </div>
 
 

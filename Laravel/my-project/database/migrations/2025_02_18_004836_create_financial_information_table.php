@@ -23,10 +23,15 @@ return new class extends Migration
             $table->string('contact_number', 20)->nullable();
 
 
-            $table->string('relative_name')->nullable();
-            $table->string('relationship')->nullable();
-            $table->string('position_course')->nullable();
-            $table->string('relative_contact_number', 20)->nullable();
+         
+                // Storing each field as an array in a single JSON column
+                $table->json('relative_names')->nullable();
+                $table->json('relationships')->nullable();
+                $table->json('position_courses')->nullable();
+                $table->json('relative_contact_numbers')->nullable();
+                
+       
+            
         });
     }
 
