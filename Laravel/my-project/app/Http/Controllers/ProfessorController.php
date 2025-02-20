@@ -156,11 +156,16 @@ class ProfessorController extends Controller
     // }
 
     public function show($professor_id)
-    {
-       
-    
+    {  
         // Fetch the professor and related subjects
         $professor = Professor::findOrFail($professor_id);
+        $user = auth()->user(); // Get the logged-in user
+    
+        // Ensure the user is a professor and can only access their own profile
+        if ($user->hasRole('professor') && optional($user->professor)->id !== $professor->id) {
+            abort(403, 'Unauthorized access');
+        }
+        
         $subjects = $professor->subjects()->withCount('students')->with('students')->get();
     
         $dayShortcodes = [

@@ -13,6 +13,7 @@
                 <option value="Relatives" {{ old('financier') == 'Relatives' ? 'selected' : '' }}>Relatives</option>
                 <option value="Guardian" {{ old('financier') == 'Guardian' ? 'selected' : '' }}>Guardian</option>
                 <option value="Myself" {{ old('financier') == 'Myself' ? 'selected' : '' }}>Myself</option>
+                <option value="Myself" {{ old('financier') == 'Others' ? 'selected' : '' }}>Others</option>
             </select>
             @error('financier')
             <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -57,6 +58,14 @@
             <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
+        <div class="mb-4">
+            <input type="text" name="contact_number" id="contact_number"
+                class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm" placeholder="Contact Number"
+                value="{{ old('contact_number') }}">
+            @error('contact_number')
+            <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
     </div>
 
 
@@ -90,11 +99,10 @@
                     <!-- Accordion Button -->
                     <div class="relative-entry-header px-4 py-3 flex justify-between items-center cursor-pointer">
                         <span class="text-lg font-medium text-gray-700">Relative </span>
-                        <svg class="w-6 h-6 transform transition-transform duration-200"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="1.5" id="accordion-toggle-{{ $index }}">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                            </svg>
+
                     </div>
 
                     <!-- Accordion Content -->

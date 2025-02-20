@@ -32,7 +32,14 @@ https://templatemo.com/tm-557-grad-school
 
 <header class="main-header clearfix" role="header">
     <div class="logo">
+
+
+    <!-- <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="logo-image w-12 h-12 border rounded-full"> -->
+
+
+            
         <a href="{{ route('home') }}"><em>Amando</em></a>
+       
     </div>
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
 
@@ -477,9 +484,10 @@ https://templatemo.com/tm-557-grad-school
         <div class="col-md-6 align-self-center">
           <div class="left-content">
           <span>Your Future Starts Here</span>
-<h4>Watch the video to learn more <em>about Our School</em></h4>
-<p>Explore the opportunities our school provides for students to achieve academic excellence and personal growth.  
-<br><br>We offer a wide range of programs, dedicated faculty, and a supportive learning environment to help you succeed. Join us and take the first step toward a brighter future.</p>
+          <span>Welcome to Our School</span>
+          <h4>Watch the video to learn more <em>about Our School</em></h4>
+          <p>At our school, we are committed to providing an exceptional learning experience. Our dedicated teachers, diverse programs, and vibrant community make us a top choice for students aiming for excellence.</p>
+          <p>Explore the many opportunities that await you, from academic programs to extracurricular activities, designed to help you grow both academically and personally.</p>
             <div class="main-button"><a rel="nofollow" href="https://www.facebook.com/amando.cope.9" target="_parent">Visit Us</a></div>
           </div>
         </div>

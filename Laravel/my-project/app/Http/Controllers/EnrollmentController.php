@@ -65,7 +65,6 @@ class EnrollmentController extends Controller
             'initial_payment' => 'required|numeric',
 
             'financier' => 'required|string',
-
             'relative_names' => 'nullable|array',
             'relative_names.*' => 'nullable|string|max:255', // Array items should be strings
             'relationships' => 'nullable|array',
@@ -164,6 +163,7 @@ class EnrollmentController extends Controller
                 'company_address' => $validated['company_address'],
                 'income' => $validated['income'],
                 'scholarship' => $validated['scholarship'],
+                'contact_number' => $validated['contact_number'],
             ];
 
             // For dynamic fields, if not provided, default to an empty array
@@ -302,29 +302,16 @@ class EnrollmentController extends Controller
             ->where('semester_id', $enrollment->semester_id)
             ->where('year_level', $enrollment->year_level)
             ->get();
-    
-        $selectedSubjects = json_decode($enrollment->subject_ids, true);
-    
-        $fee = Fee::where('enrollment_id', $id)->first();
-        $payment = $fee ? Payment::where('fee_id', $fee->id)->first() : null;
-    
-        $financialData = FinancialInformation::where('enrollment_id', $id)->first();
 
-        // Default to empty array if null
-        $relativeNames = json_decode($financialData->relative_names ?? '[]', true);
-        $relationships = json_decode($financialData->relationships ?? '[]', true);
-        $positionCourses = json_decode($financialData->position_courses ?? '[]', true);
-        $relativeContactNumbers = json_decode($financialData->relative_contact_numbers ?? '[]', true);
-        
-        // Return the data to the view
-        return view('enrollments.edit', compact(
-            'enrollment', 'students', 'courses', 'semesters', 'subjects',
-            'selectedSubjects', 'fee', 'payment', 'financialData',
-            'relativeNames', 'relationships', 'positionCourses', 'relativeContactNumbers'
-        ));
+        $selectedSubjects = json_decode($enrollment->subject_ids, true);
+        $fee = Fee::where('enrollment_id', $id)->first(); // Get the fee for the enrollment
+        $financialData = FinancialInformation::where('enrollment_id', $id)->first();
+        // Fetch the payment related to this fee
+        $payment = $fee ? Payment::where('fee_id', $fee->id)->first() : null;
+
+        return view('enrollments.edit', compact('enrollment', 'students', 'courses', 'semesters', 'subjects', 'selectedSubjects', 'fee', 'payment', 'financialData', ));
     }
-    
-    
+
 
     public function update(Request $request, $id)
     {
@@ -349,6 +336,7 @@ class EnrollmentController extends Controller
             'financier' => 'nullable|string',
             'company_name' => 'nullable|string',
             'company_address' => 'nullable|string',
+            'contact_number'=>'nullable|string',
             'income' => 'nullable|numeric',
             'scholarship' => 'nullable|string',
             'relative_names' => 'sometimes|array',
@@ -356,13 +344,13 @@ class EnrollmentController extends Controller
             'position_courses' => 'sometimes|array',
             'relative_contact_numbers' => 'sometimes|array',
         ]);
-    
+        
         try {
             DB::beginTransaction();
-    
+        
             // Find existing enrollment
             $enrollment = Enrollment::findOrFail($id);
-    
+        
             // Update only the provided fields for the enrollment
             $enrollment->update($request->only([
                 'student_id',
@@ -371,10 +359,10 @@ class EnrollmentController extends Controller
                 'year_level',
                 'category'
             ]));
-    
-            // Get the related fee
+        
+            // Get related fee record
             $fee = Fee::where('enrollment_id', $id)->first();
-    
+        
             if ($fee) {
                 // Update tuition fees and related fields if provided in the request
                 $fee->update($request->only([
@@ -385,114 +373,85 @@ class EnrollmentController extends Controller
                     'discount',
                     'initial_payment',
                 ]));
-    
-                // Recalculate fees after the update
-                $tuitionFee = $fee->tuition_fee ?? 0;
-                $labFee = $fee->lab_fee ?? 0;
-                $miscFee = $fee->miscellaneous_fee ?? 0;
-                $otherFee = $fee->other_fee ?? 0;
-                $discount = $fee->discount ?? 0;
-                $initialPayment = $fee->initial_payment ?? 0;
-    
-                // Calculate total fees (sum of all fees)
-                $totalFees = $tuitionFee + $labFee + $miscFee + $otherFee;
-    
-                // Calculate the balance after discount and initial payment
-                $balance = $totalFees - $discount - $initialPayment;
-    
-                // Get the related payment data
+        
+                // Recalculate balance after payment status
+                $totalFees = $fee->tuition_fee + $fee->lab_fee + $fee->miscellaneous_fee + $fee->other_fee;
+                $balance = $totalFees - $fee->discount - $fee->initial_payment;
+        
                 $payment = Payment::where('fee_id', $fee->id)->first();
-    
+        
                 if ($payment) {
-                    // Update payment status based on the request (if payment exists)
                     $payment->update([
                         'prelims_paid' => $request->has('prelims_paid') ? true : false,
                         'midterms_paid' => $request->has('midterms_paid') ? true : false,
                         'pre_final_paid' => $request->has('pre_final_paid') ? true : false,
                         'final_paid' => $request->has('final_paid') ? true : false,
                     ]);
-    
+        
                     // Deduct payments made only for installments marked as 'Paid'
-                    if ($payment->prelims_paid) {
-                        $balance -= $payment->prelims_payment;
-                    }
-                    if ($payment->midterms_paid) {
-                        $balance -= $payment->midterms_payment;
-                    }
-                    if ($payment->pre_final_paid) {
-                        $balance -= $payment->pre_final_payment;
-                    }
-                    if ($payment->final_paid) {
-                        $balance -= $payment->final_payment;
-                    }
+                    if ($payment->prelims_paid) $balance -= $payment->prelims_payment;
+                    if ($payment->midterms_paid) $balance -= $payment->midterms_payment;
+                    if ($payment->pre_final_paid) $balance -= $payment->pre_final_payment;
+                    if ($payment->final_paid) $balance -= $payment->final_payment;
                 }
-    
-                // Ensure no negative remaining balance
+        
                 $remainingBalance = max($balance, 0);
-    
-                // Calculate installment amount (remaining balance divided by 4)
                 $installmentAmount = $remainingBalance / 4;
-    
-                // Overall status calculation (whether all payments are made)
-                $overallStatus = (!$payment || !$payment->prelims_paid || !$payment->midterms_paid || !$payment->pre_final_paid || !$payment->final_paid)
-                    ? 'Pending'
-                    : 'Paid';
-    
-                // Prepare financial data to be updated
+        
+                // Prepare financial data
                 $financialData = [
                     'enrollment_id' => $enrollment->id,
                     'financier' => $validated['financier'] ?? null,
                     'company_name' => $validated['company_name'] ?? null,
                     'company_address' => $validated['company_address'] ?? null,
+                    'contact_number' => $validated['contact_number'] ?? null,
                     'income' => $validated['income'] ?? null,
                     'scholarship' => $validated['scholarship'] ?? null,
                 ];
-    
-                // Handle dynamic fields for relatives (default to empty arrays if not provided)
+        
+                // Handle relative data fields with default empty arrays if not present
                 $relativeNames = $validated['relative_names'] ?? [];
                 $relationships = $validated['relationships'] ?? [];
                 $positionCourses = $validated['position_courses'] ?? [];
                 $relativeContactNumbers = $validated['relative_contact_numbers'] ?? [];
-    
-                // If new relative names are added or removed, we can append or delete as required
-                $existingRelativeNames = json_decode($financialData->relative_names ?? '[]', true);
-                $existingRelationships = json_decode($financialData->relationships ?? '[]', true);
-                $existingPositionCourses = json_decode($financialData->position_courses ?? '[]', true);
-                $existingRelativeContactNumbers = json_decode($financialData->relative_contact_numbers ?? '[]', true);
-    
-                // Merging new and old values (adding new entries or deleting removed ones)
-                $relativeNames = array_merge($existingRelativeNames, $relativeNames);
-                $relationships = array_merge($existingRelationships, $relationships);
-                $positionCourses = array_merge($existingPositionCourses, $positionCourses);
-                $relativeContactNumbers = array_merge($existingRelativeContactNumbers, $relativeContactNumbers);
-    
-                // JSON-encode the dynamic fields to store as JSON
-                $data = [
-                    'relative_names' => json_encode($relativeNames),
-                    'relationships' => json_encode($relationships),
-                    'position_courses' => json_encode($positionCourses),
-                    'relative_contact_numbers' => json_encode($relativeContactNumbers),
-                ];
-    
-                // Merge fixed financial data with dynamic data
-                $financialData = array_merge($financialData, $data);
-    
-                // Update or create the financial information
-                FinancialInformation::updateOrCreate(
-                    ['enrollment_id' => $enrollment->id], // Will update if exists, create if not
-                    $financialData
-                );
-    
-                DB::commit();
-    
-                return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
-            } else {
-                // Handle case where no fee is found for the enrollment
-                throw new \Exception('No fee record found for the provided enrollment.');
+        
+                // Fetch existing financial data (if any)
+                $existingFinancialData = FinancialInformation::where('enrollment_id', $enrollment->id)->first();
+        
+                // Decode existing relative data if present, otherwise use empty arrays
+              // Ensure all variables are arrays (if null, turn into empty arrays)
+                $existingRelativeNames = $existingFinancialData ? json_decode($existingFinancialData->relative_names, true) : [];
+                $existingRelationships = $existingFinancialData ? json_decode($existingFinancialData->relationships, true) : [];
+                $existingPositionCourses = $existingFinancialData ? json_decode($existingFinancialData->position_courses, true) : [];
+                $existingRelativeContactNumbers = $existingFinancialData ? json_decode($existingFinancialData->relative_contact_numbers, true) : [];
+
+                // Merge new data with existing, ensuring no duplicates, while handling null values
+                $relativeNames = array_unique(array_merge($existingRelativeNames ?: [], $relativeNames ?: []));
+                $relationships = array_unique(array_merge($existingRelationships ?: [], $relationships ?: []));
+                $positionCourses = array_unique(array_merge($existingPositionCourses ?: [], $positionCourses ?: []));
+                $relativeContactNumbers = array_unique(array_merge($existingRelativeContactNumbers ?: [], $relativeContactNumbers ?: []));
+
+        
+                // Save or update the financial information with merged relative data
+                $financialData['relative_names'] = json_encode($relativeNames);
+                $financialData['relationships'] = json_encode($relationships);
+                $financialData['position_courses'] = json_encode($positionCourses);
+                $financialData['relative_contact_numbers'] = json_encode($relativeContactNumbers);
+        
+                // Check if financial data exists and update or create
+                if ($existingFinancialData) {
+                    $existingFinancialData->update($financialData);
+                } else {
+                    FinancialInformation::create($financialData);
+                }
             }
+        
+            DB::commit();
+        
+            return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to update enrollment: ' . $e->getMessage());
+            return response()->json(['message' => 'Error updating enrollment.', 'error' => $e->getMessage()], 500);
         }
     }
     

@@ -357,8 +357,22 @@
 
     </div>
 
+    <div class="page-break">
+        <div class=" ">
+               
+               @include('pdf.financial')
+           
+       </div>
+    </div>
 
-  
+
+    <div class="page-break">
+        <div class=" ">
+               
+               @include('pdf.permit')
+           
+       </div>
+    </div>
 
     <!-- Payment Information -->
 

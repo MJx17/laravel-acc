@@ -145,7 +145,7 @@
 
 
                 <!-- Subjects Section -->
-                <div id="subjects-container" class="col-span-1 md:col-span-2 dark:bg-gray-800 p-4 rounded-lg mt-3">
+                <div id="subjects-container" class="col-span-1 md:col-span-2 dark:bg-gray-800  rounded-lg mt-3">
                     <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Subjects</h3>
                     <p class="text-gray-500 dark:text-gray-400">
                         Select a course, semester, and year level to see subjects.
