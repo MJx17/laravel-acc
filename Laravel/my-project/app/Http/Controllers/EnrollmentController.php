@@ -229,9 +229,16 @@ class EnrollmentController extends Controller
 
 
     public function fees($id)
-    {
+    {    
         $enrollment = Enrollment::with(['student', 'subjects', 'fees', 'fees.payments', 'financialInformation'])->findOrFail($id);
-
+  
+        $user = auth()->user(); // Get the logged-in user
+        $student = $enrollment->student;
+        // Ensure the user is a professor and can only access their own profile
+        if ($user->hasRole('student') && optional($user->student)->id !== $student->id) {
+            abort(403, 'Unauthorized access');
+        }
+    
         // Initialize variables
         $totalFees = 0;
         $remainingBalance = 0;

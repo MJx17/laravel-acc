@@ -60,6 +60,8 @@ Route::middleware(['auth', 'verified', 'role:admin|student'])->group(function ()
     Route::get('/student-info', [StudentController::class, 'indexStudent'])->name('student.indexStudent');
     Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subject.subjects');
 
+    Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subject.subjects');  
+    
     Route::get('/enrollments/{id}/details', [EnrollmentController::class, 'fees'])->name('enrollments.fees');
 
 });
@@ -166,9 +168,6 @@ Route::get('/test-professor', function () {
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
 Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 
-
-Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
-->name('student_subject.subjects');  
 
 
 
