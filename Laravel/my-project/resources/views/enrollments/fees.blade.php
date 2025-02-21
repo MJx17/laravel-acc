@@ -42,21 +42,21 @@
 
 
                     <!-- Iterate through students and display a download button for each -->
-                    <a href="{{ route('download-subjects-pdf', $enrollment->student->id) }}">
+                    <!-- <a href="{{ route('download-subjects-pdf', $enrollment->student->id) }}">
                         <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 mb-4">
                             Download
                         </button>
-                    </a>
+                    </a> -->
 
                     <a href="{{ route('pdf.fees', $enrollment->id) }}"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                        View
+                        class="inline-flex items-center px-4 py-2 mb-4 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        Download
                     </a>
 
-                    <a href="{{ route('pdf.financial', $enrollment->id) }}"
+                    <!-- <a href="{{ route('pdf.financial', $enrollment->id) }}"
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                         View
-                    </a>
+                    </a> -->
 
 
 
