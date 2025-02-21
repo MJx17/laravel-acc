@@ -46,15 +46,15 @@
                                 </a>
 
                                 <!-- Delete Button -->
-                                <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline-block ml-4">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                                            onclick="return confirm('Are you sure you want to delete this course?')">
-                                        Delete
-                                    </button>
-                                </form>
+                                <form id="delete-form-{{ $course->id }}" action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline-block ml-4">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button"
+                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                    onclick="confirmDelete('delete-form-{{ $course->id }}')">
+                                    Delete
+                                </button>
+                            </form>
                             </td>
                         </tr>
                     @endforeach
