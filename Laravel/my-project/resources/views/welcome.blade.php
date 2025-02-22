@@ -55,8 +55,7 @@ https://templatemo.com/tm-557-grad-school
 
                 <!-- About Us Submenu -->
                 <li class="has-submenu">
-                    <a href=" {{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">
-                        About Us</a>
+
 
                     <a class="mobile-nav"
                         href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">About Us</a>
