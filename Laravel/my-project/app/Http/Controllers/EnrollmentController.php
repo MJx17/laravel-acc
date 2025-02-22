@@ -204,7 +204,9 @@ class EnrollmentController extends Controller
         $enrollment->delete();
 
         // Update the student's status
+
         Student::where('id', $studentId)->update(['status' => 'not_enrolled']);
+
 
         return redirect()->route('enrollments.index')->with('success', 'Enrollment deleted successfully!');
     }

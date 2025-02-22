@@ -49,57 +49,64 @@ https://templatemo.com/tm-557-grad-school
             <ul class="main-menu">
                 <!-- Home Link -->
                 <li>
-                    <a href="{{ Route::currentRouteName() == 'home' ? '#section1' : route('home') }}">Home</a>
+                    <a class="mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section1' : route('home') }}">Home</a>
                 </li>
 
                 <!-- About Us Submenu -->
                 <li class="has-submenu">
-                    <a href=" {{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">About Us</a>
+                    <a href=" {{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">
+                        About Us</a>
+
+                    <a class="mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">About Us</a>
+
                     <ul class="sub-menu">
                         <li><a href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('who_we_are') }}">Who
                                 we are?</a></li>
                         <li><a href="{{ Route::currentRouteName() == 'home' ? '#section3' : route('what_we_do') }}">What
                                 we do?</a></li>
-                        <li>
+                        <<<<<<< HEAD <li>
                             <a href="https://www.facebook.com/amando.cope.9" target="_blank" rel="noopener noreferrer">
                                 Learn More
                             </a>
-                        </li>
-
-
-                    </ul>
                 </li>
 
-                <!-- Other Links -->
-                <li class="mobile-nav">
-                    <a class=" mobile-nav"
-                        href="{{ Route::currentRouteName() == 'home' ? '#section4' : route('courses') }}">Courses</a>
-                </li>
-                <li class="mobile-nav">
-                    <a class="mobile-nav"
-                        href="{{ Route::currentRouteName() == 'home' ? '#section6' : route('contact') }}">Contact</a>
-                </li>
 
-                <!-- Authentication Links -->
-                @guest
-                <!-- Login Link -->
-                <li><a href="{{ route('login') }}" class="external">Login</a></li>
-                <!-- Register under a Submenu -->
 
-                <li><a href="{{ route('register') }}" class="external">Register</a></li>
+            </ul>
+            </li>
 
-                @endguest
+            <!-- Other Links -->
+            <li class="mobile-nav">
+                <a class=" mobile-nav"
+                    href="{{ Route::currentRouteName() == 'home' ? '#section4' : route('courses') }}">Courses</a>
+            </li>
+            <li class="mobile-nav">
+                <a class="mobile-nav"
+                    href="{{ Route::currentRouteName() == 'home' ? '#section6' : route('contact') }}">Contact</a>
+            </li>
 
-                @auth
-                <!-- Authenticated User Links -->
-                <li><a href="{{ route('dashboard') }}" class="external">Dashboard</a></li>
-                <li><a href="{{ route('logout') }}" class="external"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                </li>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                @endauth
+            <!-- Authentication Links -->
+            @guest
+            <!-- Login Link -->
+            <li><a href="{{ route('login') }}" class="external">Login</a></li>
+            <!-- Register under a Submenu -->
+
+            <li><a href="{{ route('register') }}" class="external">Register</a></li>
+
+            @endguest
+
+            @auth
+            <!-- Authenticated User Links -->
+            <li><a href="{{ route('dashboard') }}" class="external">Dashboard</a></li>
+            <li><a href="{{ route('logout') }}" class="external"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            @endauth
             </ul>
         </nav>
         @endif
@@ -569,7 +576,12 @@ https://templatemo.com/tm-557-grad-school
                 <div class="col-md-12">
                     <p><i class="fa fa-copyright"></i> Copyright 2025 by Amando Cope
 
-                        <!-- | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">TemplateMo</a></p> -->
+                        <<<<<<< HEAD <!-- | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">
+                            TemplateMo</a>
+                    </p> -->
+                    =======
+                    | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">TemplateMo</a></p>
+                    >>>>>>> 708ea2503849bd71b73db9c9ec90afbcaec22128
                 </div>
             </div>
         </div>
