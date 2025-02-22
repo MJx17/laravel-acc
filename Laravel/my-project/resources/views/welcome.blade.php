@@ -49,12 +49,14 @@ https://templatemo.com/tm-557-grad-school
             <ul class="main-menu">
                 <!-- Home Link -->
                 <li>
-                    <a href="{{ Route::currentRouteName() == 'home' ? '#section1' : route('home') }}">Home</a>
+                    <a class="mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section1' : route('home') }}">Home</a>
                 </li>
 
                 <!-- About Us Submenu -->
                 <li class="has-submenu">
-                    <a href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">About Us</a>
+                    <a class="mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('about') }}">About Us</a>
                     <ul class="sub-menu">
                         <li><a href="{{ Route::currentRouteName() == 'home' ? '#section2' : route('who_we_are') }}">Who
                                 we are?</a></li>
@@ -63,15 +65,20 @@ https://templatemo.com/tm-557-grad-school
                         <li><a href="{{ Route::currentRouteName() == 'home' ? '#section3' : route('how_it_works') }}">Learn
                                 More
 
-                            </a></li>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
 
                 <!-- Other Links -->
-                <li><a href="{{ Route::currentRouteName() == 'home' ? '#section4' : route('courses') }}">Courses</a>
+                <li class="mobile-nav">
+                    <a class=" mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section4' : route('courses') }}">Courses</a>
                 </li>
-                <li><a href="{{ Route::currentRouteName() == 'home' ? '#section6' : route('contact') }}">Contact</a>
+                <li class="mobile-nav">
+                    <a class="mobile-nav"
+                        href="{{ Route::currentRouteName() == 'home' ? '#section6' : route('contact') }}">Contact</a>
                 </li>
 
                 <!-- Authentication Links -->

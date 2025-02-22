@@ -233,11 +233,16 @@ a.menu-link { display: none; }
 .main-menu li .sub-menu {
     position: absolute;
     width: 160px;
-    background-color: #18233a;
+    background-color: #00563B;
     opacity: 0;
     visibility: hidden;
     transition: all 0.5s;
 }
+
+.external, .mobile-nav, .main-nav{
+  background-color: #00563B;
+}
+.mobile-nav li 
 
 .main-menu li:hover .sub-menu {
     opacity: 1;
@@ -250,7 +255,7 @@ a.menu-link { display: none; }
     margin-left: 0px;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #121b2f;
+    border-bottom: 1px solid white;
 }
 
 .main-menu li .sub-menu li:first-child {
@@ -1607,6 +1612,7 @@ footer p a:hover {
   nav[role="navigation"].active {
     max-height: calc(80px + 100vh);
     overflow-y: auto;
+    
   }
 }
 
