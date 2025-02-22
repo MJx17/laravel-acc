@@ -1591,7 +1591,7 @@ footer p a:hover {
 }
 
 @media screen and (max-width: 992px) {
-  .features { background-color: #0c1228; }
+  .features { background-color: #00563B; }
   .features-content { position: relative; }
   .features-post { border-left: 0 }
 }
