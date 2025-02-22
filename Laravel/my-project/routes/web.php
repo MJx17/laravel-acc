@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth', 'verified','role:admin')->group(function () {
+Route::middleware(['auth','verified','role:admin'])->group(function () {
     // Route to display the form
     Route::get('/admin/register-professor', [RegisteredProfessorUserController::class, 'create'])
     ->name('register_professor');
@@ -58,8 +58,10 @@ Route::middleware(['auth', 'verified', 'role:admin|student'])->group(function ()
     Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
     Route::post('/student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/student-info', [StudentController::class, 'indexStudent'])->name('student.indexStudent');
-    Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subjects.show');
+    Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subject.subjects');
 
+    Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])->name('student_subject.subjects');  
+    
     Route::get('/enrollments/{id}/details', [EnrollmentController::class, 'fees'])->name('enrollments.fees');
 
 });
@@ -67,7 +69,7 @@ Route::middleware(['auth', 'verified', 'role:admin|student'])->group(function ()
 
 
 
-Route::middleware('auth', 'verified','role:admin')->group(function () {
+Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::get('/student-list', [StudentController::class, 'indexAdmin'])->name('student.indexAdmin');
   
         Route::get('/users-list', [UserController::class, 'index'])->name('users.index');
@@ -86,7 +88,7 @@ Route::put('students/{studentId}/subjects', [StudentSubjectController::class, 'u
 });
 
 // Roles
-Route::middleware('auth', 'verified','role:admin')->group(function () {
+Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
@@ -167,9 +169,6 @@ Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name(
 Route::get('/professor-list', [ProfessorController::class, 'getProfessors']);
 
 
-Route::get('students/{studentId}/subjects', [StudentSubjectController::class, 'show'])
-->name('student_subject.subjects');  
-
 
 
 
@@ -182,6 +181,8 @@ Route::get('/download-subjects-pdf/{studentId}', [SubjectPdfController::class, '
 
 
 Route::get('/fees-pdf/{id}', [SubjectPdfController::class, 'fees'])->name('pdf.fees');
+Route::get('/fees-financial/{id}', [SubjectPdfController::class, 'financialInformation'])->name('pdf.financial');
+Route::get('/fees-permit/{id}', [SubjectPdfController::class, 'permit'])->name('pdf.permit');
 
 Route::get('/financial-letter', function () {
     return view('pdf.financial'); // Display the Blade template

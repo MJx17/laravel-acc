@@ -38,9 +38,15 @@ class StudentSubjectController extends Controller
 
     public function show($studentId)
     {
-        // Fetch the student
-        $student = Student::findOrFail($studentId);
+        // Fetch the student along with enrollment
+        $student = Student::with('enrollment')->findOrFail($studentId);
+        $user = auth()->user(); // Get the logged-in user
     
+        // Ensure the user is a professor and can only access their own profile
+        if ($user->hasRole('student') && optional($user->student)->id !== $student->id) {
+            abort(403, 'Unauthorized access');
+        }
+
         // Fetch subjects with pagination
         $subjects = $student->subjects()
             ->select([
@@ -60,9 +66,10 @@ class StudentSubjectController extends Controller
             ])
             ->withPivot('status', 'grade') // Include pivot data
             ->paginate(10); // Show 10 subjects per page
-    
+
         return view('student_subject.subjects', compact('student', 'subjects'));
     }
+
     
 
     public function edit($studentId)

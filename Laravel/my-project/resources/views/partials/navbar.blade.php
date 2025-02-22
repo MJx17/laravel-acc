@@ -15,6 +15,9 @@
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="w-12 h-12 border rounded-full">
 
                 </div>
+
+             
+
             </div>
 
             <!-- Profile Dropdown -->

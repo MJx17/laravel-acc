@@ -152,4 +152,10 @@ class Student extends Model
         return $this->hasMany(Enrollment::class);
     }
 
+    public function enrollment()
+{
+    return $this->hasOne(Enrollment::class);
+}
+
+
 }

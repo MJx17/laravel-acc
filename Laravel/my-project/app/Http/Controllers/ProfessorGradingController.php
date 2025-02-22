@@ -60,23 +60,32 @@ class ProfessorGradingController extends Controller
      */
     public function updateGrades(Request $request, $subjectId)
     {
-        $professor = Auth::user();
-
-        // Find the subject and ensure it belongs to the professor
-        $subject = Subject::where('id', $subjectId)
-            ->where('professor_id', $professor->id)
-            ->firstOrFail();
-
+        $user = Auth::user();
+    
+        if ($user->hasRole('admin')) {
+            // Admins can update any subject's grades
+            $subject = Subject::where('id', $subjectId)->firstOrFail();
+        } elseif ($user->hasRole('professor')) {
+            // Professors can only update their own subjects
+            $subject = Subject::where('id', $subjectId)
+                ->where('professor_id', $user->professor->id ?? null)
+                ->firstOrFail();
+        } else {
+            // Other roles are unauthorized
+            abort(403, 'Unauthorized action.');
+        }
+    
         // Validate input
         $request->validate([
             'grades.*' => 'nullable|numeric|min:0|max:100',
         ]);
-
+    
         // Update grades for each student
         foreach ($request->grades as $studentId => $grade) {
             $subject->students()->updateExistingPivot($studentId, ['grade' => $grade]);
         }
-
+    
         return back()->with('success', 'Grades updated successfully.');
     }
+    
 }

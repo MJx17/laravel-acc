@@ -21,7 +21,9 @@
                             disabled>
                             <option value="" disabled>Select Student</option>
                             @foreach($students as $student)
-                                <option value="{{ $student->id }}" {{ $enrollment->student_id == $student->id ? 'selected' : '' }}>{{ $student->fullname }}</option>
+                            <option value="{{ $student->id }}"
+                                {{ $enrollment->student_id == $student->id ? 'selected' : '' }}>{{ $student->fullname }}
+                            </option>
                             @endforeach
                         </select>
 
@@ -39,7 +41,10 @@
                             class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="" disabled>Select Semester</option>
                             @foreach($semesters as $semester)
-                                <option value="{{ $semester->id }}" {{ $enrollment->semester_id == $semester->id ? 'selected' : '' }}>{{ $semester->semester }} Semester</option>
+                            <option value="{{ $semester->id }}"
+                                {{ $enrollment->semester_id == $semester->id ? 'selected' : '' }}>
+                                {{ $semester->semester }} Semester
+                            </option>
                             @endforeach
                         </select>
 
@@ -47,11 +52,13 @@
                             class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="first_year" {{ $enrollment->year_level == 'first_year' ? 'selected' : '' }}>
                                 First Year</option>
-                            <option value="second_year" {{ $enrollment->year_level == 'second_year' ? 'selected' : '' }}>
+                            <option value="second_year"
+                                {{ $enrollment->year_level == 'second_year' ? 'selected' : '' }}>
                                 Second Year</option>
                             <option value="third_year" {{ $enrollment->year_level == 'third_year' ? 'selected' : '' }}>
                                 Third Year</option>
-                            <option value="fourth_year" {{ $enrollment->year_level == 'fourth_year' ? 'selected' : '' }}>
+                            <option value="fourth_year"
+                                {{ $enrollment->year_level == 'fourth_year' ? 'selected' : '' }}>
                                 Fourth Year</option>
                             <option value="5th_year" {{ $enrollment->year_level == '5th_year' ? 'selected' : '' }}>Fifth
                                 Year</option>
@@ -64,9 +71,9 @@
                         class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500">
                         <option value="" disabled>Select Course</option>
                         @foreach($courses as $course)
-                            <option value="{{ $course->id }}" {{ $enrollment->course_id == $course->id ? 'selected' : '' }}>
-                                {{ $course->course_name }}
-                            </option>
+                        <option value="{{ $course->id }}" {{ $enrollment->course_id == $course->id ? 'selected' : '' }}>
+                            {{ $course->course_name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -104,39 +111,41 @@
 
                 <!-- Payment Status Section -->
 
-                <!-- Payment Status Section -->
-     <!-- Payment Status Section -->
-<!-- Payment Status Section -->
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Payment Status</h3>
-                <div class="grid grid-cols-1 gap-4">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="prelims_paid" value="1" 
-                            {{ old('prelims_paid', $payment->prelims_paid == 1) ? 'checked' : '' }} class="form-checkbox">
-                        <span class="ml-2">Prelims Paid</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="midterms_paid" value="1" 
-                            {{ old('midterms_paid', $payment->midterms_paid == 1) ? 'checked' : '' }} class="form-checkbox">
-                        <span class="ml-2">Midterms Paid</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="pre_final_paid" value="1" 
-                            {{ old('pre_final_paid', $payment->pre_final_paid == 1) ? 'checked' : '' }} class="form-checkbox">
-                        <span class="ml-2">Pre-Final Paid</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="final_paid" value="1" 
-                            {{ old('final_paid', $payment->final_paid == 1) ? 'checked' : '' }} class="form-checkbox">
-                        <span class="ml-2">Final Paid</span>
-                    </label>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Payment Status</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="prelims_paid" value="1"
+                                {{ old('prelims_paid', $payment->prelims_paid == 1) ? 'checked' : '' }}
+                                class="form-checkbox">
+                            <span class="ml-2">Prelims Paid</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="midterms_paid" value="1"
+                                {{ old('midterms_paid', $payment->midterms_paid == 1) ? 'checked' : '' }}
+                                class="form-checkbox">
+                            <span class="ml-2">Midterms Paid</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="pre_final_paid" value="1"
+                                {{ old('pre_final_paid', $payment->pre_final_paid == 1) ? 'checked' : '' }}
+                                class="form-checkbox">
+                            <span class="ml-2">Pre-Final Paid</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="final_paid" value="1"
+                                {{ old('final_paid', $payment->final_paid == 1) ? 'checked' : '' }}
+                                class="form-checkbox">
+                            <span class="ml-2">Final Paid</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
 
 
 
                 <!-- Subjects Section -->
-                <div id="subjects-container" class="col-span-1 md:col-span-2 dark:bg-gray-800 p-4 rounded-lg mt-3">
+                <div id="subjects-container" class="col-span-1 md:col-span-2 dark:bg-gray-800  rounded-lg mt-3">
                     <h3 class="text-lg font-semibold text-blue-800 dark:text-white">Subjects</h3>
                     <p class="text-gray-500 dark:text-gray-400">
                         Select a course, semester, and year level to see subjects.
@@ -144,14 +153,38 @@
 
                     <div class="grid grid-cols-1 gap-4 border p-2 rounded-lg bg-white dark:bg-gray-900 shadow w-1/2">
                         @foreach($enrollment->subjects as $subject)
-                            <label class="flex items-center justify-between w-full">
-                                <span>{{ $subject->name }}</span>
-                                <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" checked
-                                    class="form-checkbox">
-                            </label>
+                        <label class="flex items-center justify-between w-full">
+                            <span>{{ $subject->name }}</span>
+                            <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" checked
+                                class="form-checkbox">
+                        </label>
                         @endforeach
                     </div>
                 </div>
+
+
+
+                <div class="cols-span-1 md:col-span-2  flex-1 ">
+
+                    @include('partials.financial-edit')
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <!-- Submit & Cancel Buttons -->
                 <div class="col-span-1 md:col-span-2 flex justify-end gap-4 mt-6">
@@ -164,88 +197,109 @@
                         Cancel
                     </a>
                 </div>
+
+
+
+
+
+
+
+
+
             </form>
         </div>
     </div>
 
 
 
+
+
+
+
+
+
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const courseSelect = document.querySelector('select[name="course_id"]');
-            const semesterSelect = document.querySelector('select[name="semester_id"]');
-            const yearLevelSelect = document.querySelector('select[name="year_level"]');
-            const subjectsContainer = document.getElementById('subjects-container');
+    document.addEventListener('DOMContentLoaded', function() {
+        const courseSelect = document.querySelector('select[name="course_id"]');
+        const semesterSelect = document.querySelector('select[name="semester_id"]');
+        const yearLevelSelect = document.querySelector('select[name="year_level"]');
+        const subjectsContainer = document.getElementById('subjects-container');
 
-            function fetchSubjects() {
-                const courseId = courseSelect.value;
-                const semesterId = semesterSelect.value;
-                const yearLevel = yearLevelSelect.value;
+        function fetchSubjects() {
+            const courseId = courseSelect.value;
+            const semesterId = semesterSelect.value;
+            const yearLevel = yearLevelSelect.value;
 
-                if (!courseId || !semesterId || !yearLevel) {
-                    subjectsContainer.innerHTML = ''; // Clear subjects if selections are incomplete
-                    return;
-                }
-
-                fetch(`{{ route('get.subjects') }}?course_id=${courseId}&semester_id=${semesterId}&year_level=${yearLevel}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        subjectsContainer.innerHTML = '';
-
-                        if (Object.keys(data).length === 0) {
-                            subjectsContainer.innerHTML = '<p class="text-gray-500">No subjects available.</p>';
-                        } else {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'grid grid-cols-1 md:grid-cols-2 gap-4'; // Two columns on larger screens
-
-                            Object.keys(data).forEach(year => {
-                                // Year container (flex item)
-                                const yearContainer = document.createElement('div');
-                                yearContainer.className = 'border p-4 rounded-lg bg-white dark:bg-gray-900 shadow';
-
-                                // Year level header
-                                const yearHeader = document.createElement('h3');
-                                yearHeader.textContent = year.replace('_', ' ').toUpperCase();
-                                yearHeader.className = 'text-lg font-semibold mb-2';
-
-                                // Subject list container
-                                const subjectList = document.createElement('div');
-                                subjectList.className = 'flex flex-col gap-2';
-
-                                data[year].forEach(subject => {
-                                    const label = document.createElement('label');
-                                    label.className = 'flex items-center justify-between w-full';
-
-                                    const span = document.createElement('span');
-                                    span.textContent = subject.name;
-
-                                    const checkbox = document.createElement('input');
-                                    checkbox.type = 'checkbox';
-                                    checkbox.name = 'subjects[]';
-                                    checkbox.value = subject.id;
-                                    checkbox.className = 'form-checkbox';
-
-                                    label.appendChild(span);
-                                    label.appendChild(checkbox);
-                                    subjectList.appendChild(label);
-                                });
-
-                                // Append header and subject list to container
-                                yearContainer.appendChild(yearHeader);
-                                yearContainer.appendChild(subjectList);
-                                wrapper.appendChild(yearContainer);
-                            });
-
-                            subjectsContainer.appendChild(wrapper);
-                        }
-                    })
-                    .catch(error => console.error('Error fetching subjects:', error));
+            if (!courseId || !semesterId || !yearLevel) {
+                subjectsContainer.innerHTML = ''; // Clear subjects if selections are incomplete
+                return;
             }
 
-            courseSelect.addEventListener('change', fetchSubjects);
-            semesterSelect.addEventListener('change', fetchSubjects);
-            yearLevelSelect.addEventListener('change', fetchSubjects);
-        });
+            fetch(
+                    `{{ route('get.subjects') }}?course_id=${courseId}&semester_id=${semesterId}&year_level=${yearLevel}`
+                )
+                .then(response => response.json())
+                .then(data => {
+                    subjectsContainer.innerHTML = '';
+
+                    if (Object.keys(data).length === 0) {
+                        subjectsContainer.innerHTML = '<p class="text-gray-500">No subjects available.</p>';
+                    } else {
+                        const wrapper = document.createElement('div');
+                        wrapper.className =
+                            'grid grid-cols-1 md:grid-cols-2 gap-4'; // Two columns on larger screens
+
+                        Object.keys(data).forEach(year => {
+                            // Year container (flex item)
+                            const yearContainer = document.createElement('div');
+                            yearContainer.className =
+                                'border p-4 rounded-lg bg-white dark:bg-gray-900 shadow';
+
+                            // Year level header
+                            const yearHeader = document.createElement('h3');
+                            yearHeader.textContent = year.replace('_', ' ').toUpperCase();
+                            yearHeader.className = 'text-lg font-semibold mb-2';
+
+                            // Subject list container
+                            const subjectList = document.createElement('div');
+                            subjectList.className = 'flex flex-col gap-2';
+
+                            data[year].forEach(subject => {
+                                const label = document.createElement('label');
+                                label.className =
+                                    'flex items-center justify-between w-full';
+
+                                const span = document.createElement('span');
+                                span.textContent = subject.name;
+
+                                const checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.name = 'subjects[]';
+                                checkbox.value = subject.id;
+                                checkbox.className = 'form-checkbox';
+
+                                label.appendChild(span);
+                                label.appendChild(checkbox);
+                                subjectList.appendChild(label);
+                            });
+
+                            // Append header and subject list to container
+                            yearContainer.appendChild(yearHeader);
+                            yearContainer.appendChild(subjectList);
+                            wrapper.appendChild(yearContainer);
+                        });
+
+                        subjectsContainer.appendChild(wrapper);
+                    }
+                })
+                .catch(error => console.error('Error fetching subjects:', error));
+        }
+
+        courseSelect.addEventListener('change', fetchSubjects);
+        semesterSelect.addEventListener('change', fetchSubjects);
+        yearLevelSelect.addEventListener('change', fetchSubjects);
+    });
     </script>
 
 

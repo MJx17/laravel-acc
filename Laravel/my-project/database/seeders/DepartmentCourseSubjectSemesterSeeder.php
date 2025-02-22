@@ -13,6 +13,9 @@ use App\Models\Professor;
 use App\Models\CourseSubject;
 use App\Models\StudentSubject;
 use App\Models\ProfessorSubject;
+use App\Models\Fee;
+use App\Models\Payment;
+use App\Models\FinancialInformation;
 use Carbon\Carbon;
 
 class DepartmentCourseSubjectSemesterSeeder extends Seeder
@@ -117,7 +120,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-1',
+            'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -132,7 +136,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-2',
+            'professor_id' => $professor9->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
             'end_time' => '11:30:00',
@@ -147,6 +152,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
+            'room' =>  'MT-3',
             'professor_id' => $professor1->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '13:00:00',
@@ -162,7 +168,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-4',
+            'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '15:00:00',
             'end_time' => '16:30:00',
@@ -177,7 +184,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-5',
+            'professor_id' => $professor3->id,
             'days' => json_encode(['Friday']),
             'start_time' => '09:00:00',
             'end_time' => '12:00:00',
@@ -192,7 +200,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 1,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-5',
+            'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -207,7 +216,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-5',
+            'professor_id' => $professor4->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '13:00:00',
             'end_time' => '15:00:00',
@@ -222,7 +232,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 1,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-6',
+            'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
             'end_time' => '11:30:00',
@@ -235,9 +246,10 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'prerequisite_id' => null,
             'fee' => 500,
             'units' => 3,
+            'room' =>  'MT-7',
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'professor_id' => $professor4->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '14:00:00',
             'end_time' => '15:30:00',
@@ -252,7 +264,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-8',
+            'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '09:00:00',
             'end_time' => '10:30:00',
@@ -267,7 +280,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'MT-8',
+            'professor_id' => $professor5->id,
             'days' => json_encode(['Friday']),
             'start_time' => '13:00:00',
             'end_time' => '14:30:00',
@@ -282,6 +296,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
+            'room' =>  'MT-9',
             'professor_id' => $professor1->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '11:00:00',
@@ -297,7 +312,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'L2',
+            'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '13:00:00',
             'end_time' => '14:30:00',
@@ -312,7 +328,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 2,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'L3',
+            'professor_id' => $professor6->id,
             'days' => json_encode(['Friday']),
             'start_time' => '10:00:00',
             'end_time' => '11:30:00',
@@ -328,7 +345,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'L4',
+            'professor_id' => $professor6->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -343,7 +361,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'first_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'L4',
+            'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
             'end_time' => '11:30:00',
@@ -360,7 +379,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'L5',
+            'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -374,6 +394,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'L6',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
@@ -388,6 +409,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'L7',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '11:30:00',
@@ -402,6 +424,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'L8',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '13:30:00',
@@ -416,6 +439,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'L9',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '15:30:00',
@@ -430,6 +454,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE1',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '17:30:00',
@@ -444,6 +469,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE2',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Friday']),
             'start_time' => '08:00:00',
@@ -458,6 +484,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 2,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE3',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '10:30:00',
@@ -473,7 +500,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'RE4',
+            'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -487,6 +515,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE5',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
@@ -501,6 +530,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE6',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '11:30:00',
@@ -515,6 +545,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE7',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '13:30:00',
@@ -529,6 +560,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '15:30:00',
@@ -543,6 +575,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'RE9',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '17:30:00',
@@ -557,6 +590,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'DMH-1',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Friday']),
             'start_time' => '08:00:00',
@@ -571,6 +605,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 2,
             'year_level' => 'second_year',
             'block' => 'A',
+            'room' =>  'DMH-2',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '10:30:00',
@@ -588,10 +623,11 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
+            'room' =>  'DMH-3',
         ]);
 
         $cbmec1 = Subject::create([
@@ -606,6 +642,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
             'end_time' => '11:30:00',
+            'room' =>  'DMH-4',
         ]);
 
         $bacc5 = Subject::create([
@@ -620,6 +657,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '13:00:00',
             'end_time' => '14:30:00',
+            'room' =>  'DMH-6',
         ]);
 
         $bapc4 = Subject::create([
@@ -630,10 +668,12 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'DMH-7',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '15:00:00',
             'end_time' => '16:30:00',
+            
         ]);
 
         $elec3 = Subject::create([
@@ -644,6 +684,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'DMH-8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Friday']),
             'start_time' => '09:00:00',
@@ -658,6 +699,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'DMH-9',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '16:30:00',
@@ -687,7 +729,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'ACC1',
+            'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -701,6 +744,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC2',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '10:00:00',
@@ -715,6 +759,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC3',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Friday']),
             'start_time' => '09:00:00',
@@ -729,6 +774,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC4',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '15:00:00',
@@ -743,6 +789,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC5',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '13:00:00',
@@ -757,6 +804,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC6',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
             'start_time' => '16:30:00',
@@ -771,6 +819,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'third_year',
             'block' => 'A',
+            'room' =>  'ACC7',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '10:30:00',
@@ -786,7 +835,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
-            'professor_id' => $professor1->id,
+            'room' =>  'ACC8',
+            'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
             'end_time' => '09:30:00',
@@ -802,6 +852,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ACC9',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Wednesday', 'Friday']),
             'start_time' => '13:00:00',
@@ -816,6 +867,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-1',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Monday', 'Thursday']),
             'start_time' => '15:00:00',
@@ -830,6 +882,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-2',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Friday']),
             'start_time' => '17:00:00',
@@ -844,6 +897,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-3',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '09:00:00',
@@ -859,6 +913,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-4',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Wednesday', 'Friday']),
             'start_time' => '14:00:00',
@@ -873,6 +928,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 3,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-5',
             'professor_id' => $professor9->id,
             'days' => json_encode(['Saturday']),
             'start_time' => '10:30:00',
@@ -889,6 +945,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 5,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-5',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Monday', 'Wednesday']),
             'start_time' => '08:00:00',
@@ -903,6 +960,7 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'units' => 6,
             'year_level' => 'fourth_year',
             'block' => 'A',
+            'room' =>  'ST-4',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Tuesday', 'Thursday']),
             'start_time' => '09:00:00',
@@ -927,6 +985,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
         $pe2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
         $eco1->courses()->attach([ $course4->id,  $course5->id, ]); // Attach courses via the pivot table
         $ba1->courses()->attach([ $course4->id,  $course5->id, ]); 
+        $nstp1->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]); // Attach courses via the pivot table
+        $nstp2->courses()->attach([$course1->id, $course2->id,  $course3->id, $course4->id,  $course5->id, ]);
 
 
         //Second Year 1st 
@@ -1023,6 +1083,10 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
         $this->command->info('Students enrolled successfully!');
     }
 
+
+
+
+
     private function enrollStudent($student, $yearLevel, $semesterId, $courseId, $subjectIds)
     {
         // Step 1: Create enrollment
@@ -1036,11 +1100,11 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             ],
             ['subject_ids' => json_encode($subjectIds)]
         );
-
+    
         // Step 2: Update student's status
         $student->status = 'enrolled';
         $student->save();
-
+    
         // Step 3: Assign subjects to Student
         foreach ($subjectIds as $subjectId) {
             StudentSubject::updateOrCreate([
@@ -1052,7 +1116,79 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
                 'grade' => null,
             ]);
         }
-                                
+    
+        // Step 4: Add related fee, payment, and financial data
+    
+        // Hardcoded Fee Data for the enrollment
+        $tuitionFee = 5000.00;
+        $labFee = 500.00;
+        $miscellaneousFee = 300.00;
+        $otherFee = 200.00;
+        $discount = 100.00;
+        $initialPayment = 1000.00;
+    
+        $totalFee = $tuitionFee + $labFee + $miscellaneousFee + $otherFee - $discount - $initialPayment;
+    
+        // Insert fees into the students_fees table
+        $fee = Fee::create([
+            'enrollment_id' => $enrollment->id,
+            'tuition_fee' => $tuitionFee,
+            'lab_fee' => $labFee,
+            'miscellaneous_fee' => $miscellaneousFee,
+            'other_fee' => $otherFee,
+            'discount' => $discount,
+            'initial_payment' => $initialPayment,
+        ]);
+    
+        // Calculate installment amounts (splitting total fee into 4 installments)
+        $installmentAmount = $totalFee > 0 ? $totalFee / 4 : 0;
+    
+        // Insert Payment details
+        $paymentsData = [
+            'fee_id' => $fee->id,
+            'prelims_payment' => $installmentAmount,
+            'prelims_paid' => false,
+            'midterms_payment' => $installmentAmount,
+            'midterms_paid' => false,
+            'pre_final_payment' => $installmentAmount,
+            'pre_final_paid' => false,
+            'final_payment' => $installmentAmount,
+            'final_paid' => false,
+            'status' => 'Pending',
+        ];
+    
+        // Create Payment record
+        Payment::create($paymentsData);
+    
+        // Dummy Financial Data (Example)
+        $dummyFinancialData = [
+            'financier' => 'Myself',
+            'company_name' => 'ABC Corp',
+            'company_address' => '123 Street, City, Country',
+            'income' => 35000,
+            'scholarship' => 5000,
+            'contact_number' => '123-456-7890',
+            'relative_names' => ['John Doe', 'Jane Smith'], // Example relatives
+            'relationships' => ['Father', 'Mother'],
+            'position_courses' => ['Manager', 'Engineer'],
+            'relative_contact_numbers' => ['987-654-3210', '555-123-4567'],
+        ];
+    
+        // Merge the financial data with relative info
+        $financialData = array_merge($dummyFinancialData, [
+            'enrollment_id' => $enrollment->id,
+            'relative_names' => json_encode($dummyFinancialData['relative_names']),
+            'relationships' => json_encode($dummyFinancialData['relationships']),
+            'position_courses' => json_encode($dummyFinancialData['position_courses']),
+            'relative_contact_numbers' => json_encode($dummyFinancialData['relative_contact_numbers']),
+        ]);
+    
+        // Insert the financial information into the financial_info table
+        FinancialInformation::create($financialData);
+    
+    
+
+
                     
             
             

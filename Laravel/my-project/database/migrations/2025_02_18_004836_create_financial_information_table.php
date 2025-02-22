@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('enrollment_id')->constrained()->onDelete('cascade');
-            $table->enum('financier', ['Parents', 'Relatives', 'Guardian', 'Myself'])->nullable();
+            $table->enum('financier', ['Parents', 'Relatives', 'Guardian', 'Myself', 'Others'])->nullable();
             $table->string('company_name')->nullable();
             $table->text('company_address')->nullable();
             $table->string('scholarship')->nullable();
