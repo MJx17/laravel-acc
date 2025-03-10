@@ -77,20 +77,27 @@ class SubjectController extends Controller
     // Show the form to edit the subject
     public function edit($id)
     {
-        $subject = Subject::findOrFail($id);
+        // Fetch the subject with its related data (courses, professor, and semester)
+        $subject = Subject::with(['courses', 'professor', 'semester'])->findOrFail($id);
+    
+        // Fetch available courses, professors, semesters, and subjects (excluding the current one)
         $courses = Course::all();
         $professors = Professor::with('user')->get();
         $semesters = Semester::all();
         $subjects = Subject::where('id', '!=', $subject->id)->get(); // Exclude the current subject
-
+    
+        // Return the edit view with the data
         return view('subjects.edit', compact('subject', 'courses', 'professors', 'semesters', 'subjects'));
     }
+    
+    
 
     // Update the subject
     public function update(Request $request, $id)
     {
         $subject = Subject::findOrFail($id);
-
+    
+        // Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:50|unique:subjects,code,' . $subject->id,
@@ -109,7 +116,8 @@ class SubjectController extends Controller
             'room'  => 'required|string',
             'block' => 'required|string'
         ]);
-
+    
+        // Update the subject with the validated data
         $subject->update([
             'name' => $validatedData['name'],
             'code' => $validatedData['code'],
@@ -125,11 +133,14 @@ class SubjectController extends Controller
             'room'=> $validatedData['room'],
             'block'=>$validatedData['block'],
         ]);
-
+    
+        // Sync the related courses (many-to-many relationship)
         $subject->courses()->sync($validatedData['course_ids']);
-
-        return redirect()->route('subjects.index')->with('updated', ' Subject updated successfully!');
+    
+        // Redirect with success message
+        return redirect()->route('subjects.index')->with('updated', 'Subject updated successfully!');
     }
+    
 
     // Delete the subject
     public function destroy($id)
