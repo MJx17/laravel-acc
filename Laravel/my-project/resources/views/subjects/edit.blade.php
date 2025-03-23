@@ -8,9 +8,6 @@
     <div class="py-10 flex justify-center">
         <div class="max-w-3xl w-full bg-white shadow-md rounded-xl p-6">
 
-
-
-
             <form method="POST" action="{{ route('subjects.update', $subject->id) }}">
                 @csrf
                 @method('PUT')
