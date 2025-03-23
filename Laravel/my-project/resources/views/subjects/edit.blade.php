@@ -7,6 +7,10 @@
 
     <div class="py-10 flex justify-center">
         <div class="max-w-3xl w-full bg-white shadow-md rounded-xl p-6">
+
+
+
+
             <form method="POST" action="{{ route('subjects.update', $subject->id) }}">
                 @csrf
                 @method('PUT')
@@ -15,7 +19,7 @@
                     <!-- Subject Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">Subject Name</label>
-                        <input type="text" name="name" id="name" 
+                        <input type="text" name="name" id="name"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                             value="{{ old('name', $subject->name) }}" required>
                     </div>
@@ -28,59 +32,69 @@
                             value="{{ old('code', $subject->code) }}" required>
                     </div>
 
-                    <!-- Room -->
+
                     <div>
                         <label for="room" class="block text-sm font-medium text-gray-700">Room</label>
                         <input type="text" name="room" id="room"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-                            value="{{ old('room', $subject->room) }}" required>
+                            value="{{ old('room', $subject->room)}}" required>
                     </div>
 
-                    <!-- Block -->
+
+
                     <div>
-                        <label for="block" class="block text-sm font-medium text-gray-700">Block</label>
+                        <label for="block" class="block text-sm font-medium text-gray-700">block</label>
                         <input type="text" name="block" id="block"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                             value="{{ old('block', $subject->block) }}" required>
                     </div>
 
-                    <!-- Semester -->
+
+                    <!-- Semester & Year Level -->
                     <div>
                         <label for="semester_id" class="block text-sm font-medium text-gray-700">Semester</label>
                         <select name="semester_id" id="semester_id"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            required>
                             <option value="">Select Semester</option>
                             @foreach($semesters as $semester)
-                                <option value="{{ $semester->id }}" {{ old('semester_id', $subject->semester_id) == $semester->id ? 'selected' : '' }}>
-                                    {{ $semester->semester }}
-                                </option>
+                            <option value="{{ $semester->id }}"
+                                {{ $subject->semester_id == $semester->id ? 'selected' : '' }}>
+                                {{ $semester->semester }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <!-- Year Level -->
                     <div>
                         <label for="year_level" class="block text-sm font-medium text-gray-700">Year Level</label>
                         <select id="year_level" name="year_level"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
-                            <option value="first_year" {{ old('year_level', $subject->year_level) == 'first_year' ? 'selected' : '' }}>First Year</option>
-                            <option value="second_year" {{ old('year_level', $subject->year_level) == 'second_year' ? 'selected' : '' }}>Second Year</option>
-                            <option value="third_year" {{ old('year_level', $subject->year_level) == 'third_year' ? 'selected' : '' }}>Third Year</option>
-                            <option value="fourth_year" {{ old('year_level', $subject->year_level) == 'fourth_year' ? 'selected' : '' }}>Fourth Year</option>
-                            <option value="fifth_year" {{ old('year_level', $subject->year_level) == 'fifth_year' ? 'selected' : '' }}>Fifth Year</option>
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            required>
+                            <option value="first_year" {{ $subject->year_level == 'first_year' ? 'selected' : '' }}>
+                                First Year</option>
+                            <option value="second_year" {{ $subject->year_level == 'second_year' ? 'selected' : '' }}>
+                                Second Year</option>
+                            <option value="third_year" {{ $subject->year_level == 'third_year' ? 'selected' : '' }}>
+                                Third Year</option>
+                            <option value="fourth_year" {{ $subject->year_level == 'fourth_year' ? 'selected' : '' }}>
+                                Fourth Year</option>
+                            <option value="fifth_year" {{ $subject->year_level == 'fifth_year' ? 'selected' : '' }}>
+                                Fifth Year</option>
                         </select>
                     </div>
 
-                    <!-- Prerequisite -->
                     <div>
-                        <label for="prerequisite_id" class="block text-sm font-medium text-gray-700">Prerequisite</label>
+                        <label for="prerequisite_id"
+                            class="block text-sm font-medium text-gray-700">Prerequisite</label>
                         <select name="prerequisite_id" id="prerequisite_id"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300">
                             <option value="">None</option>
-                            @foreach($subjects as $otherSubject)
-                                <option value="{{ $otherSubject->id }}" {{ old('prerequisite_id', $subject->prerequisite_id) == $otherSubject->id ? 'selected' : '' }}>
-                                    {{ $otherSubject->name }}
-                                </option>
+                            @foreach($subjects as $subject)
+                            <option value="{{ $subject->id }}"
+                                {{ old('prerequisite_id') == $subject->id ? 'selected' : '' }}>
+                                {{ $subject->name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -89,12 +103,14 @@
                     <div>
                         <label for="professor_id" class="block text-sm font-medium text-gray-700">Professor</label>
                         <select name="professor_id" id="professor_id"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300" required>
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            required>
                             <option value="">Select Professor</option>
                             @foreach($professors as $professor)
-                                <option value="{{ $professor->id }}" {{ old('professor_id', $subject->professor_id) == $professor->id ? 'selected' : '' }}>
-                                    {{ $professor->user->name }}
-                                </option>
+                            <option value="{{ $professor->id }}"
+                                {{ $subject->professor_id == $professor->id ? 'selected' : '' }}>
+                                {{ $professor->user->name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -132,45 +148,53 @@
                         <label for="course_ids" class="block text-sm font-medium text-gray-700">Courses</label>
                         <div class="grid grid-cols-1 gap-2 mt-2">
                             @foreach($courses as $course)
-                                <label class="flex items-center space-x-2">
-                                    <input type="checkbox" name="course_ids[]" value="{{ $course->id }}" class="rounded border-gray-300"
-                                        {{ in_array($course->id, $subject->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                    <span class="text-gray-700">{{ $course->course_name }}</span>
-                                </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="course_ids[]" value="{{ $course->id }}"
+                                    class="rounded border-gray-300"
+                                    {{ in_array($course->id, $subject->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                <span class="text-gray-700">{{ $course->course_name }}</span>
+                            </label>
                             @endforeach
                         </div>
                     </div>
 
-                    <!-- Days -->
                     <div>
                         <label for="days" class="block text-sm font-medium text-gray-700">Days</label>
                         <div class="grid grid-cols-1 gap-2 mt-2">
                             @php
-                                $selectedDays = old('days', json_decode($subject->days, true) ?? []);
+                            $selectedDays = old('days', json_decode($subject->days, true) ?? []);
                             @endphp
-                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                <label class="flex items-center space-x-2">
-                                    <input type="checkbox" name="days[]" value="{{ $day }}" class="rounded border-gray-300"
-                                        {{ in_array($day, $selectedDays) ? 'checked' : '' }}>
-                                    <span class="text-gray-700">{{ $day }}</span>
-                                </label>
+                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as
+                            $day)
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="days[]" value="{{ $day }}" class="rounded border-gray-300"
+                                    {{ in_array($day, $selectedDays) ? 'checked' : '' }}>
+                                <span class="text-gray-700">{{ $day }}</span>
+                            </label>
                             @endforeach
                         </div>
                     </div>
 
+
+
+
                 </div>
 
+
+                <!-- Submit Button -->
                 <!-- Submit & Cancel Buttons -->
                 <div class="mt-6 flex justify-end space-x-2">
-                    <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    <button type="submit"
+                        class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
                         Update
                     </button>
-                    
-                    <a href="{{ route('subjects.index') }}" 
+
+                    <a href="{{ route('subjects.index') }}"
                         class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
                         Cancel
                     </a>
                 </div>
+
             </form>
         </div>
     </div>
