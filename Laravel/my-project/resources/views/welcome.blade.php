@@ -574,13 +574,6 @@ https://templatemo.com/tm-557-grad-school
             <div class="row">
                 <div class="col-md-12">
                     <p><i class="fa fa-copyright"></i> Copyright 2025 by Amando Cope
-
-                        <<<<<<< HEAD <!-- | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">
-                            TemplateMo</a>
-                    </p> -->
-                    =======
-                    | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">TemplateMo</a></p>
-                    >>>>>>> 708ea2503849bd71b73db9c9ec90afbcaec22128
                 </div>
             </div>
         </div>
