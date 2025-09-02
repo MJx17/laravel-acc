@@ -123,8 +123,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-1',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
         
         $ge2 = Subject::create([
@@ -139,8 +139,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-2',
             'professor_id' => $professor9->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
         
         $ge3 = Subject::create([
@@ -155,8 +155,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-3',
             'professor_id' => $professor1->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
         ]);
         
         $ge4 = Subject::create([
@@ -171,8 +171,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-4',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '15:00:00',
-            'end_time' => '16:30:00',
+            'start_time' => '15:00',
+            'end_time' => '16:30',
         ]);
         
         $ba1 = Subject::create([
@@ -187,8 +187,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-5',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
+            'start_time' => '09:00',
+            'end_time' => '12:00',
         ]);
         
         $pe1 = Subject::create([
@@ -203,8 +203,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-5',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
         
         $nstp1 = Subject::create([
@@ -219,8 +219,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-5',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '13:00:00',
-            'end_time' => '15:00:00',
+            'start_time' => '13:00',
+            'end_time' => '15:00',
         ]);
         
         $perDev1 = Subject::create([
@@ -235,8 +235,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-6',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
         
         $ge5 = Subject::create([
@@ -251,8 +251,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'block' => 'A',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '14:00:00',
-            'end_time' => '15:30:00',
+            'start_time' => '14:00',
+            'end_time' => '15:30',
         ]);
         
         $ge6 = Subject::create([
@@ -267,8 +267,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '09:00:00',
-            'end_time' => '10:30:00',
+            'start_time' => '09:00',
+            'end_time' => '10:30',
         ]);
         
         $ge7 = Subject::create([
@@ -283,8 +283,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
         ]);
         
         $ge8 = Subject::create([
@@ -299,8 +299,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'MT-9',
             'professor_id' => $professor1->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '11:00:00',
-            'end_time' => '12:30:00',
+            'start_time' => '11:00',
+            'end_time' => '12:30',
         ]);
         
         $eco1 = Subject::create([
@@ -315,8 +315,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L2',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
         ]);
         
         $pe2 = Subject::create([
@@ -331,8 +331,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L3',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
         
     
@@ -348,8 +348,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L4',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
         
         $perDev2 = Subject::create([
@@ -364,8 +364,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L4',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
         
         
@@ -382,8 +382,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L5',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
 
         $bacc1 = Subject::create([
@@ -397,8 +397,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L6',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
 
         $bacc2 = Subject::create([
@@ -412,8 +412,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L7',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '11:30:00',
-            'end_time' => '13:00:00',
+            'start_time' => '11:30',
+            'end_time' => '13:00',
         ]);
 
         $bapc1 = Subject::create([
@@ -427,8 +427,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L8',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '13:30:00',
-            'end_time' => '15:00:00',
+            'start_time' => '13:30',
+            'end_time' => '15:00',
         ]);
 
         $ba2 = Subject::create([
@@ -442,8 +442,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'L9',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '15:30:00',
-            'end_time' => '17:00:00',
+            'start_time' => '15:30',
+            'end_time' => '17:00',
         ]);
 
         $ba3 = Subject::create([
@@ -457,8 +457,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE1',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '17:30:00',
-            'end_time' => '19:00:00',
+            'start_time' => '17:30',
+            'end_time' => '19:00',
         ]);
 
         $elec1 = Subject::create([
@@ -472,8 +472,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE2',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '08:00:00',
-            'end_time' => '10:30:00',
+            'start_time' => '08:00',
+            'end_time' => '10:30',
         ]);
 
         $pe3 = Subject::create([
@@ -487,8 +487,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE3',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '10:30:00',
-            'end_time' => '12:00:00',
+            'start_time' => '10:30',
+            'end_time' => '12:00',
         ]);
 
         // Second Year - 2nd Semester Subjects
@@ -503,8 +503,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE4',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
 
         $bacc4 = Subject::create([
@@ -518,8 +518,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE5',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
 
         $bapc2 = Subject::create([
@@ -533,8 +533,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE6',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '11:30:00',
-            'end_time' => '13:00:00',
+            'start_time' => '11:30',
+            'end_time' => '13:00',
         ]);
 
         $bapc3 = Subject::create([
@@ -548,8 +548,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE7',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '13:30:00',
-            'end_time' => '15:00:00',
+            'start_time' => '13:30',
+            'end_time' => '15:00',
         ]);
 
         $ba4 = Subject::create([
@@ -563,8 +563,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '15:30:00',
-            'end_time' => '17:00:00',
+            'start_time' => '15:30',
+            'end_time' => '17:00',
         ]);
 
         $ba5 = Subject::create([
@@ -578,8 +578,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'RE9',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '17:30:00',
-            'end_time' => '19:00:00',
+            'start_time' => '17:30',
+            'end_time' => '19:00',
         ]);
 
         $elec2 = Subject::create([
@@ -593,8 +593,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'DMH-1',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '08:00:00',
-            'end_time' => '10:30:00',
+            'start_time' => '08:00',
+            'end_time' => '10:30',
         ]);
 
         $pe4 = Subject::create([
@@ -608,8 +608,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'DMH-2',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '10:30:00',
-            'end_time' => '12:00:00',
+            'start_time' => '10:30',
+            'end_time' => '12:00',
         ]);
 
 
@@ -625,8 +625,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'block' => 'A',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
             'room' =>  'DMH-3',
         ]);
 
@@ -640,8 +640,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'block' => 'A',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
             'room' =>  'DMH-4',
         ]);
 
@@ -655,8 +655,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'block' => 'A',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
             'room' =>  'DMH-6',
         ]);
 
@@ -671,8 +671,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'DMH-7',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '15:00:00',
-            'end_time' => '16:30:00',
+            'start_time' => '15:00',
+            'end_time' => '16:30',
             
         ]);
 
@@ -687,8 +687,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'DMH-8',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
+            'start_time' => '09:00',
+            'end_time' => '12:00',
         ]);
 
         $ba6 = Subject::create([
@@ -702,8 +702,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'DMH-9',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '16:30:00',
-            'end_time' => '18:00:00',
+            'start_time' => '16:30',
+            'end_time' => '18:00',
         ]);
 
         $fl1 = Subject::create([
@@ -716,8 +716,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'block' => 'A',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '10:30:00',
-            'end_time' => '12:00:00',
+            'start_time' => '10:30',
+            'end_time' => '12:00',
         ]);
 
         // THIRD YEAR - 2nd Semester
@@ -732,8 +732,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC1',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
 
         $bacc6 = Subject::create([
@@ -747,8 +747,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC2',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '10:00:00',
-            'end_time' => '11:30:00',
+            'start_time' => '10:00',
+            'end_time' => '11:30',
         ]);
 
         $bapc5 = Subject::create([
@@ -762,8 +762,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC3',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Friday']),
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
+            'start_time' => '09:00',
+            'end_time' => '12:00',
         ]);
 
         $bapc6 = Subject::create([
@@ -777,8 +777,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC4',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '15:00:00',
-            'end_time' => '16:30:00',
+            'start_time' => '15:00',
+            'end_time' => '16:30',
         ]);
 
         $elec4 = Subject::create([
@@ -792,8 +792,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC5',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
         ]);
 
         $ba7 = Subject::create([
@@ -807,8 +807,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC6',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Tuesday', 'Thursday']),
-            'start_time' => '16:30:00',
-            'end_time' => '18:00:00',
+            'start_time' => '16:30',
+            'end_time' => '18:00',
         ]);
 
         $fl2 = Subject::create([
@@ -822,8 +822,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC7',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '10:30:00',
-            'end_time' => '12:00:00',
+            'start_time' => '10:30',
+            'end_time' => '12:00',
         ]);
 
                 // Fourth Year - First Semester
@@ -838,8 +838,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC8',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '09:30:00',
+            'start_time' => '08:00',
+            'end_time' => '09:30',
         ]);
 
         
@@ -855,8 +855,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ACC9',
             'professor_id' => $professor3->id,
             'days' => json_encode(['Wednesday', 'Friday']),
-            'start_time' => '13:00:00',
-            'end_time' => '14:30:00',
+            'start_time' => '13:00',
+            'end_time' => '14:30',
         ]);
 
         $elec5 = Subject::create([
@@ -870,8 +870,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-1',
             'professor_id' => $professor4->id,
             'days' => json_encode(['Monday', 'Thursday']),
-            'start_time' => '15:00:00',
-            'end_time' => '16:30:00',
+            'start_time' => '15:00',
+            'end_time' => '16:30',
         ]);
 
         $bapc8 = Subject::create([
@@ -885,8 +885,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-2',
             'professor_id' => $professor5->id,
             'days' => json_encode(['Tuesday', 'Friday']),
-            'start_time' => '17:00:00',
-            'end_time' => '18:30:00',
+            'start_time' => '17:00',
+            'end_time' => '18:30',
         ]);
 
         $ba8 = Subject::create([
@@ -900,8 +900,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-3',
             'professor_id' => $professor6->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
+            'start_time' => '09:00',
+            'end_time' => '12:00',
         ]);
 
 
@@ -916,8 +916,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-4',
             'professor_id' => $professor8->id,
             'days' => json_encode(['Wednesday', 'Friday']),
-            'start_time' => '14:00:00',
-            'end_time' => '15:30:00',
+            'start_time' => '14:00',
+            'end_time' => '15:30',
         ]);
 
         $ba9 = Subject::create([
@@ -931,8 +931,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-5',
             'professor_id' => $professor9->id,
             'days' => json_encode(['Saturday']),
-            'start_time' => '10:30:00',
-            'end_time' => '12:00:00',
+            'start_time' => '10:30',
+            'end_time' => '12:00',
         ]);
 
 
@@ -948,8 +948,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-5',
             'professor_id' => $professor2->id,
             'days' => json_encode(['Monday', 'Wednesday']),
-            'start_time' => '08:00:00',
-            'end_time' => '10:30:00',
+            'start_time' => '08:00',
+            'end_time' => '10:30',
         ]);
 
         $practicum = Subject::create([
@@ -963,8 +963,8 @@ class DepartmentCourseSubjectSemesterSeeder extends Seeder
             'room' =>  'ST-4',
             'professor_id' => $professor7->id,
             'days' => json_encode(['Monday', 'Tuesday', 'Thursday']),
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
+            'start_time' => '09:00',
+            'end_time' => '12:00',
         ]);
 
        

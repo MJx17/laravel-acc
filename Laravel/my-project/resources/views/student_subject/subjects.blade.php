@@ -124,15 +124,14 @@
                             </tbody>
                         </table>
                     </div>
+                    @if($student->subjects->isEmpty())
+                    <p>This student is not enrolled in any subjects.</p>
+                    @else
+                    {{ $subjects->links() }}
                     @endif
                 </div>
             </div>
         </div>
     </div>
-
-    @if($student->subjects->isEmpty())
-    <p>This student is not enrolled in any subjects.</p>
-    @else
-    {{ $subjects->links() }}
 
 </x-app-layout>

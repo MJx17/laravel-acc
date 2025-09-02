@@ -49,7 +49,7 @@
                                 @method('DELETE')
                                 <button type="button"
                                     class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-700 transition duration-200"
-                                    onclick="confirmDelete({{ $student->id }})">
+                                    onclick="confirmDelete('delete-form-{{ $student->id }}')">
                                     Delete
                                 </button>
                             </form>

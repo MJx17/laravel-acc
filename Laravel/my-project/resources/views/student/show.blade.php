@@ -20,7 +20,7 @@
             @endif
 
             <!-- Name Below Image -->
-            <h3 class="text-xl font-bold mt-4">{{ $student->first_name }} {{ $student->middle_name }} {{ $student->surname }}</h3>
+            <h3 class="text-xl text-black font-bold mt-4">{{ $student->first_name }} {{ $student->middle_name }} {{ $student->surname }}</h3>
 
             <!-- Status Below Image with Conditional Styling -->
             @php
