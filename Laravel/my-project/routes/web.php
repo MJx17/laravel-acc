@@ -26,6 +26,15 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
+
+
+// LMS Sample Page
+Route::get('/lms', function () {
+    return view('lms.index'); // resources/views/lms/index.blade.php
+})->name('lms.index');
+
+
 // Dashboard Route
 Route::get('/dashboard', function () {
     return view('dashboard');
