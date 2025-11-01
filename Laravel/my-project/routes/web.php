@@ -20,7 +20,8 @@ use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\ProfessorGradingController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\Lms\LMSController;
+use App\Http\Controllers\Lms\AdminController;
 // Home Routeuse Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
@@ -29,10 +30,6 @@ Route::get('/', function () {
 
 
 
-// LMS Sample Page
-Route::get('/lms', function () {
-    return view('lms.index'); // resources/views/lms/index.blade.php
-})->name('lms.index');
 
 
 // Dashboard Route
@@ -136,16 +133,37 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('professors', ProfessorController::class)
         ->parameters(['professor' => 'professor_id'])
         ->except(['show']); // Exclude 'show' because it's restricted to professors only
-        Route::resource('course-subjects', CourseSubjectController::class);
 
+     // INDEX – list all course subjects
+    Route::get('/course-subjects', [CourseSubjectController::class, 'index'])
+        ->name('course-subjects.index');
+
+    // CREATE – pass course_code here
     Route::get('/course-subjects/create/{course_code}', [CourseSubjectController::class, 'create'])
         ->name('course-subjects.create');
 
+    // STORE – pass course_code here
     Route::post('/course-subjects/store/{course_code}', [CourseSubjectController::class, 'store'])
         ->name('course-subjects.store');
 
+    // SHOW – show one course subject
+    Route::get('/course-subjects/{id}', [CourseSubjectController::class, 'show'])
+        ->name('course-subjects.show');
 
-});
+    // EDIT – edit a course subject
+    Route::get('/course-subjects/{id}/edit', [CourseSubjectController::class, 'edit'])
+        ->name('course-subjects.edit');
+
+    // UPDATE – update a course subject
+    Route::put('/course-subjects/{id}', [CourseSubjectController::class, 'update'])
+        ->name('course-subjects.update');
+
+    // DESTROY – delete a course subject
+    Route::delete('/course-subjects/{id}', [CourseSubjectController::class, 'destroy'])
+        ->name('course-subjects.destroy');
+
+
+    });
 
 Route::middleware(['auth', 'verified', 'role:professor|admin'])->group(function () {
     Route::get('professors/{professor_id}', [ProfessorController::class, 'show'])
@@ -166,12 +184,12 @@ Route::middleware(['auth', 'verified', 'role:professor|admin'])->group(function 
 
 
 
-Route::get('/test-professor', function () {
-    return [
-        'user' => auth()->user(),
-        'professor' => auth()->user()->professor ?? 'No professor record found',
-    ];
-});
+// Route::get('/test-professor', function () {
+//     return [
+//         'user' => auth()->user(),
+//         'professor' => auth()->user()->professor ?? 'No professor record found',
+//     ];
+// });
 
 
 Route::get('/get-subjects', [EnrollmentController::class, 'getSubjects'])->name('get.subjects');
@@ -200,10 +218,35 @@ Route::get('/financial-letter', function () {
 
 
 // Professor Grading Routes
+Route::get('/lms', [LMSController::class, 'index'])->name('lms.index');
+Route::get('/lms/classes', [LMSController::class, 'classes'])->name('lms.classes');
+Route::get('/lms/homework', [LMSController::class, 'homework'])->name('lms.homework');
+Route::get('/lms/messages', [LMSController::class, 'messages'])->name('lms.messages');
+Route::get('/lms/grades', [LMSController::class, 'grades'])->name('lms.grades');
 
-   
 
+Route::prefix('admin-lms')->group(function () {
+    // Classes
+    Route::get('classes', [AdminController::class, 'classes'])->name('admin-lms.classes');
+    Route::get('classes/create', [AdminController::class, 'createClass'])->name('admin-lms.classes.create');
+    Route::post('classes/store', [AdminController::class, 'storeClass'])->name('admin-lms.classes.store');
+    Route::get('classes/edit/{id}', [AdminController::class, 'editClass'])->name('admin-lms.classes.edit');
+    Route::post('classes/update/{id}', [AdminController::class, 'updateClass'])->name('admin-lms.classes.update');
 
+    // Homework
+    Route::get('homework', [AdminController::class, 'homework'])->name('admin-lms.homework');
+    Route::get('homework/create', [AdminController::class, 'createHomework'])->name('admin-lms.homework.create');
+    Route::post('homework/store', [AdminController::class, 'storeHomework'])->name('admin-lms.homework.store');
+    Route::get('homework/edit/{id}', [AdminController::class, 'editHomework'])->name('admin-lms.homework.edit');
+    Route::post('homework/update/{id}', [AdminController::class, 'updateHomework'])->name('admin-lms.homework.update');
+
+    // Lessons
+    Route::get('lessons', [AdminController::class, 'lessons'])->name('admin-lms.lessons');
+    Route::get('lessons/create', [AdminController::class, 'createLesson'])->name('admin-lms.lessons.create');
+    Route::post('lessons/store', [AdminController::class, 'storeLesson'])->name('admin-lms.lessons.store');
+    Route::get('lessons/edit/{id}', [AdminController::class, 'editLesson'])->name('admin-lms.lessons.edit');
+    Route::post('lessons/update/{id}', [AdminController::class, 'updateLesson'])->name('admin-lms.lessons.update');
+});
 
 // Auth Routes (Generated by Laravel Breeze or Jetstream)
 require __DIR__ . '/auth.php';
